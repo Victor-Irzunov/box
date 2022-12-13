@@ -7,18 +7,27 @@ import categoryRouter from "./categoryRouter.js"
 import productRouter from "./productRouter.js"
 import infoTitleRouter from "./infoTitleRouter.js"
 import categoryTypeRouter from "./categoryTypeRouter.js"
+import basketRouter from "./basketRouter.js"
+import orderRouter from "./orderRouter.js"
 
 
 
 
 
 router.use('/user', userRouter)
+
 router.use('/product', productRouter)
+
 router.use('/type', typeRouter)
 router.use('/info', infoRouter)
 router.use('/category', categoryRouter)
 router.use('/categorytype', categoryTypeRouter)
 router.use('/infotitle', infoTitleRouter)
+
+router.use('/basket', basketRouter)
+router.use('/order', orderRouter)
+
+
 
 
 

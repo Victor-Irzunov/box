@@ -69,6 +69,7 @@ class ProductController {
 			await models.CategoryType.findOrCreate({ where: { categoryId: category, typeId: type } })
 			await models.CategoryProduct.create({ categoryId: category, productId: product.id })
 			await models.TypeProduct.create({ typeId: type, productId: product.id })
+
 			return res.status(201).json({ message: `Продукт добавлен` })
 		}
 		catch (e) {
@@ -85,33 +86,27 @@ class ProductController {
 			limit = Number(limit) || 10
 			let offset = page * limit - limit
 
-			console.log('-------priceFrom: ', priceFrom)
-			console.log('-------priceBefore: ', priceBefore)
-			console.log('-------categoryId: ', categoryId)
-			console.log('-------typeId: ', typeId)
-			console.log('---------------------------------------')
+
 
 			let data
 
 			if (categoryId && !typeId && !priceFrom && !priceBefore) {
-				console.log('💊💊💊-💊💊💊💊-categoryId && !typeId && !priceFrom && !priceBefore-💊💊💊💊-💊💊💊')
+				// console.log('💊💊💊-💊💊💊💊-categoryId && !typeId && !priceFrom && !priceBefore-💊💊💊💊-💊💊💊')
 				data = await models.Product.findAndCountAll({
 					limit, offset, where: { categoryId },
 					include: [{ model: models.Category }, { model: models.Type }],
 				})
-				console.log('💊----data: ', data)
 			}
 			if (categoryId && typeId && !priceFrom && !priceBefore) {
-				console.log('💊💊💊💊💊💊💊-categoryId && typeId && !priceFrom && !priceBefore-💊💊💊💊💊💊💊')
+				// console.log('💊💊💊💊💊💊💊-categoryId && typeId && !priceFrom && !priceBefore-💊💊💊💊💊💊💊')
 				data = await models.Product.findAndCountAll({
 					limit, offset, where: { categoryId, typeId },
 					include: [{ model: models.Category }, { model: models.Type }],
 				})
-				console.log('💊💊----data: ', data)
 			}
 			// ---------------------
 			if (categoryId && !typeId && priceFrom && !priceBefore) {
-				console.log('💊💊💊💊💊💊💊-categoryId && !typeId && priceFrom && !priceBefore-💊💊💊💊💊💊💊')
+				// console.log('💊💊💊💊💊💊💊-categoryId && !typeId && priceFrom && !priceBefore-💊💊💊💊💊💊💊')
 				data = await models.Product.findAndCountAll({
 					limit, offset,
 					where: {
@@ -125,7 +120,7 @@ class ProductController {
 				})
 			}
 			if (categoryId && typeId && priceFrom && !priceBefore) {
-				console.log('💊💊💊💊💊💊💊-categoryId && typeId && priceFrom && !priceBefore-💊💊💊💊💊💊💊')
+				// console.log('💊💊💊💊💊💊💊-categoryId && typeId && priceFrom && !priceBefore-💊💊💊💊💊💊💊')
 				data = await models.Product.findAndCountAll({
 					limit, offset,
 					where: {
@@ -139,7 +134,7 @@ class ProductController {
 			}
 
 			if (categoryId && !typeId && priceFrom && priceBefore) {
-				console.log('💊💊💊💊💊💊💊-categoryId && !typeId && priceFrom && priceBefore-💊💊💊💊💊💊💊')
+				// console.log('💊💊💊💊💊💊💊-categoryId && !typeId && priceFrom && priceBefore-💊💊💊💊💊💊💊')
 				data = await models.Product.findAndCountAll({
 					limit, offset,
 					where: {
@@ -153,7 +148,7 @@ class ProductController {
 			}
 
 			if (categoryId && typeId && priceFrom && priceBefore) {
-				console.log('💊💊💊💊💊💊💊-categoryId && typeId && priceFrom && priceBefore-💊💊💊💊💊💊💊')
+				// console.log('💊💊💊💊💊💊💊-categoryId && typeId && priceFrom && priceBefore-💊💊💊💊💊💊💊')
 				data = await models.Product.findAndCountAll({
 					limit, offset,
 					where: {
@@ -167,7 +162,6 @@ class ProductController {
 			}
 			// ----------
 			if (categoryId && !typeId && !priceFrom && priceBefore) {
-				console.log('💊💊💊💊💊💊💊-categoryId && !typeId && !priceFrom && priceBefore-💊💊💊💊💊💊💊')
 				data = await models.Product.findAndCountAll({
 					limit, offset,
 					where: {
@@ -181,7 +175,6 @@ class ProductController {
 			}
 			// --------
 			if (categoryId && typeId && !priceFrom && priceBefore) {
-				console.log('💊💊💊💊💊💊💊-categoryId && typeId && !priceFrom && priceBefore-💊💊💊💊💊💊💊')
 				data = await models.Product.findAndCountAll({
 					limit, offset,
 					where: {
@@ -233,6 +226,24 @@ class ProductController {
 	}
 
 
+	async getAllProductInBasketNoUser(req, res, next) {
+		try {
+			const dataArr = req.query
+			const arrNumberId = dataArr.arr.map(el => +el.id)
+
+			const data = await models.Product.findAll({
+				where: { id: arrNumberId },
+			})
+
+			return res.status(200).json(data)
+		} catch (e) {
+			console.log('🦺-------err: ', e.message)
+			console.log('🦺-------e: ', e)
+			next(ApiError.internal(e.message))
+		}
+	}
+
+
 	async getPohozhie(req, res, next) {
 		try {
 			const { id } = req.params
@@ -253,7 +264,6 @@ class ProductController {
 				],
 			})
 
-			// console.log('💊-----------data: ', data)
 
 
 			return res.status(200).json(data)

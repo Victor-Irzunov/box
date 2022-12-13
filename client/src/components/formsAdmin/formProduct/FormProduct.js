@@ -73,12 +73,11 @@ const FormProduct = () => {
 	const [fileList, setFileList] = useState([])
 
 	const [title, setTitle] = useState('')
-	// const [checkBox, setCheckBox] = useState()
 
-	console.log('💊---------dataInfo:', dataInfo)
 	useEffect(() => {
 		fetchInfo()
 			.then(data => {
+				console.log('data info: ', data)
 				setDataInfo(data)
 			})
 			.catch(err => {
@@ -135,11 +134,6 @@ const FormProduct = () => {
 	const onFinish = async values => {
 		console.log('Success:', values)
 
-		// const arrColor = []
-		// values.color.forEach(el => {
-		// 	const obj = dataColor.find(elem => elem.color === el)
-		// 	if (obj) arrColor.push({ name: obj.name, color: obj.color })
-		// })
 
 		const arrInfo = []
 		const keys = Object.keys(values.info)
@@ -170,6 +164,9 @@ const FormProduct = () => {
 			.then(data => {
 				console.log('data: ', data)
 				message.success(data.message)
+			})
+			.catch(data => {
+				message.error(data.response.data.message)
 			})
 	}
 
@@ -216,7 +213,7 @@ const FormProduct = () => {
 					},]}
 				>
 					{
-						dataCategory.length > 1 ?
+						dataCategory.length > 0 ?
 							<Radio.Group buttonStyle="solid">
 								{dataCategory.map(el => {
 									return (<Radio.Button key={el.id} className='mr-1' value={el.id}>{el.name}</Radio.Button>)
@@ -238,7 +235,7 @@ const FormProduct = () => {
 					},]}
 				>
 					{
-						dataType.length > 1 ?
+						dataType.length > 0 ?
 							<Radio.Group buttonStyle="solid">
 								{dataType.map(el => {
 									return (<Radio.Button
@@ -294,10 +291,10 @@ const FormProduct = () => {
 				<Form.Item
 					label="Описание товара"
 					name="description"
-				// rules={[{
-				// 		required: true,
-				// 		message: 'Введите описание!'
-				// 	},]}
+					rules={[{
+						required: true,
+						message: 'Введите описание!'
+					},]}
 				>
 					<TextArea
 						autoSize allowClear showCount
@@ -373,7 +370,7 @@ const FormProduct = () => {
 					tooltip="Необходимо"
 				>
 					{
-						dataInfo.length > 1 ?
+						dataInfo.length > 0 ?
 
 							dataInfo.map(el => {
 								return (

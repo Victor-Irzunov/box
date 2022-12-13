@@ -29,6 +29,8 @@ class UserController {
 			if (!login || !password) return next(ApiError.badRequest('Некорректный email или password'))
 
 			const candidate = await models.User.findOne({ where: { login } })
+			
+			console.log('------candidate: ', candidate.dataValues.password)
 			if (candidate) {
 				return next(ApiError.badRequest('Пользователь с таким email уже существует'))
 			}
@@ -43,7 +45,10 @@ class UserController {
 			const user = await models.User.create({ login, role, password: hashPassword, activationLink, isActivation: false })
 			const token = generateJwt(user.id, user.login, user.role, user.isActivation)
 
+			
 			await mailService.sendActivationMail(login, `${process.env.API_URL}/api/user/activate/${activationLink}`)
+
+			await models.Basket.create({ userId: user.id })
 
 			return res.json({ token })
 

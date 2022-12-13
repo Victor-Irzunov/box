@@ -5,6 +5,7 @@ export default class ProductsStore {
 		this._data = {}
 		this._dataOne = {}
 		this._isSpin = false
+		this._sendData = []
 
 
 
@@ -19,6 +20,10 @@ export default class ProductsStore {
 	setIsSpin(data) {
 		this._isSpin = data
 	}
+	setSendData(data) {
+		this._sendData = data
+	}
+
 
 
 
@@ -30,6 +35,9 @@ export default class ProductsStore {
 	}
 	get dataOneProduct() {
 		return this._dataOne
+	}
+	get sendData() {
+		return this._sendData
 	}
 
 

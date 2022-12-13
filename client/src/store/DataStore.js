@@ -10,6 +10,7 @@ export default class DataStore {
 		this._likedlength = 0
 		this._likedarr = []
 		this._basketlength = 0
+		this._basketArr = []
 		this._isBtnFormOtzyvy = false
 		this._isBtnFormQuestion = false
 
@@ -36,6 +37,9 @@ export default class DataStore {
 	}
 	setBasketLength(data) {
 		this._basketlength = data
+	}
+	setBasketArr(data) {
+		this._basketArr = data
 	}
 	setIsBtnFormOtzyvy(data) {
 		this._isBtnFormOtzyvy = data
@@ -65,6 +69,9 @@ export default class DataStore {
 	}
 	get basketLength() {
 		return this._basketlength
+	}
+	get basketArr() {
+		return this._basketArr
 	}
 	get isBtnFormOtzyvy() {
 		return this._isBtnFormOtzyvy

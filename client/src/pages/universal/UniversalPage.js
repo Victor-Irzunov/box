@@ -9,7 +9,10 @@ import TitleAffix from '../../components/titleAffix/TitleAffix'
 import { Context } from '../../App'
 import { observer } from "mobx-react-lite"
 import PaginationComp from '../../components/pagination/PaginationComp'
-import { Link, useLocation } from 'react-router-dom'
+import {
+	Link, useLocation,
+	useSearchParams
+} from 'react-router-dom'
 import { fetchProducts } from '../../http/productsAPI'
 
 const { Sider, Content } = Layout
@@ -27,6 +30,8 @@ const UniversalPage = observer(() => {
 	const [editP2, setEditP2] = useState(textMenPage.p2)
 	const [editP3, setEditP3] = useState(textMenPage.p3)
 
+	let [searchParams, setSearchParams] = useSearchParams()
+
 	let location = useLocation()
 	const localPath = location.pathname.split('/').join('')
 	const arrLocalPath = location.pathname.split('/').filter(function (el) {
@@ -35,54 +40,62 @@ const UniversalPage = observer(() => {
 
 	const [itemCard, setItemCard] = useState([])
 	const [totalItem, setTotalItem] = useState(1)
+
 	const [page, setPage] = useState(1)
 	const [pageSize, setPageSize] = useState(10)
+
 	const [categoryId, setCategoryId] = useState(null)
 	const [typeId, setTypeId] = useState(null)
 	const [type, setType] = useState([])
 	const [isReset, setIsReset] = useState(false)
+
 	const [isBtnSortRatng, setIsBtnSortRatng] = useState(false)
 	const [isBtnSortPrice, setIsBtnSortPrice] = useState(false)
 
 	const [inputValueFrom, setInputValueFrom] = useState(15)
 	const [inputValueBefore, setInputValueBefore] = useState(null)
-	// console.log('-------------------------------------------------------location: ', location)
-	console.log('-----------------------------------------------comp-🧤---🧤-render-------',)
-	
-	useEffect(() => {
-		if (dataApp.dataMenu) {
-		// console.log('🧤---🧤')
-		dataApp.dataMenu.forEach(el => {
-			if (el.link === arrLocalPath[0]) {
-				setCategoryId(el.id)
-				setEditH1(el.name)
-				setTypeId(null)
-				setType(el.types)
-			}
-			if (arrLocalPath.length === 2) {
-				el.types.forEach(elem => {
-					if (elem.link === arrLocalPath[1]) {
-						setTypeId(elem.id)
-						setH2(elem.name)
-					}
-				})
-			}
-		})
-	}
-	}, [arrLocalPath])
+
+	const params = searchParams.get('page')
 
 	useEffect(() => {
-		console.log('💊💊💊useEffect: ', categoryId, typeId)
-		if (categoryId) {
-			console.log('---------if (categoryId) {---------')
-			fetchProducts(page, pageSize, categoryId, typeId)
-			.then(data => {
-				console.log('💡--💡data: ', data)
-				setItemCard(data.rows)
-				setTotalItem(data.count)
+		if (!params) setPage(1)
+		if (params && page !== params) setPage(+params)
+
+
+		if (dataApp.dataMenu) {
+			dataApp.dataMenu.forEach(el => {
+				if (el.link === arrLocalPath[0]) {
+					setCategoryId(el.id)
+					setEditH1(el.name)
+					setTypeId(null)
+					setType(el.types)
+				}
+				if (arrLocalPath.length === 2) {
+					el.types.forEach(elem => {
+						if (elem.link === arrLocalPath[1]) {
+							setTypeId(elem.id)
+							setH2(elem.name)
+						}
+					})
+				}
 			})
 		}
-	}, [page,
+	}, [
+		arrLocalPath,
+	])
+
+	useEffect(() => {
+
+		if (categoryId) {
+			fetchProducts(page, pageSize, categoryId, typeId)
+				.then(data => {
+					// console.log('💡--💡data: ', data)
+					setItemCard(data.rows)
+					setTotalItem(data.count)
+				})
+		}
+	}, [
+		page,
 		pageSize,
 		localPath,
 		categoryId,
@@ -104,9 +117,10 @@ const UniversalPage = observer(() => {
 			})
 	}
 
-	const onChange = (page, pageSize) => {
+	const onChangePage = (page, pageSize) => {
 		setPage(page)
 		setPageSize(pageSize)
+		setSearchParams({ page: page })
 	}
 
 	const resetFilter = () => setIsReset(i => !i)
@@ -128,6 +142,8 @@ const UniversalPage = observer(() => {
 		setIsBtnSortRatng(i => !i)
 		return setItemCard(prev => prev.sort((a, b) => b.rating - a.rating))
 	}
+
+
 
 	return (
 		<>
@@ -232,10 +248,10 @@ const UniversalPage = observer(() => {
 							totalItem
 								?
 								<>
-									<CardComp itemCard={itemCard} />
+									<CardComp itemCard={itemCard} page={page} location={location} />
 									<br />
 									<br />
-									<PaginationComp totalItem={totalItem} onChange={onChange} />
+									<PaginationComp totalItem={totalItem} onChange={onChangePage} current={page} />
 								</>
 								:
 								<Empty>

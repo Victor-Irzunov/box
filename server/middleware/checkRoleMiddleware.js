@@ -6,6 +6,7 @@ export default function(role) {
             next()
         }
         try {
+
             const token = req.headers.authorization.split(' ')[1]
             if (!token) {
                 console.log('!!!----------------не авторизован')

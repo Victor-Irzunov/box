@@ -34,17 +34,17 @@ const ModalComponent = ({ open, setOpen }) => {
 			{
 				isAccount &&
 				<>
-						
-								<p className='font-extralight mb-3'>Для доступа в Ваш личный кабинет введите e-mail.</p>
-								<FormRegistration handleCancel={handleCancel} />
-								<span>Есть аккаунт?</span>
-								<Button type='link' onClick={() => {
-									setIsAccount(false)
-									handleCancel()
-									setTimeout(() => { setOpen(true) }, 0.7)
-								}}>Вход</Button>
-						
-					
+
+					<p className='font-extralight mb-3'>Для доступа в Ваш личный кабинет введите e-mail.</p>
+					<FormRegistration handleCancel={handleCancel} />
+					<span>Есть аккаунт?</span>
+					<Button type='link' onClick={() => {
+						setIsAccount(false)
+						handleCancel()
+						setTimeout(() => { setOpen(true) }, 0.7)
+					}}>Вход</Button>
+
+
 				</>
 			}
 		</Modal>

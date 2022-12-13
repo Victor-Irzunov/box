@@ -8,6 +8,7 @@ router.post('/', checkRole('ADMIN'), productController.create)
 router.get('/', productController.getAll)
 router.get('/pohozhie/:id', productController.getPohozhie)
 router.get('/:id', productController.getOne)
+router.get('/basket/nouser', productController.getAllProductInBasketNoUser)
 router.delete('/:id', checkRole('ADMIN'), productController.deleteOne)
 
 

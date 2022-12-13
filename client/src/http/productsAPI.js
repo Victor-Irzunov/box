@@ -23,8 +23,15 @@ export const fetchOneProduct = async (id) => {
 	const { data } = await $host.get('api/product/' + id)
 	return data
 }
+
+
+export const fetchProductBasketNoUser = async (arrId) => {
+	const { data } = await $host.get('api/product/basket/nouser', { params: { arr: arrId } })
+	return data
+}
+
+
 export const fetchProductsPohozhie = async (id) => {
-	// console.log('💊------id:', id)
 	const { data } = await $host.get('api/product/pohozhie/' + id)
 	return data
 }

@@ -1,11 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react'
 import CourouselComp from '../../components/react-image-gallery/CurouselComp'
-import { Typography, Row, Col, Rate, Badge, Button, BackTop } from 'antd'
+import { Typography, Row, Col, Rate, Badge, Button, BackTop, message } from 'antd'
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import { Context } from "../../App"
-import { HighlightOutlined, CarOutlined, ArrowLeftOutlined } from '@ant-design/icons'
+import { HighlightOutlined, CarOutlined, ArrowLeftOutlined, CheckOutlined } from '@ant-design/icons'
 import { Helmet } from "react-helmet"
-// import axios from 'axios'
 import BadgeIconHeard from '../../components/badgeIcon/badgeIconHeard/BadgeIconHeard'
 import BadgeIconVesy from '../../components/badgeIcon/badgeIconVesy/BadgeIconVesy'
 import { ReactComponent as CardSvg } from '../../images/footer/bank_card.svg'
@@ -22,12 +21,10 @@ import { fetchOneProduct } from '../../http/productsAPI'
 
 const ProductPage = observer(() => {
 	const { isAdmin, dataApp, dataProducts } = useContext(Context)
-	const { id } = useParams()
+	// const { id } = useParams()
 	let location = useLocation()
-
-
-
 	const navigate = useNavigate()
+
 	const [editH1, setEditH1] = useState('')
 	const [product, setProduct] = useState({})
 	const [imgArr, setImgArr] = useState([])
@@ -35,20 +32,10 @@ const ProductPage = observer(() => {
 	const { addList } = useCookieList(null)
 
 
+	const page = location.state?.page
+	const id = location.state?.id
+	const loca = location.state?.location
 
-
-	// useEffect(() => {
-	// 	axios.get(`https://dummyjson.com/products/${id}`)
-	// 		.then(data => {
-	// 			setProduct(data.data)
-	// 			setEditH1(data.data.title)
-	// 			dataProducts.setDataOneProduct(data.data)
-	// 			declOfNum(5, ['отзывов', 'отзыва', 'отзыв'])
-	// 			setImgArr(data.data.images.map(el => {
-	// 				return { original: el, thumbnail: el }
-	// 			}))
-	// 		})
-	// }, [id])
 
 	useEffect(() => {
 		fetchOneProduct(id)
@@ -56,12 +43,22 @@ const ProductPage = observer(() => {
 				setProduct(data)
 				setEditH1(data.name)
 				dataProducts.setDataOneProduct(data)
-				console.log('--data', data)
+				console.log('--data one product:', data)
 				declOfNum(5, ['отзывов', 'отзыва', 'отзыв'])
 				setImgArr(fuImg(data))
 
 			})
 	}, [])
+
+
+	const addBasket = id => {
+		if (!dataApp.isAuth) {
+			addList('BasketProduct', id)
+		}
+		message.success('Товар в корзине')
+	}
+
+
 
 	function fuImg(data) {
 		const img = JSON.parse(data.img)
@@ -96,8 +93,9 @@ const ProductPage = observer(() => {
 			behavior: 'smooth',
 		}), 150)
 	}
-
-	const goBack = () => navigate(-1)
+	const goBack = () => navigate(
+		`${loca}`
+	)
 
 	return (
 		<>
@@ -170,8 +168,7 @@ const ProductPage = observer(() => {
 							</div>
 
 							<div className='mt-10'>
-								{/* <FormRadioColor />
-								<FormSizeBtn /> */}
+
 								<p>{product.description}</p>
 							</div>
 						</div>
@@ -188,10 +185,13 @@ const ProductPage = observer(() => {
 									type="primary"
 									shape="round"
 									size={'large'}
+									disabled={dataApp.basketArr.some(elem => elem.id === product.id)}
+									icon={dataApp.basketArr.some(elem => elem.id === product.id) && <CheckOutlined />}
 									block
 									className='mr-4'
+									onClick={() => addBasket(product.id)}
 								>
-									В корзину
+									{dataApp.basketArr.some(elem => elem.id === product.id) ? 'В корзине' : 'В корзину'}
 								</Button>
 								<Button type="primary" ghost shape="round" size={'large'} block>Заказать в один клик</Button>
 							</div>

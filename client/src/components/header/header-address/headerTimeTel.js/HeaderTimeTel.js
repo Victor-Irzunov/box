@@ -6,7 +6,7 @@ import {
 	UserOutlined,
 } from '@ant-design/icons'
 import { Context } from '../../../../App'
-import ModalComponent from '../../../modal/ModalComponent'
+import ModalComponent from '../../../modalLoginRegistrat/ModalComponent'
 import { Link } from 'react-router-dom'
 import { observer } from "mobx-react-lite"
 

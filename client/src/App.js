@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react'
 import './App.css'
 import { Spin, ConfigProvider, theme } from 'antd'
-import { Routes, Route, BrowserRouter } from 'react-router-dom'
+import { Routes, Route, BrowserRouter, Navigate } from 'react-router-dom'
 import UserStore from './store/UserStore'
 import DataStore from './store/DataStore'
 import ProductsStore from './store/ProductsStore'
@@ -20,6 +20,7 @@ import AdminPage from './pages/admin/AdminPage'
 import locale from 'antd/es/locale/ru_RU'
 import { categoryType } from './http/productsAPI'
 import UniversalPage from './pages/universal/UniversalPage'
+import BasketPage from './pages/basket/BasketPage'
 
 
 ConfigProvider.config({
@@ -46,20 +47,22 @@ const App = observer(() => {
           user.setUser(true)
         }
       })
+      .catch(data => {
+        console.log('check err:', data.response.data.message)
+      })
       .finally(() => setLoading(false))
   }, [])
 
   useEffect(() => {
     categoryType()
       .then(data => {
-        console.log('------data categoryType: ', data)
         dataApp.setDataMenu(data)
       })
   }, [])
 
 
   if (loading) {
-    return <Spin size="large" />
+    return <div className='w-full h-screen flex justify-center items-center'><Spin size="large" /></div>
   }
 
 
@@ -87,8 +90,9 @@ const App = observer(() => {
                 <Route path='/:category/:type' element={<UniversalPage />} />
                 <Route path='/uspeshno' element={<ResultComp />} />
                 <Route path='/super-adminka' element={<AdminPage />} />
+                <Route path='/korzina' element={<BasketPage />} />
                 <Route
-                  path='/:category/:type/:id/:title'
+                  path='/:category/:type/:title'
                   element={<ProductPage />}
                 />
                 <Route path='*' element={<ErrorPage />} />

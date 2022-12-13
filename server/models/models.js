@@ -53,10 +53,10 @@ const Product = sequelize.define('product', {
 		type: DataTypes.BOOLEAN, defaultValue: false
 	},
 	typeId: {
-		type:DataTypes.INTEGER, allowNull: false
+		type: DataTypes.INTEGER, allowNull: false
 	},
 	categoryId: {
-		type:DataTypes.INTEGER, allowNull: false
+		type: DataTypes.INTEGER, allowNull: false
 	},
 
 })
@@ -176,6 +176,124 @@ const CategoryType = sequelize.define('category_type', {
 
 
 
+// ------------------------------------------
+const Basket = sequelize.define('basket', {
+	id: {
+		type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true
+	},
+})
+
+const BasketProduct = sequelize.define('basket_products', {
+	id: {
+		type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true
+	},
+	inStock: {
+		type: DataTypes.BOOLEAN, allowNull: false
+	},
+})
+
+// -----------------------
+const UserData = sequelize.define('user_data', {
+	id: {
+		type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true
+	},
+	fitstName: {
+		type: DataTypes.STRING, allowNull: false
+	},
+	lastName: {
+		type: DataTypes.STRING, allowNull: false
+	},
+	otchestvo: {
+		type: DataTypes.STRING, allowNull: false
+	},
+	email: {
+		type: DataTypes.STRING, allowNull: false
+	},
+	dateBirth: {
+		type: DataTypes.STRING, allowNull: false
+	},
+	phone: {
+		type: DataTypes.JSON, allowNull: false
+	},
+	address: {
+		type: DataTypes.JSON, allowNull: false
+	},
+	city: {
+		type: DataTypes.JSON, allowNull: false
+	},
+})
+
+const BasketOrder = sequelize.define('basket_order', {
+	id: {
+		type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true
+	},
+	count: {
+		type: DataTypes.INTEGER, allowNull: false
+	},
+	price: {
+		type: DataTypes.FLOAT(10, 2), allowNull: false
+	},
+	productId: {
+		type: DataTypes.INTEGER, allowNull: false, unique: true,
+	},
+})
+
+const Order = sequelize.define('order', {
+	id: {
+		type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true
+	},
+	userId: {
+		type: DataTypes.INTEGER, allowNull: false
+	},
+	delivery: {
+		type: DataTypes.STRING, allowNull: false
+	},
+	city: {
+		type: DataTypes.STRING, allowNull: false
+	},
+	address: {
+		type: DataTypes.STRING, allowNull: false
+	},
+	oplata: {
+		type: DataTypes.STRING, allowNull: false
+	},
+	phone: {
+		type: DataTypes.STRING, allowNull: false
+	},
+	comment: {
+		type: DataTypes.STRING, allowNull: false
+	},
+	date: {
+		type: DataTypes.STRING, allowNull: false
+	},
+	time: {
+		type: DataTypes.STRING, allowNull: false
+	}
+})
+
+
+Order.hasMany(BasketOrder)
+BasketOrder.belongsTo(Order)
+
+Order.belongsTo(User)
+
+BasketOrder.belongsTo(Basket)
+
+User.hasOne(UserData)
+UserData.belongsTo(User)
+
+// -----------------------------------------
+User.hasOne(Basket)
+Basket.belongsTo(User)
+
+Basket.hasMany(BasketProduct)
+BasketProduct.belongsTo(Basket)
+
+Product.hasMany(BasketProduct) //, {onDelete: 'cascade'}
+BasketProduct.belongsTo(Product) //, {onDelete: 'restrict'}
+// -------------------------------------------
+
+
 
 User.hasMany(Rating)
 Rating.belongsTo(User)
@@ -206,8 +324,11 @@ Type.belongsToMany(Category, { through: CategoryType })
 Product.hasMany(ProductInfo, { as: 'info' })
 ProductInfo.belongsTo(Product)
 
+
+
 export const models = {
 	User,
+	UserData,
 	Product,
 	Category,
 	SliderImg,
@@ -220,5 +341,9 @@ export const models = {
 	ProductInfo,
 	Info,
 	InfoTitle,
+	Basket,
+	BasketOrder,
+	Order,
+	BasketProduct,
 }
 

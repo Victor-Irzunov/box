@@ -7,6 +7,7 @@ import BadgeIconBasked from '../badgeIcon/BadgeIconBasket'
 import BadgeIconVesy from '../badgeIcon/badgeIconVesy/BadgeIconVesy'
 import { Context } from '../../App'
 import { observer } from "mobx-react-lite"
+import { getAllBasketUser } from '../../http/basketAPI'
 
 const Header = observer(() => {
   const { dataApp, dataProducts } = useContext(Context)
@@ -14,7 +15,7 @@ const Header = observer(() => {
   // const [dataMenu, setDataMenu] = useState([])
 
 
-  
+
 
   useEffect(() => {
     let cookie = {}
@@ -41,6 +42,27 @@ const Header = observer(() => {
       dataApp.setLikedArr(arr)
     }
   }, [dataApp.likedLength])
+
+  useEffect(() => {
+    if (!dataApp.isAuth) {
+      let cookie = {}
+      decodeURIComponent(document.cookie).split(';').forEach(el => {
+        let [k, v] = el.split('=')
+        cookie[k.trim()] = v
+      })
+      if (cookie['BasketProduct']) {
+        let arr = JSON.parse(cookie['BasketProduct'])
+        dataApp.setBasketLength(arr.length)
+        dataApp.setBasketArr(arr)
+      }
+    } else {
+      getAllBasketUser()
+        .then(data => {
+          console.log('data basket:', data)
+        })
+    }
+
+  }, [dataApp.basketLength])
 
   return (
     <>
