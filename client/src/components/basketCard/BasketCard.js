@@ -1,67 +1,115 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { observer } from 'mobx-react-lite'
-import { Image, Button, Empty, Typography, Divider } from 'antd'
+import { Image, Button, Empty, Typography, message } from 'antd'
 import { MinusOutlined, PlusOutlined, CloseOutlined } from '@ant-design/icons'
 import { Context } from '../../App'
 import { useCookieList } from '../../hooks/useCookieList'
-import ProductPage from '../../pages/productPage/ProductPage'
+import { Link, useLocation } from 'react-router-dom'
+import {
+	deleteBasketUserOneProduct,
+	minusBasketUserOneProduct,
+	plusBasketUserOneProduct
+} from '../../http/basketAPI'
+import CyrillicToTranslit from 'cyrillic-to-translit-js'
 
 const ButtonGroup = Button.Group
 const { Text } = Typography
 
 
-const BasketCard = observer(({ data }) => {
-	const { dataApp, dataProducts } = useContext(Context)
+const BasketCard = observer(({ data, isActive, setData }) => {
+	const { dataApp, dataProducts, user } = useContext(Context)
 	const { addList, minusList, deleteOneList } = useCookieList(null)
 	const [totalWithoutDiscount, setTotalWithoutDiscount] = useState(0)
 	const [totalDiscount, setTotalDiscount] = useState(0)
 	const [total, setTotal] = useState(0)
-	
+	const cyrillicToTranslit = new CyrillicToTranslit()
 	const [isUpload, setUpload] = useState(false)
+	const location = useLocation()
 
-	// console.log('data: ', data)
+
+	console.log('data: ', data)
+	// console.log('dataApp.basketLength:', dataApp.basketLength)
 
 	useEffect(() => {
 		let totalCost = 0
 		let discount = 0
 		const sendData = []
 		if (data.length > 0) {
-			data.forEach(el => {
-				dataApp.basketArr.forEach(elem => {
-					if (el.id === elem.id) {
-						totalCost += el.price * elem.count
-						if (el.discountPercentage) {
-							discount += +(el.price * elem.count) * el.discountPercentage / 100
+
+			if (!user.isAuth) {
+				data.forEach(el => {
+					dataApp.basketArr.forEach(elem => {
+						if (el.id === elem.id) {
+							totalCost += el.price * elem.count
+							if (el.discountPercentage) discount += +(el.price * elem.count) * el.discountPercentage / 100
+							sendData.push({ poductId: el.id, price: el.price, count: elem.count })
 						}
-						sendData.push({ poductId: el.id, count: elem.count })
-					}
-				}
-				)
-			})
+					})
+				})
+			} else {
+				data.forEach(el => {
+					totalCost += el.price * el.countBasket
+					if (el.discountPercentage) discount += +(el.price * el.countBasket) * el.discountPercentage / 100
+					sendData.push({ poductId: el.id, price: el.price, count: el.countBasket })
+				})
+			}
 			let total = totalCost - discount
 			setTotalWithoutDiscount((totalCost.toFixed(2)))
 			setTotalDiscount((discount).toFixed(2))
 			setTotal((total).toFixed(2))
 			dataProducts.setSendData(sendData)
 		}
-	}, [data.length, isUpload])
+	}, [
+		data.length,
+		isUpload,
+		data
+	])
 
-	const addBasket = id => {
-		if (!dataApp.isAuth) {
+	const plusBasket = id => {
+		if (!user.isAuth) {
 			addList('BasketProduct', id)
-			setUpload(i => !i)
+			// setUpload(i => !i)
+		} else {
+			plusBasketUserOneProduct(id)
+				.then(data => {
+					dataProducts.setDataBasket(data)
+					setUpload(i => !i)
+				})
 		}
 	}
 	const minusBasket = id => {
-		if (!dataApp.isAuth) {
+		if (!user.isAuth) {
 			minusList('BasketProduct', id)
 			setUpload(i => !i)
+		} else {
+			minusBasketUserOneProduct(id)
+				.then(data => {
+					dataProducts.setDataBasket(data)
+					setUpload(i => !i)
+				})
 		}
 	}
 	const deleteBasket = id => {
-		if (!dataApp.isAuth) {
+		if (!user.isAuth) {
 			deleteOneList('BasketProduct', id)
 			setUpload(i => !i)
+		} else {
+			deleteBasketUserOneProduct(id)
+				.then(data => {
+					if (data.length) {
+						const dataArr = []
+						data.forEach(el => {
+							dataArr.push({ ...el.product, countBasket: el.count })
+						})
+						dataProducts.setDataBasket(dataArr)
+						// setData(dataArr)
+						message.success('Удалён один товар')
+					} else {
+						setData([])
+						message.warning('В корзине пусто')
+					}
+					dataApp.setBasketLength(data.length)
+				})
 		}
 	}
 
@@ -70,21 +118,30 @@ const BasketCard = observer(({ data }) => {
 			{data.length ?
 				data.map((el, idx) => {
 					let count
-					if (dataApp.basketLength) {
-						count = dataApp.basketArr[idx]?.count
+					if (!user.isAuth) {
+						if (dataApp.basketLength) count = dataApp.basketArr[idx]?.count
+					} else {
+						count = el.countBasket
 					}
-
 					return (
 						<div key={el.id} className='mb-4 flex justify-between bg-white border'>
-							<div className='p-2'>
+							<div className='p-2 w-1/2'>
 								<div className='flex'>
 									<Image
 										preview={false}
 										width={130}
 										src={process.env.REACT_APP_API_URL + JSON.parse(el.img)[0].image} />
-									<div className='ml-5'>
-										<p className='text-lg'>{el.name}</p>
-										<p className='text-xs text-slate-400 font-light'>Артикул: {el.id}</p>
+									<div className='ml-5 flex flex-col justify-between'>
+										<div>
+											<Link to={{
+												pathname: `/${el.categories[0].link}/${el.types[0].link}/${cyrillicToTranslit.transform(el.name.split(' ').join('-'))}`,
+											}}
+												state={{ id: el.id, location: location.pathname }}>
+												<p className='text-lg'>{el.name}</p>
+											</Link>
+											<p className='text-xs text-slate-400 font-light'>Артикул: {el.id}</p>
+										</div>
+										<p className='text-xs text-slate-300 font-light'>На складе: {el.count}</p>
 									</div>
 								</div>
 							</div>
@@ -92,21 +149,23 @@ const BasketCard = observer(({ data }) => {
 								<ButtonGroup>
 									<Button
 										onClick={() => minusBasket(el.id)}
-										size='large'
+										size={isActive ? 'small' : 'large'}
 										disabled={count === 1}
 									>
 										<MinusOutlined />
 									</Button>
 									<Button
-										size='large'
-
+										size={isActive ? 'small' : 'large'}
 									>
 										{count}
 									</Button>
 
 									<Button
-										onClick={() => addBasket(el.id)}
-										size='large'
+										onClick={() => {
+											plusBasket(el.id)
+										}}
+										size={isActive ? 'small' : 'large'}
+										disabled={el.count === count}
 									>
 										<PlusOutlined />
 									</Button>

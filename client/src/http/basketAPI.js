@@ -1,12 +1,27 @@
 import { $authHost, $host } from "./index"
 
 
-
-//_add basket
 export const addBasketUserOneProduct = async (id) => {
-	const { data } = await $host.post('api/basket/add/' + id)
+	const { data } = await $authHost.post('api/basket/add/' + id)
 	return data
 }
+export const plusBasketUserOneProduct = async (id) => {
+	const { data } = await $authHost.post('api/basket/add/plus/' + id)
+	return data
+}
+export const minusBasketUserOneProduct = async (id) => {
+	const { data } = await $authHost.post('api/basket/minus/' + id)
+	return data
+}
+export const deleteBasketUserOneProduct = async (id) => {
+	const { data } = await $authHost.delete('api/basket/delete/' + id)
+	return data
+}
+export const deleteAllProductBasketUser = async (id) => {
+	const { data } = await $authHost.delete('api/basket/delete/all/' + id)
+	return data
+}
+
 
 //_getAll basket
 export const getAllBasketUser = async () => {

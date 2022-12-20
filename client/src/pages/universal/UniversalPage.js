@@ -21,7 +21,7 @@ const { Paragraph } = Typography
 
 
 const UniversalPage = observer(() => {
-	const { dataApp, isAdmin } = useContext(Context)
+	const { dataApp } = useContext(Context)
 	const [editH1, setEditH1] = useState('')
 	const [editH2, setEditH2] = useState(textMenPage.h2)
 	const [h2, setH2] = useState('')
@@ -61,7 +61,6 @@ const UniversalPage = observer(() => {
 		if (!params) setPage(1)
 		if (params && page !== params) setPage(+params)
 
-
 		if (dataApp.dataMenu) {
 			dataApp.dataMenu.forEach(el => {
 				if (el.link === arrLocalPath[0]) {
@@ -85,11 +84,9 @@ const UniversalPage = observer(() => {
 	])
 
 	useEffect(() => {
-
 		if (categoryId) {
 			fetchProducts(page, pageSize, categoryId, typeId)
 				.then(data => {
-					// console.log('💡--💡data: ', data)
 					setItemCard(data.rows)
 					setTotalItem(data.count)
 				})
@@ -154,15 +151,11 @@ const UniversalPage = observer(() => {
 
 			<BackTop />
 			<section className='container pt-10'>
-				{
+				{/* {
 					isAdmin && <TitleAffix url={'/muzhskie'} btn={'Изменить Title'} form={'FormTitleChange'} title={'Изменить Title / Description'} />
-				}
+				} */}
 				<Space align='center'>
 					<Typography.Title
-						// editable={isAdmin && {
-						// 	onChange: setEditH1,
-						// 	icon: <HighlightOutlined />,
-						// }}
 						level={1}
 						className=''
 					>
@@ -267,28 +260,26 @@ const UniversalPage = observer(() => {
 							<Paragraph editable={{ onChange: setEditP }}>{editP}</Paragraph>
 							<Divider orientation="left">
 								<Typography.Title
-									editable={isAdmin && {
-										onChange: setEditH2,
-										icon: <HighlightOutlined />,
-									}}
 									level={2}
 									className=''
 								>
 									{editH2}
 								</Typography.Title>
 							</Divider>
-							<Paragraph editable={isAdmin && { onChange: setEditP2 }}>{editP2}</Paragraph>
+							<Paragraph
+							>
+								{editP2}
+							</Paragraph>
 							<Typography.Title
-								editable={isAdmin && {
-									onChange: setEditH3,
-									icon: <HighlightOutlined />,
-								}}
 								level={3}
 								className=''
 							>
 								{editH3}
 							</Typography.Title>
-							<Paragraph editable={isAdmin && { onChange: setEditP3 }}>{editP3}</Paragraph>
+							<Paragraph
+							>
+								{editP3}
+							</Paragraph>
 						</div>
 
 
@@ -304,11 +295,3 @@ const UniversalPage = observer(() => {
 })
 
 export default UniversalPage
-
-	// useEffect(() => {
-	// 	axios.get(`https://dummyjson.com/products?limit=${pageSize}&skip=${page * pageSize - pageSize}`)
-	// 		.then(data => {
-	// 			setItemCard(data.data.products)
-	// 			setTotalItem(data.data.total)
-	// 		})
-	// }, [page, pageSize])

@@ -7,113 +7,143 @@ class BasketController {
 		try {
 			const userId = req.user.id
 			const id = req.params.id
-
 			const basketUser = await models.Basket.findOne({ where: { userId } })
-
-			const product = await models.Product.findOne({ where: { id } })
-			const productInBasket = await models.BasketProduct.create({ productId: product.id, basketId: basketUser.id, inStock: true })
-
-			return res.json(productInBasket)
+			const [data, created] = await models.BasketProduct.findOrCreate({
+				where: { productId: id, basketId: basketUser.id, inStock: true }
+			})
+			if (!created) {
+				data.count += 1
+				await data.save()
+			}
+			const basket = await models.BasketProduct.findAll()
+			return res.json(basket)
 
 		} catch (e) {
+			console.log('🦺e.message: ', e.message)
+			console.log('🦺e: ', e)
+			next(ApiError.internal(e.message))
+		}
+	}
+
+	async getAll(req, res, next) {
+		try {
+			const userId = req.user.id
+			const basketUser = await models.Basket.findOne({ where: { userId } })
+			const allBasketUser = await models.BasketProduct.findAll({
+				where: { basketId: basketUser.id },
+				include: {
+					model: models.Product,
+					include: [
+						{
+							model: models.Category
+						},
+						{
+							model: models.Type
+						},
+					]
+				}
+			})
+			console.log('💊💊💊--allBasketUser:', allBasketUser)
+			return res.json(allBasketUser)
+		}
+		catch (e) {
 			console.log('🦺-------err: ', e.message)
 			console.log('🦺-------e: ', e)
 			next(ApiError.internal(e.message))
 		}
+	}
 
+	async plus(req, res, next) {
+		try {
+			const userId = req.user.id
+			const { id } = req.params
+			const basketUser = await models.Basket.findOne({ where: { userId } })
+			const updateBasket = await models.BasketProduct.findOne({ where: { productId: id } })
+			updateBasket.count += 1
+			await updateBasket.save()
+			const basket = await models.BasketProduct.findAll({
+				where: { basketId: basketUser.id },
+				include: [{
+					model: models.Product
+				}]
+			})
+			// console.log('💊💊💊--basket:', basket)
+			return res.json(basket)
+		}
+		catch (e) {
+			console.log('🦺-------err: ', e.message)
+			console.log('🦺-------e: ', e)
+			next(ApiError.internal(e.message))
+		}
+	}
+
+	async minus(req, res, next) {
+		try {
+			const userId = req.user.id
+			const { id } = req.params
+			const basketUser = await models.Basket.findOne({ where: { userId } })
+			const updateBasket = await models.BasketProduct.findOne({ where: { productId: id } })
+			updateBasket.count -= 1
+			await updateBasket.save()
+			const basket = await models.BasketProduct.findAll({
+				where: { basketId: basketUser.id },
+				include: [{
+					model: models.Product
+				}]
+			})
+			// console.log('💊💊💊--basket:', basket)
+			return res.json(basket)
+		}
+		catch (e) {
+			console.log('🦺-------err: ', e.message)
+			console.log('🦺-------e: ', e)
+			next(ApiError.internal(e.message))
+		}
+	}
+
+	async delete(req, res, next) {
+		// console.log('💊💊💊')
+		try {
+			const userId = req.user.id
+			const { id } = req.params
+			const basketUser = await models.Basket.findOne({ where: { userId } })
+			await models.BasketProduct.destroy({ where: { productId: id } })
+
+			const basket = await models.BasketProduct.findAll({
+				where: { basketId: basketUser.id },
+				include: [{
+					model: models.Product
+				}]
+			})
+			return res.json(basket)
+		}
+		catch (e) {
+			console.log('🦺-------err: ', e.message)
+			console.log('🦺-------e: ', e)
+			next(ApiError.internal(e.message))
+		}
+	}
+
+	async deleteAll(req, res, next) {
+		// console.log('💊💊💊')
+		try {
+			const userId = req.user.id
+			const basketUser = await models.Basket.findOne({ where: { userId } })
+			await models.BasketProduct.destroy({ where: { basketId: basketUser.id } })
+
+
+			return res.json({ message: 'Корзина очищена' })
+		}
+		catch (e) {
+			console.log('🦺-------err: ', e.message)
+			console.log('🦺-------e: ', e)
+			next(ApiError.internal(e.message))
+		}
 	}
 
 
 
 
-	//:basket page
-	// async getAll(req, res, next) {
-	// 	const userId = req.user.id
-	// 	const basketUser = await models.Basket.findOne({ where: { userId } })
-
-	// 	const allBaskDevUser = await models.BasketDevice.findAll({ where: { basketId: basketUser.id } })
-
-	// 	//_all device basket user:
-	// 	const allProdInBaskUser = []
-	// 	for (let i of allBaskDevUser) {
-	// 		let oneElProd = await models.Device.findOne({ where: { id: i.deviceId } })
-	// 		if (oneElProd.count === 0) {
-	// 			await models.BasketDevice.update({ inStock: false }, { where: { deviceId: i.deviceId } })
-	// 		}
-	// 		allProdInBaskUser.push(oneElProd)
-	// 	}
-
-	// 	//_the total amount of the entire product in the basket
-	// 	let totalPrice = allProdInBaskUser.reduce((acc, n) => (acc.price += n.price, acc), { price: 0 })
-
-	// 	//_quantity:
-	// 	let length = allProdInBaskUser.length
-	// 	let counter = allProdInBaskUser.reduce(function (o, i) {
-	// 		if (!o.hasOwnProperty(i.id)) o[i.id] = 0
-	// 		o[i.id]++
-	// 		return o
-	// 	}, {})
-	// 	let result = Object.keys(counter).map(id => ({ id: id, sum: counter[id] }))
-
-	// 	let newArr = []
-	// 	let lookObj = {}
-	// 	for (let i in allProdInBaskUser) {
-	// 		lookObj[allProdInBaskUser[i]['id']] = allProdInBaskUser[i]
-	// 	}
-	// 	for (let i in lookObj) newArr.push(lookObj[i])
-
-	// 	//_checkbox:
-	// 	const basketCheckedAll = await models.BasketOrder.findAll()
-	// 	let allCheckedTotalPrice = basketCheckedAll.reduce((acc, n) => (acc.price += n.price, acc), { price: 0 })
-	// 	const checkedBoll = []
-	// 	newArr.forEach(o => {
-	// 		basketCheckedAll.forEach(obj => {
-	// 			if (obj.deviceId === o.id) checkedBoll.push({ id: obj.deviceId, checked: true })
-	// 		})
-	// 		if (!checkedBoll.some(e => e.id === o.id)) checkedBoll.push({ id: o.id, checked: false })
-	// 	})
-
-	// 	//. sending to frontEnd:
-	// 	return res.json({
-	// 		newArr,
-	// 		length,
-	// 		counter,
-	// 		result,
-	// 		allBaskDevUser,
-	// 		totalPrice,
-	// 		userId,
-	// 		basketCheckedAll,
-	// 		allCheckedTotalPrice,
-	// 		checkedBoll,
-	// 		basketId: basketUser.id
-	// 	})
-	// }
-	//:basket length
-	// async getLength(req, res, next) {
-
-	// 	const userId = req.user.id
-	// 	const basketUser = await Basket.findOne({ where: { userId } })
-
-	// 	const allBaskDevUser = await BasketDevice.findAll({ where: { basketId: basketUser.id } })
-
-	// 	//_all device basket user:
-	// 	const allProdInBaskUser = []
-	// 	for (let i of allBaskDevUser) {
-	// 		let oneElProd = await Device.findOne({ where: { id: i.deviceId } })
-	// 		if (oneElProd.count === 0) {
-	// 			await BasketDevice.update({ inStock: false }, { where: { deviceId: i.deviceId } })
-	// 		}
-	// 		allProdInBaskUser.push(oneElProd)
-	// 	}
-	// 	let length = allProdInBaskUser.length
-
-	// 	return res.json({
-	// 		length
-	// 	})
-	// }
-
-
-	//: deleting everything from the trash:
 	// async removeAll(req, res) {
 	// 	const userId = req.user.id
 	// 	const basketUser = await Basket.findOne({ where: { userId } })

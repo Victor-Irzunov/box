@@ -1,15 +1,34 @@
 import { Button, Rate, Form, Input, Checkbox } from 'antd'
 import React, { useState } from 'react'
+import { otzyvRatingUser } from '../../../http/otzyvyAPI'
 const { TextArea } = Input
 const desc = ['ужасно', 'плохо', 'нормально', 'хорошо', 'замечательно']
 
 
-const FormOtzyvy = () => {
+const FormOtzyvy = ({product}) => {
 	const [form] = Form.useForm()
 	const [isCheck, setIsCheck] = useState(false)
+
+
 	const onFinish = (values) => {
 		console.log('Success:', values)
-		form.resetFields()
+
+		const formData = new FormData()
+		formData.append('name', values.name)
+		formData.append('contact', values.contact)
+		formData.append('description', values.description)
+		formData.append('plus', values.plus)
+		formData.append('minus', values.minus)
+		formData.append('rate', values.rate)
+		formData.append('productId', product.id)
+
+
+		// form.resetFields()
+
+		otzyvRatingUser(formData)
+			.then(data => {
+			console.log('res data:', data)
+		})
 	}
 	const onFinishFailed = (errorInfo) => {
 		console.log('Failed:', errorInfo)
@@ -35,7 +54,7 @@ const FormOtzyvy = () => {
 			>
 				<Form.Item
 					label="Имя"
-					name="username"
+					name="name"
 					rules={[
 						{
 							required: true,
@@ -48,7 +67,7 @@ const FormOtzyvy = () => {
 
 				<Form.Item
 					label="Телефон"
-					name="tel"
+					name="contact"
 					rules={[
 						{
 							required: true,
@@ -60,7 +79,7 @@ const FormOtzyvy = () => {
 				</Form.Item>
 
 				<Form.Item
-					name="otzyvy"
+					name="description"
 					label='Отзыв'
 					rules={[
 						{

@@ -1,7 +1,6 @@
 import {
 	Button,
 	AutoComplete,
-	// InputNumber,
 	Radio,
 	Form,
 	Input,
@@ -19,7 +18,8 @@ import { useCookieList } from '../../hooks/useCookieList'
 import moment from 'moment'
 import { observer } from 'mobx-react-lite'
 import { Context } from '../../App'
-import { orderNoUser } from '../../http/orderAPI'
+import { orderUser } from '../../http/orderAPI'
+import { deleteAllProductBasketUser } from '../../http/basketAPI'
 
 const { Option } = Select
 const { TextArea } = Input
@@ -34,14 +34,15 @@ const disabledDate = (current) => {
 
 const FormBasketOrder = ({ next }) => {
 
-	const { dataProducts } = useContext(Context)
+	const { dataProducts, user } = useContext(Context)
 	const [autoCompleteResult, setAutoCompleteResult] = useState([])
 	const [tel, setTel] = useState('')
-	const [value, setValue] = useState('')
+	const [value, setValue] = useState('kurer_minsk')
 	const [isCheck, setIsCheck] = useState(false)
 	const { deleteAllList } = useCookieList(null)
 	const [form] = Form.useForm()
-	console.log('dataProducts.sendData: ', [...dataProducts.sendData])
+	// console.log('dataProducts.sendData: ', [...dataProducts.sendData])
+	// console.log('userData:', user.userData)
 
 	const onFinish = (values) => {
 		console.log('Success:', values)
@@ -67,16 +68,22 @@ const FormBasketOrder = ({ next }) => {
 		formData.append('otchestvo', values.otchestvo)
 		formData.append('dataBasket', JSON.stringify([...dataProducts.sendData]))
 
-		// console.log('formData-->: ', [...formData])
-		// console.log('formData:', formData.get('dataBasket'))
-		orderNoUser(formData)
+		orderUser(formData)
 			.then(data => {
 				console.log('data order: ', data)
+				message.success('Заказ оформлен!')
+				form.resetFields()
+				if (!user.isAuth) {
+					deleteAllList('BasketProduct', null)
+				} else {
+					deleteAllProductBasketUser(user.userData.id)
+						.then(data => {
+							console.log('--->>>>>data:', data)
+						})
+				}
+				next()
 			})
 	}
-
-
-
 
 	const onFinishFailed = (errorInfo) => {
 		console.log('Failed:', errorInfo)
@@ -110,12 +117,17 @@ const FormBasketOrder = ({ next }) => {
 			selection
 		}
 	}
-	const onChange = (e) => {
+	const onChange = e => {
 		console.log('radio checked', e.target.value)
+		if (value === 'kurer_minsk') {
+			form.setFieldsValue({ address_city: '' })
+		} else {
+			form.setFieldsValue({ address_city: 'Минск' })
+		}
 		setValue(e.target.value)
 	}
+
 	const onChangeCheck = (e) => {
-		console.log('e.target.checked: ', e.target.checked)
 		setIsCheck(e.target.checked)
 	}
 
@@ -131,7 +143,9 @@ const FormBasketOrder = ({ next }) => {
 				span: 16,
 			}}
 			initialValues={{
-				address_city: 'minsk'
+				address_city: 'Минск',
+				dostavka: "kurer_minsk",
+				login: user.isAuth && user.userData.login
 			}}
 			onFinish={onFinish}
 			onFinishFailed={onFinishFailed}
@@ -188,7 +202,7 @@ const FormBasketOrder = ({ next }) => {
 			<Form.Item
 				label="Почта"
 				name="login"
-				tooltip="Обязательное поле"
+				tooltip={user.isAuth ? "Почту можно изменить" : ''}
 				hasFeedback
 				rules={[
 					{
@@ -205,6 +219,7 @@ const FormBasketOrder = ({ next }) => {
 					options={websiteOptions}
 					onChange={onWebsiteChange}
 					placeholder="exemple@gmail.com"
+
 				/>
 			</Form.Item>
 
@@ -231,7 +246,7 @@ const FormBasketOrder = ({ next }) => {
 			</Form.Item>
 
 
-			{value !== 'kurer_belarus' ?
+			{/* {value !== 'kurer_belarus' ?
 				<Form.Item
 					name="address_city"
 					label="Город"
@@ -242,7 +257,7 @@ const FormBasketOrder = ({ next }) => {
 				</Form.Item>
 				:
 				<Form.Item
-					name="address_country"
+					name="address_city"
 					label="Город"
 					rules={[
 						{
@@ -253,7 +268,23 @@ const FormBasketOrder = ({ next }) => {
 				>
 					<Input />
 				</Form.Item>
-			}
+			} */}
+
+			<Form.Item
+				name="address_city"
+				label="Город"
+				rules={[
+					{
+						required: true,
+						message: 'Пожалуйста введите Ваш город!',
+					},
+				]}
+			>
+				<Input />
+			</Form.Item>
+
+
+
 
 
 
@@ -394,7 +425,7 @@ const FormBasketOrder = ({ next }) => {
 					htmlType="submit"
 					disabled={!isCheck}
 				>
-					Оформить заказ
+					Перейти к оплате
 				</Button>
 			</Form.Item>
 		</Form>

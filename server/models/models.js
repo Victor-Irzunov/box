@@ -41,7 +41,7 @@ const Product = sequelize.define('product', {
 		type: DataTypes.INTEGER, allowNull: false
 	},
 	rating: {
-		type: DataTypes.INTEGER, defaultValue: 0
+		type: DataTypes.FLOAT(10, 1), defaultValue: 0
 	},
 	img: {
 		type: DataTypes.JSON                //allowNull - запрещает 0(пустым)
@@ -145,7 +145,7 @@ const Feedback = sequelize.define('feedback', {
 		type: DataTypes.STRING, allowNull: false
 	},
 	description: {
-		type: DataTypes.STRING, allowNull: false
+		type: DataTypes.TEXT('long'), allowNull: false
 	},
 	plus: {
 		type: DataTypes.STRING, allowNull: false
@@ -159,8 +159,6 @@ const SliderImg = sequelize.define('sliderImg', {
 	id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 	img: { type: DataTypes.STRING, allowNull: false },
 })
-
-
 
 const CategoryProduct = sequelize.define('category_product', {
 	id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
@@ -190,6 +188,9 @@ const BasketProduct = sequelize.define('basket_products', {
 	inStock: {
 		type: DataTypes.BOOLEAN, allowNull: false
 	},
+	count: {
+		type: DataTypes.INTEGER, defaultValue: 1
+	},
 })
 
 // -----------------------
@@ -201,16 +202,16 @@ const UserData = sequelize.define('user_data', {
 		type: DataTypes.STRING, allowNull: false
 	},
 	lastName: {
-		type: DataTypes.STRING, allowNull: false
+		type: DataTypes.STRING
 	},
 	otchestvo: {
-		type: DataTypes.STRING, allowNull: false
+		type: DataTypes.STRING
 	},
 	email: {
 		type: DataTypes.STRING, allowNull: false
 	},
 	dateBirth: {
-		type: DataTypes.STRING, allowNull: false
+		type: DataTypes.STRING, defaultValue: '-'
 	},
 	phone: {
 		type: DataTypes.JSON, allowNull: false
@@ -234,7 +235,7 @@ const BasketOrder = sequelize.define('basket_order', {
 		type: DataTypes.FLOAT(10, 2), allowNull: false
 	},
 	productId: {
-		type: DataTypes.INTEGER, allowNull: false, unique: true,
+		type: DataTypes.INTEGER
 	},
 })
 

@@ -93,7 +93,12 @@ class ProductController {
 			if (categoryId && !typeId && !priceFrom && !priceBefore) {
 				// console.log('💊💊💊-💊💊💊💊-categoryId && !typeId && !priceFrom && !priceBefore-💊💊💊💊-💊💊💊')
 				data = await models.Product.findAndCountAll({
-					limit, offset, where: { categoryId },
+					limit, offset, where: {
+						categoryId,
+						count: {
+							[Op.gt]: 0
+						}
+					},
 					include: [{ model: models.Category }, { model: models.Type }],
 				})
 			}
@@ -186,11 +191,6 @@ class ProductController {
 					include: [{ model: models.Category }, { model: models.Type }],
 				})
 			}
-
-
-
-
-
 			return res.status(200).json(data)
 		}
 		catch (e) {
@@ -228,14 +228,34 @@ class ProductController {
 
 	async getAllProductInBasketNoUser(req, res, next) {
 		try {
+
 			const dataArr = req.query
-			const arrNumberId = dataArr.arr.map(el => +el.id)
+			if (Object.keys(dataArr).length !== 0) {
+				const arrNumberId = dataArr.arr.map(el => {
+					if (el.hasOwnProperty('id')) {
+						return +el.id
+					}
+					return parseInt(el)
+				})
+				const data = await models.Product.findAll({
+					where: { id: arrNumberId },
+					include: [
+						{
+							model: models.ProductInfo, as: 'info'
+						},
+						{
+							model: models.Category,
+						},
+						{
+							model: models.Type
+						},
+					]
+				})
+				return res.status(200).json(data)
+			} else {
+				return res.json({ message: 'Товара нет' })
+			}
 
-			const data = await models.Product.findAll({
-				where: { id: arrNumberId },
-			})
-
-			return res.status(200).json(data)
 		} catch (e) {
 			console.log('🦺-------err: ', e.message)
 			console.log('🦺-------e: ', e)

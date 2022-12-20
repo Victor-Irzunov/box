@@ -15,7 +15,7 @@ function BasketDostavkaIOplata({ next, data }) {
 
 
 				<Col xl={14}>
-					<BasketCard data={data} />
+					<BasketCard data={data} isActive={true} />
 				</Col>
 			</Row>
 		</div>

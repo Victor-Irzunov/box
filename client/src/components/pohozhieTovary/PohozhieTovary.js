@@ -20,7 +20,7 @@ const PohozhieTovary = ({ id }) => {
 		// 	})
 		fetchProductsPohozhie(id)
 			.then(data => {
-				console.log('data-data: ', data)
+				// console.log('data-data: ', data)
 				setProduct(data)
 			})
 	}, [])

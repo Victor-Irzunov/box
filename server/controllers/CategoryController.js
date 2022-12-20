@@ -8,7 +8,6 @@ class CategoryController {
             // const data = req.body
             // await models.Brand.bulkCreate(data)
             const { name, link } = req.body
-            console.log('req.body: ', req.body)
             await models.Category.create({ name, link })
 
             return res.status(201).json({ message: `Категория добавлена` })

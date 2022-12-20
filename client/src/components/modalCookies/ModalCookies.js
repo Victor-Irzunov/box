@@ -8,7 +8,7 @@ import CyrillicToTranslit from 'cyrillic-to-translit-js'
 
 
 
-const ModalCookies = ({ setIsModalOpen, isModalOpen, data }) => {
+const ModalCookies = ({ setIsModalOpen, isModalOpen, data, btnText }) => {
 	const cyrillicToTranslit = new CyrillicToTranslit()
 	const handleOk = () => {
 		setIsModalOpen(false)
@@ -34,7 +34,7 @@ const ModalCookies = ({ setIsModalOpen, isModalOpen, data }) => {
 						icon={<ArrowLeftOutlined />}
 						size='large'
 					>
-						Продолжить покупки
+						{btnText ?'Продолжить':'Продолжить покупки'}
 					</Button>
 					<Link to={`/${cyrillicToTranslit.transform('корзина')}`}>
 						<Button
@@ -55,7 +55,7 @@ const ModalCookies = ({ setIsModalOpen, isModalOpen, data }) => {
 					<Image
 						preview={false}
 						width={100}
-						src={process.env.REACT_APP_API_URL + JSON.parse(data.img)[0].image} />
+						src={Object.keys(data).length && process.env.REACT_APP_API_URL + JSON.parse(data.img)[0].image} />
 					<div className='ml-5'>
 						<p className='text-lg'>{data.name}</p>
 						<p className='text-xs text-slate-400 font-light'>Артикул: {data.id}</p>

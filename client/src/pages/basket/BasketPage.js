@@ -4,31 +4,58 @@ import BasketSteps from '../../components/basketSteps/BasketSteps'
 import ModalComponent from '../../components/modalLoginRegistrat/ModalComponent'
 import { Context } from '../../App'
 import { observer } from "mobx-react-lite"
-import { fetchProductBasketNoUser } from '../../http/productsAPI'
+import { fetchProductNoUser } from '../../http/productsAPI'
+import { getAllBasketUser } from '../../http/basketAPI'
 
 const { Title } = Typography
 
 const BasketPage = observer(() => {
-	const { dataApp, dataProducts } = useContext(Context)
-	const [open, setOpen] = useState(false)
+	const { dataApp, dataProducts, user } = useContext(Context)
 	const [data, setData] = useState([])
 
 
 	useEffect(() => {
-		fetchProductBasketNoUser(dataApp.basketArr)
-			.then(data => {
-				// console.log('BasketPage data:', data)
-				if (!!data.length) {
-					setData(data)
-				} else {
-					message.warning('Корзина пуста')
-				}
-			})
-			.catch(data => {
+		if (!user.isAuth) {
+			if (dataApp.basketLength) {
+				fetchProductNoUser(dataApp.basketArr)
+					.then(data => {
+						if (!!data.length) {
+							setData(data)
+						} else {
+							message.warning('Корзина пуста')
+						}
+					})
+					.catch(() => {
+						setData([])
+						message.success('Корзина пуста')
+					})
+			} else {
 				setData([])
-				message.success('Корзина пуста')
-		})
-	}, [dataApp.basketLength, dataApp.basketArr])
+				message.success('В корзине пусто')
+			}
+		} else {
+			getAllBasketUser()
+				.then(data => {
+					console.log('-basket----data:', data)
+					if (data.length) {
+						// dataApp.setBasketLength(data.length)
+						const dataArr = []
+						data.forEach(el => {
+							dataArr.push({ ...el.product, countBasket: el.count })
+						})
+						// dataProducts.setDataBasket(dataArr)
+						setData(dataArr)
+					} else {
+						message.warning('Пока в корзине пусто')
+					}
+				}
+				)
+		}
+	}, [
+		dataApp.basketLength,
+		dataApp.basketArr,
+		dataProducts.dataBasket
+	])
 
 
 
@@ -36,36 +63,7 @@ const BasketPage = observer(() => {
 		<section className='container min-h-screen flex flex-col justify-evenly pb-10 pt-10 '>
 			<Title>Моя корзина</Title>
 
-			<BasketSteps data={data} />
-
-
-
-
-
-			<div>
-				<span>Рекомендуем войти в&nbsp;
-					<Button
-						type='text'
-						onClick={() => setOpen(true)}
-						className='p-0 text-[#1d4ed8]'
-					>
-						Личный кабинет
-					</Button>
-					&nbsp;или&nbsp;
-					<Button
-						type='text'
-						onClick={() => {
-							setOpen(true)
-						}}
-						className='p-0 text-[#1d4ed8]'
-					>
-						Зарегистрироваться
-					</Button>
-				</span>
-
-
-			</div>
-			<ModalComponent setOpen={setOpen} open={open} />
+			<BasketSteps data={data} setData={setData} />
 		</section>
 	)
 })

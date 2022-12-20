@@ -91,25 +91,53 @@ const useCookieList = value => {
 
 	const deleteOneList = (key, id) => {
 		let value_cookie = JSON.parse(getCookie(key))
-		const newArr = value_cookie.filter(el => el.id !== id)
-		let date = new Date()
-		date.setYear(date.getFullYear() + 1)
-		let json_str = JSON.stringify(newArr)
-		document.cookie = encodeURIComponent(key) + '=' + encodeURIComponent(json_str) + '; expires=' + date.toUTCString() + ';path' + '=' + '/'
-		dataApp.setBasketLength(newArr.length)
-		dataApp.setBasketArr(newArr)
+
+		if (key === 'BasketProduct') {
+			const newArr = value_cookie.filter(el => el.id !== id)
+			let date = new Date()
+			date.setYear(date.getFullYear() + 1)
+			let json_str = JSON.stringify(newArr)
+			document.cookie = encodeURIComponent(key) + '=' + encodeURIComponent(json_str) + '; expires=' + date.toUTCString() + ';path' + '=' + '/'
+			dataApp.setBasketLength(newArr.length)
+			dataApp.setBasketArr(newArr)
+
+		} else {
+			const newArr = value_cookie.filter(el => el !== id)
+			let date = new Date()
+			date.setYear(date.getFullYear() + 1)
+			let json_str = JSON.stringify(newArr)
+			document.cookie = encodeURIComponent(key) + '=' + encodeURIComponent(json_str) + '; expires=' + date.toUTCString() + ';path' + '=' + '/'
+			if (key === 'ComparisonList') {
+				dataApp.setVesyLength(newArr.length)
+				dataApp.setVesyArr(newArr)
+			} else {
+				dataApp.setLikedLength(newArr.length)
+				dataApp.setLikedArr(newArr)
+			}
+		}
 	}
+
+
 	const deleteAllList = (key, id) => {
 		let value_cookie = JSON.parse(getCookie(key))
 		value_cookie = []
-
-
 		let date = new Date()
 		date.setYear(date.getFullYear() + 1)
 		let json_str = JSON.stringify(value_cookie)
 		document.cookie = encodeURIComponent(key) + '=' + encodeURIComponent(json_str) + '; expires=' + date.toUTCString() + ';path' + '=' + '/'
-		dataApp.setBasketLength(value_cookie.length)
-		dataApp.setBasketArr(value_cookie)
+		if (key === 'BasketProduct') {
+			dataApp.setBasketLength(value_cookie.length)
+			dataApp.setBasketArr(value_cookie)
+		}
+		if (key === 'ComparisonList') {
+			dataApp.setVesyLength(value_cookie.length)
+			dataApp.setVesyArr(value_cookie)
+		}
+		if (key === 'LikedList') {
+			dataApp.setLikedLength(value_cookie.length)
+			dataApp.setLikedArr(value_cookie)
+		}
+
 	}
 
 	return { addList, minusList, deleteOneList, deleteAllList }

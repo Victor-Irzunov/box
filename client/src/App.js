@@ -21,6 +21,8 @@ import locale from 'antd/es/locale/ru_RU'
 import { categoryType } from './http/productsAPI'
 import UniversalPage from './pages/universal/UniversalPage'
 import BasketPage from './pages/basket/BasketPage'
+import ProductComparison from './pages/comparison/ProductComparison'
+import LikedList from './pages/likedList/LikedList'
 
 
 ConfigProvider.config({
@@ -91,6 +93,8 @@ const App = observer(() => {
                 <Route path='/uspeshno' element={<ResultComp />} />
                 <Route path='/super-adminka' element={<AdminPage />} />
                 <Route path='/korzina' element={<BasketPage />} />
+                <Route path='/cpisok-sravneniya' element={<ProductComparison />} />
+                <Route path='/spisok-ponravivshikhsya' element={<LikedList />} />
                 <Route
                   path='/:category/:type/:title'
                   element={<ProductPage />}

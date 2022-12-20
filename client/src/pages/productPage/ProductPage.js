@@ -10,17 +10,17 @@ import BadgeIconVesy from '../../components/badgeIcon/badgeIconVesy/BadgeIconVes
 import { ReactComponent as CardSvg } from '../../images/footer/bank_card.svg'
 import TabsPtoduct from '../../components/tabsProduct/TabsPtoduct'
 import PohozhieTovary from '../../components/pohozhieTovary/PohozhieTovary'
-import FormRadioColor from '../../components/forms/formFilter/FormRadioColor'
-import FormSizeBtn from '../../components/forms/formSizeBtn/FormSizeBtn'
 import Content from '../../components/content/Content'
 import { useCookieList } from '../../hooks/useCookieList'
 import { observer } from "mobx-react-lite"
 import { fetchOneProduct } from '../../http/productsAPI'
+import { addBasketUserOneProduct } from '../../http/basketAPI'
+import { isBuyThisProductUser } from '../../http/orderAPI'
 
 
 
 const ProductPage = observer(() => {
-	const { isAdmin, dataApp, dataProducts } = useContext(Context)
+	const { isAdmin, dataApp, dataProducts, user } = useContext(Context)
 	// const { id } = useParams()
 	let location = useLocation()
 	const navigate = useNavigate()
@@ -30,11 +30,13 @@ const ProductPage = observer(() => {
 	const [imgArr, setImgArr] = useState([])
 	const [review, setReview] = useState('')
 	const { addList } = useCookieList(null)
-
+	// const [isBuyProd, setIsBuyProd] = useState(false)
 
 	const page = location.state?.page
 	const id = location.state?.id
 	const loca = location.state?.location
+
+
 
 
 	useEffect(() => {
@@ -43,22 +45,28 @@ const ProductPage = observer(() => {
 				setProduct(data)
 				setEditH1(data.name)
 				dataProducts.setDataOneProduct(data)
-				console.log('--data one product:', data)
 				declOfNum(5, ['отзывов', 'отзыва', 'отзыв'])
 				setImgArr(fuImg(data))
 
 			})
 	}, [])
 
+	
+
 
 	const addBasket = id => {
-		if (!dataApp.isAuth) {
+		if (!user.isAuth) {
 			addList('BasketProduct', id)
+			message.success('Товар добавлен в корзину')
+		} else {
+			addBasketUserOneProduct(id)
+				.then(data => {
+					dataApp.setBasketLength(data.length)
+					dataProducts.setDataBasket(data)
+					message.success('Товар добавлен в корзину')
+				})
 		}
-		message.success('Товар в корзине')
 	}
-
-
 
 	function fuImg(data) {
 		const img = JSON.parse(data.img)
@@ -175,25 +183,24 @@ const ProductPage = observer(() => {
 						<div className='border-b pb-6 pt-6'>
 							<p className='text-base text-slate-700 font-light pb-2'>Цена:</p>
 							<div className='flex justify-between'>
-								<p className='text-3xl'>{product.price} BYN</p>
-								<p className='text-[#00FF26] bg-[#ff0084]  py-2 px-3'>скидка на бокс: {product.discountPercentage ? product.discountPercentage : ''}%</p>
+								<p className='text-3xl'>{product.price && (product.price).toFixed(2)} BYN</p>
+								{product.discountPercentage ? <p className='text-[#00FF26] bg-[#ff0084]  py-2 px-3'>скидка на бокс: {product.discountPercentage}%</p> : ''}
 							</div>
 							<div
-								className='flex justify-between mt-8'
+								className='flex justify-start mt-8'
 							>
 								<Button
 									type="primary"
 									shape="round"
 									size={'large'}
-									disabled={dataApp.basketArr.some(elem => elem.id === product.id)}
-									icon={dataApp.basketArr.some(elem => elem.id === product.id) && <CheckOutlined />}
 									block
+									disabled={(user.isAuth ? dataProducts.dataBasket.some(elem => elem.productId === product.id) : dataApp.basketArr.some(elem => elem.id === product.id))}
+									icon={(user.isAuth ? dataProducts.dataBasket.some(elem => elem.productId === product.id) : dataApp.basketArr.some(elem => elem.id === product.id)) && <CheckOutlined />}
 									className='mr-4'
 									onClick={() => addBasket(product.id)}
 								>
-									{dataApp.basketArr.some(elem => elem.id === product.id) ? 'В корзине' : 'В корзину'}
+									{(user.isAuth ? dataProducts.dataBasket.some(elem => elem.productId === product.id) : dataApp.basketArr.some(elem => elem.id === product.id)) ? 'В корзине' : 'В корзину'}
 								</Button>
-								<Button type="primary" ghost shape="round" size={'large'} block>Заказать в один клик</Button>
 							</div>
 						</div>
 						<div className='border-b pb-4 pt-2'>
@@ -221,7 +228,7 @@ const ProductPage = observer(() => {
 
 				<div className='mt-28' />
 				<PohozhieTovary id={id} />
-				<TabsPtoduct />
+				<TabsPtoduct product={product} />
 				<Content />
 			</section>
 		</>

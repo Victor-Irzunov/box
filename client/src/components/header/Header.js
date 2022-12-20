@@ -10,7 +10,7 @@ import { observer } from "mobx-react-lite"
 import { getAllBasketUser } from '../../http/basketAPI'
 
 const Header = observer(() => {
-  const { dataApp, dataProducts } = useContext(Context)
+  const { dataApp, user, dataProducts } = useContext(Context)
   const [isAffix, setIsAffix] = useState(false)
   // const [dataMenu, setDataMenu] = useState([])
 
@@ -44,7 +44,7 @@ const Header = observer(() => {
   }, [dataApp.likedLength])
 
   useEffect(() => {
-    if (!dataApp.isAuth) {
+    if (!user.isAuth) {
       let cookie = {}
       decodeURIComponent(document.cookie).split(';').forEach(el => {
         let [k, v] = el.split('=')
@@ -58,10 +58,10 @@ const Header = observer(() => {
     } else {
       getAllBasketUser()
         .then(data => {
-          console.log('data basket:', data)
+          dataApp.setBasketLength(data.length)
+          dataProducts.setDataBasket(data)
         })
     }
-
   }, [dataApp.basketLength])
 
   return (

@@ -6,31 +6,25 @@ import ResultComp from '../result/ResultComp'
 
 
 
-const BasketSteps = ({ data }) => {
+const BasketSteps = ({ data, setData }) => {
 	const [current, setCurrent] = useState(0)
-	// const [isDisabled, setIsDisabled] = useState(false)
-	// const [form] = Form.useForm()
 
-	// const onS = () => {
-	// 	form.submit()
-
-	// }
 	const next = () => {
 		setCurrent(current + 1)
-	};
+	}
 	const prev = () => {
 		setCurrent(current - 1)
-	};
+	}
 
 
 	const steps = [
 		{
 			title: 'Товары и услуги',
-			content: <BasketCard data={data}/>,
+			content: <BasketCard data={data} setData={setData} />,
 		},
 		{
 			title: 'Доставка и оплата',
-			content: <BasketDostavkaIOplata next={next} data={data}  />,
+			content: <BasketDostavkaIOplata next={next} data={data} />,
 			disabled: !data.length
 		},
 		{
@@ -41,8 +35,7 @@ const BasketSteps = ({ data }) => {
 	]
 
 	const onChange = (value) => {
-		// console.log('onChange:', value);
-		setCurrent(value);
+		setCurrent(value)
 	}
 
 	const items = steps.map((item) => ({
@@ -51,7 +44,7 @@ const BasketSteps = ({ data }) => {
 		disabled: item.disabled
 	}))
 
-	
+
 	return (
 		<>
 			<Steps

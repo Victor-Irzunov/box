@@ -12,9 +12,8 @@ export default function (req, res, next) {
         }
         const decoded = jwt.verify(token, process.env.SECRET_KEY)        //на валидность
         req.user = decoded
-
         next()
     } catch (e) {
-        res.status(401).json({message: "Ошибка регистрации!"})
+        res.status(401).json({ message: "Ошибка регистрации!" })
     }
 }

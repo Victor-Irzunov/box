@@ -29,9 +29,8 @@ class UserController {
 			if (!login || !password) return next(ApiError.badRequest('Некорректный email или password'))
 
 			const candidate = await models.User.findOne({ where: { login } })
-			
-			console.log('------candidate: ', candidate.dataValues.password)
-			if (candidate) {
+
+			if (candidate && candidate.dataValues.password) {
 				return next(ApiError.badRequest('Пользователь с таким email уже существует'))
 			}
 			if (role === 'ADMIN') {
@@ -42,12 +41,25 @@ class UserController {
 			const hashPassword = await bcrypt.hash(password, 5)
 			const activationLink = uuidv4()
 
-			const user = await models.User.create({ login, role, password: hashPassword, activationLink, isActivation: false })
+			let user
+
+			if (candidate && !candidate.dataValues.password) {
+				candidate.password = hashPassword;
+				candidate.activationLink = activationLink;
+				await candidate.ave();
+				user = await models.User.findOne({ where: { login } })
+				// user = await models.User.update(
+				// 	{ login, password: hashPassword, activationLink, isActivation: false },
+				// 	{ where: { id: candidate.dataValues.id }, }
+				// )
+			}
+			if (!candidate) {
+				user = await models.User.create({ login, role, password: hashPassword, activationLink, isActivation: false })
+			}
+			// const user = await models.User.create({ login, role, password: hashPassword, activationLink, isActivation: false })
 			const token = generateJwt(user.id, user.login, user.role, user.isActivation)
 
-			
 			await mailService.sendActivationMail(login, `${process.env.API_URL}/api/user/activate/${activationLink}`)
-
 			await models.Basket.create({ userId: user.id })
 
 			return res.json({ token })
@@ -80,7 +92,7 @@ class UserController {
 
 	async check(req, res, next) {
 		try {
-			const user = await models.User.findOne({ where: { id: req.user.id} })
+			const user = await models.User.findOne({ where: { id: req.user.id } })
 			const token = generateJwt(req.user.id, req.user.login, req.user.role, user.isActivation)
 			return res.json({ token })
 		} catch (err) {

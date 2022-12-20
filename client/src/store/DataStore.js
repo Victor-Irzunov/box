@@ -13,6 +13,7 @@ export default class DataStore {
 		this._basketArr = []
 		this._isBtnFormOtzyvy = false
 		this._isBtnFormQuestion = false
+		this._isBuyProd = false
 
 
 		makeAutoObservable(this)
@@ -47,6 +48,9 @@ export default class DataStore {
 	setIsBtnFormQuestion(data) {
 		this._isBtnFormQuestion = data
 	}
+	setIsBuyProd(data) {
+		this._isBuyProd = data
+	}
 
 
 	get data() {
@@ -78,6 +82,9 @@ export default class DataStore {
 	}
 	get isBtnFormQuestion() {
 		return this._isBtnFormQuestion
+	}
+	get isBuyProd() {
+		return this._isBuyProd
 	}
 
 }

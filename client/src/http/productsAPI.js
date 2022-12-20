@@ -25,7 +25,7 @@ export const fetchOneProduct = async (id) => {
 }
 
 
-export const fetchProductBasketNoUser = async (arrId) => {
+export const fetchProductNoUser = async (arrId) => {
 	const { data } = await $host.get('api/product/basket/nouser', { params: { arr: arrId } })
 	return data
 }

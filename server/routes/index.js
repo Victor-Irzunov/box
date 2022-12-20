@@ -9,6 +9,7 @@ import infoTitleRouter from "./infoTitleRouter.js"
 import categoryTypeRouter from "./categoryTypeRouter.js"
 import basketRouter from "./basketRouter.js"
 import orderRouter from "./orderRouter.js"
+import otzyvyRouter from "./otzyvyRatingRouter.js"
 
 
 
@@ -26,6 +27,7 @@ router.use('/infotitle', infoTitleRouter)
 
 router.use('/basket', basketRouter)
 router.use('/order', orderRouter)
+router.use('/otzyvy', otzyvyRouter)
 
 
 
