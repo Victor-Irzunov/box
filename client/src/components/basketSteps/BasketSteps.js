@@ -3,11 +3,13 @@ import React, { useState } from 'react'
 import BasketCard from '../basketCard/BasketCard'
 import BasketDostavkaIOplata from '../basketDostavkaIOplata/BasketDostavkaIOplata'
 import ResultComp from '../result/ResultComp'
+import { useScreens } from '../../Constants/constants'
 
 
 
 const BasketSteps = ({ data, setData }) => {
 	const [current, setCurrent] = useState(0)
+	const screens = useScreens()
 
 	const next = () => {
 		setCurrent(current + 1)
@@ -76,7 +78,7 @@ const BasketSteps = ({ data, setData }) => {
 				{current < 1 && (
 					<Button
 						type="primary"
-						size='large'
+						size={screens.xs ? 'middle': 'large'}
 						className={`${!data.length && 'hidden'}`}
 						onClick={() => {
 							next()

@@ -1,28 +1,20 @@
 import { Divider } from 'antd'
 import React, { useState, useEffect } from 'react'
 import CarouselCard from '../carouselCard/CarouselCard'
-import axios from 'axios'
 import { fetchProductsPohozhie } from '../../http/productsAPI'
 
 
-const PohozhieTovary = ({ id }) => {
-	const [product, setProduct] = useState([])
-	const [open, setOpen] = useState(false)
-	const showDrawer = () => {
-		setOpen(true)
-	}
+const PohozhieTovary = ({ product }) => {
+	const [productData, setProductData] = useState([])
 
-// console.log('💊-------💊------💊id: ', id)
 	useEffect(() => {
-		// axios.get(`https://dummyjson.com/products?limit=10`)
-		// 	.then(data => {
-		// 		setProduct(data.data.products)
-		// 	})
-		fetchProductsPohozhie(id)
-			.then(data => {
-				// console.log('data-data: ', data)
-				setProduct(data)
-			})
+		if (Object.keys(product).length) {
+			fetchProductsPohozhie({groupId: product.groupId, id: product.id })
+				.then(data => {
+					console.log('data-data: ', data)
+					setProductData(data)
+				})
+		}
 	}, [])
 
 
@@ -35,7 +27,7 @@ const PohozhieTovary = ({ id }) => {
 			>
 				Похожие товары
 			</Divider>
-			<CarouselCard product={product} />
+			<CarouselCard product={productData} />
 		</div>
 	)
 }

@@ -43,7 +43,7 @@ class BasketController {
 					]
 				}
 			})
-			console.log('💊💊💊--allBasketUser:', allBasketUser)
+			// console.log('💊💊💊--allBasketUser:', allBasketUser)
 			return res.json(allBasketUser)
 		}
 		catch (e) {

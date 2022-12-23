@@ -3,9 +3,11 @@ import { Row, Col, Divider } from 'antd'
 import FormType from '../../components/formsAdmin/formType/FormType'
 import FormInfo from '../../components/formsAdmin/formInfo/FormInfo'
 import FormCategory from '../../components/formsAdmin/formCategory/FormCategory'
-import FormProduct from '../../components/formsAdmin/formProduct/FormProduct'
+import FormProduct from '../../components/formsAdmin/formCreateProduct/FormProduct'
 import FormInfoTitle from '../../components/formsAdmin/formInfoTitle/FormInfoTitle'
 import Сharacteristic from '../../components/formsAdmin/formInfo/Сharacteristic'
+import GetProductChange from '../../components/formsAdmin/formChangeProduct/GetProductChange'
+import FormDeleteProduct from '../../components/formsAdmin/formDeleteProduct/FormDeleteProduct'
 
 
 const AdminPage = () => {
@@ -32,7 +34,7 @@ const AdminPage = () => {
 
 
 				<Row gutter={[10, 10]} className=''>
-					
+
 					<Col xl={24}>
 						{/* <p className='mb-4 text-base'>Добавить характеристики</p> */}
 						<Сharacteristic />
@@ -46,8 +48,20 @@ const AdminPage = () => {
 						<p className='text-xl mb-10'>Добавить товар</p>
 						<FormProduct />
 					</Col>
-					<Col xl={24}>
+				</Row>
+				<Divider />
 
+				<Row>
+					<Col xl={24}>
+						<p className='text-xl mb-10'>Изменить товар</p>
+						<GetProductChange />
+					</Col>
+				</Row>
+				<Divider />
+				<Row>
+					<Col xl={24}>
+						<p className='text-xl mb-10'>Удалить товар</p>
+						<FormDeleteProduct />
 					</Col>
 				</Row>
 			</div>

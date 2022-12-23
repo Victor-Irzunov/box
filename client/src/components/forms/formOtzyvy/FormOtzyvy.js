@@ -1,11 +1,11 @@
-import { Button, Rate, Form, Input, Checkbox } from 'antd'
+import { Button, Rate, Form, Input, Checkbox, message } from 'antd'
 import React, { useState } from 'react'
 import { otzyvRatingUser } from '../../../http/otzyvyAPI'
 const { TextArea } = Input
 const desc = ['ужасно', 'плохо', 'нормально', 'хорошо', 'замечательно']
 
 
-const FormOtzyvy = ({product}) => {
+const FormOtzyvy = ({product, setIsOtzyvUserProd, setIsBtnFormOtzyvy}) => {
 	const [form] = Form.useForm()
 	const [isCheck, setIsCheck] = useState(false)
 
@@ -27,7 +27,11 @@ const FormOtzyvy = ({product}) => {
 
 		otzyvRatingUser(formData)
 			.then(data => {
-			console.log('res data:', data)
+				console.log('res data:', data)
+				form.resetFields()
+				setIsOtzyvUserProd(true)
+				setIsBtnFormOtzyvy(false)
+				message.success(data.message)
 		})
 	}
 	const onFinishFailed = (errorInfo) => {
@@ -53,7 +57,7 @@ const FormOtzyvy = ({product}) => {
 				autoComplete="off"
 			>
 				<Form.Item
-					label="Имя"
+					label="Имя Фамилия"
 					name="name"
 					rules={[
 						{

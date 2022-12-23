@@ -19,11 +19,19 @@ class ProductController {
 				name,
 				price,
 				type,
-				newProd
+				newProd,
+				groupCreate,
+				group
 			} = req.body
 
-
+			console.log('💊💊💊req.body: ', req.body)
 			const { img, imgMini } = req.files
+
+			let groupData = 0
+			if (groupCreate === "1") {
+				const group = await models.Group.create()
+				groupData = group.id
+			}
 
 			const fileName = []
 			if (img) {
@@ -54,6 +62,7 @@ class ProductController {
 				typeId: type,
 				new: newProd,
 				categoryId: category,
+				groupId: groupData || +group || null
 			})
 			if (info) {
 				let infos = JSON.parse(info)
@@ -70,7 +79,8 @@ class ProductController {
 			await models.CategoryProduct.create({ categoryId: category, productId: product.id })
 			await models.TypeProduct.create({ typeId: type, productId: product.id })
 
-			return res.status(201).json({ message: `Продукт добавлен` })
+
+			return res.status(201).json(product)
 		}
 		catch (e) {
 			console.log('🦺-------err: ', e.message)
@@ -85,11 +95,7 @@ class ProductController {
 			page = page || 1
 			limit = Number(limit) || 10
 			let offset = page * limit - limit
-
-
-
 			let data
-
 			if (categoryId && !typeId && !priceFrom && !priceBefore) {
 				// console.log('💊💊💊-💊💊💊💊-categoryId && !typeId && !priceFrom && !priceBefore-💊💊💊💊-💊💊💊')
 				data = await models.Product.findAndCountAll({
@@ -215,7 +221,15 @@ class ProductController {
 					{
 						model: models.Type
 					},
-					{ model: models.ProductInfo, as: 'info' }
+					{
+						model: models.ProductInfo, as: 'info'
+					},
+					{
+						model: models.Feedback,
+						include: {
+							model: models.Rating
+						}
+					}
 				],
 			})
 			return res.status(200).json(data)
@@ -266,13 +280,14 @@ class ProductController {
 
 	async getPohozhie(req, res, next) {
 		try {
-			const { id } = req.params
-			// console.log('💊---------id:', id)
+			const { groupId, id } = req.query
+			// console.log('💊💊💊---------req.query:', req.query)
 			const data = await models.Product.findAll({
 				where: {
 					id: {
 						[Op.notIn]: [id]
-					}
+					},
+					groupId
 				},
 				include: [
 					{
@@ -280,11 +295,9 @@ class ProductController {
 					},
 					{
 						model: models.Type
-					}
-				],
+					},
+				]
 			})
-
-
 
 			return res.status(200).json(data)
 		} catch (e) {
@@ -301,6 +314,136 @@ class ProductController {
 			return res.json({ message: `Продукт удален` })
 		}
 		catch (e) {
+			next(ApiError.internal(e.message))
+		}
+	}
+
+	async getNewProduct(req, res, next) {
+		try {
+			const data = await models.Product.findAll(
+				{
+					limit: 5,
+					order: [['createdAt', 'DESC']],
+					include: [
+						{
+							model: models.Category,
+						},
+						{
+							model: models.Type
+						},
+					]
+				}
+			)
+			return res.json(data)
+		}
+		catch (e) {
+			next(ApiError.internal(e.message))
+		}
+	}
+
+	async updateOneProduct(req, res, next) {
+		try {
+			const { id } = req.params
+			let {
+				info,
+				category,
+				count,
+				description,
+				discountPercentage,
+				name,
+				price,
+				type,
+				newProd,
+				groupCreate,
+				group
+			} = req.body
+			// console.log('💊req.files.img:', req.files.img)
+
+			let img, imgMini
+			if (req.files) {
+				if (Array.isArray(req.files.img)) {
+					img = req.files.img
+					imgMini = req.files.imgMini
+				} else {
+					img = [req.files.img]
+					imgMini = [req.files.imgMini]
+				}
+			}
+
+
+			let groupData = null
+			if (groupCreate === "1") {
+				const groupBd = await models.Group.create()
+				groupData = groupBd.id
+				group = null
+			}
+			if (groupCreate === "0") {
+				group = null
+			}
+
+			const fileName = []
+			if (img) {
+				const __dirname = decodeURI(new URL('.', import.meta.url).pathname)
+				for (let k of img) {
+					let name = uuidv4() + ".webp"
+					fileName.push({ image: name })
+					k.mv(path.resolve(__dirname, '..', 'static', name))
+				}
+			}
+			const fileNameMini = []
+			if (imgMini) {
+				const __dirname = decodeURI(new URL('.', import.meta.url).pathname)
+				for (let k of imgMini) {
+					let name = uuidv4() + ".webp"
+					fileNameMini.push({ image: name })
+					k.mv(path.resolve(__dirname, '..', 'static', name))
+				}
+			}
+
+			const newProduct = await models.Product.findOne({ where: { id } })
+			if (fileName.length) {
+				newProduct.set({
+					price,
+					name,
+					description,
+					discountPercentage,
+					count,
+					img: JSON.stringify(fileName),
+					imgMini: JSON.stringify(fileNameMini),
+					typeId: type,
+					new: newProd,
+					categoryId: category,
+					groupId: groupData || +group || null
+				})
+			} else {
+				newProduct.set({
+					price,
+					name,
+					description,
+					discountPercentage,
+					count,
+					typeId: type,
+					new: newProd,
+					categoryId: category,
+					groupId: groupData || +group || null
+				})
+			}
+
+			newProduct.save()
+
+			let infos = JSON.parse(info)
+			await models.ProductInfo.bulkCreate(
+				infos,
+				{
+					updateOnDuplicate: ["description"],
+				}
+			)
+			return res.json({ message: `Продукт изменён` })
+
+		}
+		catch (e) {
+			console.log('🦺-------err: ', e.message)
+			console.log('🦺-------e: ', e)
 			next(ApiError.internal(e.message))
 		}
 	}

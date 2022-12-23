@@ -16,33 +16,35 @@ const FormSubscripMain = () => {
 	return (
 		<Form
 			name="basic112"
-			layout="inline"
+			// layout="inline"
 			onFinish={onFinish}
 			onFinishFailed={onFinishFailed}
 		>
-			<Form.Item
-				name="username"
-			>
-				<Input placeholder='Ваше имя' />
-			</Form.Item>
+			<div className='xs:flex xx:flex'>
+				<Form.Item
+					name="username"
+				>
+					<Input placeholder='Ваше имя' />
+				</Form.Item>
 
-			<Form.Item
-				name="email"
-				rules={[
-					{
-						required: true,
-						message: 'Введите email!',
-					},
-				]}
-			>
-				<Input placeholder='Ваш email' />
-			</Form.Item>
-			<Form.Item
-			>
-				<Button disabled={!isCheck} htmlType="submit">
-					Подпишитесь
-				</Button>
-			</Form.Item>
+				<Form.Item
+					name="email"
+					rules={[
+						{
+							required: true,
+							message: 'Введите email!',
+						},
+					]}
+				>
+					<Input placeholder='Ваш email' />
+				</Form.Item>
+				<Form.Item
+				>
+					<Button disabled={!isCheck} htmlType="submit">
+						Подпишитесь
+					</Button>
+				</Form.Item>
+			</div>
 			<br />
 			<br />
 			<Form.Item
@@ -56,6 +58,6 @@ const FormSubscripMain = () => {
 
 
 		</Form >
-	);
-};
+	)
+}
 export default FormSubscripMain

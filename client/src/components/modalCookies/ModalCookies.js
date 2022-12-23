@@ -5,11 +5,12 @@ import {
 } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 import CyrillicToTranslit from 'cyrillic-to-translit-js'
-
+import { useScreens } from '../../Constants/constants'
 
 
 const ModalCookies = ({ setIsModalOpen, isModalOpen, data, btnText }) => {
 	const cyrillicToTranslit = new CyrillicToTranslit()
+	const screens = useScreens()
 	const handleOk = () => {
 		setIsModalOpen(false)
 	}
@@ -32,7 +33,7 @@ const ModalCookies = ({ setIsModalOpen, isModalOpen, data, btnText }) => {
 						onClick={handleCancel}
 						shape="round"
 						icon={<ArrowLeftOutlined />}
-						size='large'
+						size={screens.xs ? 'middle': 'large'}
 					>
 						{btnText ?'Продолжить':'Продолжить покупки'}
 					</Button>
@@ -41,7 +42,7 @@ const ModalCookies = ({ setIsModalOpen, isModalOpen, data, btnText }) => {
 							onClick={handleOk}
 							shape="round"
 							type='primary'
-							size='large'
+							size={screens.xs ? 'middle': 'large'}
 						>
 							Оформить заказ
 						</Button>
@@ -51,7 +52,7 @@ const ModalCookies = ({ setIsModalOpen, isModalOpen, data, btnText }) => {
 		>
 			<div className='flex justify-between'>
 
-				<div className='flex'>
+				<div className='flex border-r'>
 					<Image
 						preview={false}
 						width={100}
@@ -61,7 +62,7 @@ const ModalCookies = ({ setIsModalOpen, isModalOpen, data, btnText }) => {
 						<p className='text-xs text-slate-400 font-light'>Артикул: {data.id}</p>
 					</div>
 				</div>
-				<p className='text-xl'>{data.price} BYN</p>
+				<p className='text-xl xs:text-sm ml-2 xs:text-center'>{data.price} <span className='xs:text-base xx:text-base'>BYN</span></p>
 			</div>
 
 		</Modal>

@@ -9,8 +9,8 @@ import { Context } from '../../../../App'
 import ModalComponent from '../../../modalLoginRegistrat/ModalComponent'
 import { Link } from 'react-router-dom'
 import { observer } from "mobx-react-lite"
+import { useScreens } from '../../../../Constants/constants'
 
-// const text = <span>Меню личного кабинета</span>;
 const Content = () => {
 	const { user } = useContext(Context)
 	const exit = () => {
@@ -18,6 +18,7 @@ const Content = () => {
 		user.setIsAuth(false)
 		user.setUser(false)
 	}
+
 	return (
 		<div>
 			<p className='mb-2'>
@@ -50,6 +51,7 @@ const { Paragraph } = Typography
 const HeaderTimeTel = observer(() => {
 	const { user } = useContext(Context)
 	const [open, setOpen] = useState(false)
+	const screens = useScreens()
 
 
 
@@ -59,74 +61,71 @@ const HeaderTimeTel = observer(() => {
 	return (
 
 		<div
-			className='border-l pl-2 flex justify-between items-center w-full'
+			className={`border-l pl-2 flex justify-between items-center w-full`}
 		>
-			<div className='flex items-center'>
-				<HistoryOutlined className='text-base mr-3' />
-				<Space
-					direction='vertical'
-					size={[1, 0]}
-					align="center"
-				>
-					<Paragraph
-						editable={{
-							triggerType: 'text'
-						}}
-					>
-						08:30-20:00 пн-пт
-					</Paragraph>
-					<Paragraph
-						editable={{
-							triggerType: 'text'
-						}}
-					>
-						10:00-19:00 сб-вс
-					</Paragraph>
-				</Space>
-			</div>
-
-			<div
-				className='ml-5 mr-5'
-			>
-				{/* <Typography.Link> */}
-				<Button type='link'
-					className=''
-					icon={<PhoneOutlined className='text-base' />} href='tel:80290000000'>
-					+375 29 000-00-00
-				</Button>
-				{/* </Typography.Link> */}
-			</div>
-
-			<div>
-				{
-					user.isAuth ?
-						<Popover
-							placement="bottomRight"
-							// title={text}
-							content={Content}
-							trigger="click"
+			
+				<div className={`flex items-center`}>
+					<HistoryOutlined className='text-base mr-3' />
+					<div>
+						<Paragraph
+							editable={{
+								triggerType: 'text'
+							}}
 						>
-							<Button
-								className='text-base hover:text-blue-500'
-								type='text'
-								icon={<UserOutlined />}
-							>
-								{'Привет!'}{' '}
-								{user.userData.role === 'ADMIN' && 'Админ'}
-							</Button>
-						</Popover>
-						:
-						<Button
-							className='text-base hover:text-blue-500'
-							type='text'
-							icon={<UserOutlined />}
-							onClick={showModal}
+							08:30-20:00 пн-пт
+						</Paragraph>
+						<Paragraph
+							editable={{
+								triggerType: 'text'
+							}}
 						>
-							{'Личный кабинет'}
+							10:00-19:00 сб-вс
+						</Paragraph>
+					</div>
+				</div>
+
+
+			
+					<div
+						className='ml-5 mr-5'
+					>
+						<Button type='link'
+							className=''
+							icon={<PhoneOutlined className='text-base' />} href='tel:80290000000'>
+							+375 29 000-00-00
 						</Button>
-				}
-			</div>
+					</div>
 
+					<div>
+						{
+							user.isAuth ?
+								<Popover
+									placement="bottomRight"
+									content={Content}
+									trigger="click"
+								>
+									<Button
+										className='text-base hover:text-blue-500'
+										type='text'
+										icon={<UserOutlined />}
+									>
+										{'Привет!'}{' '}
+										{user.userData.role === 'ADMIN' && 'Админ'}
+									</Button>
+								</Popover>
+								:
+								<Button
+									className='text-base hover:text-blue-500'
+									type='text'
+									icon={<UserOutlined />}
+									onClick={showModal}
+								>
+									{'Личный кабинет'}
+								</Button>
+						}
+					</div>
+			
+	
 			<ModalComponent open={open} setOpen={setOpen} />
 		</div>
 	)

@@ -55,8 +55,9 @@ img{
 }
 
 .active{
-	color: #00FF26;
+	color: #00FF26 !important;
 }
+
 
 
 
@@ -140,4 +141,29 @@ img{
 
 .ant-collapse-content > .ant-collapse-content-box{
 padding-left: 0;
+}
+
+.ant-menu-submenu-inline > .ant-menu-inline{
+	background: transparent;
+	color: #fff;
+}
+.ant-menu-inline .ant-menu-title-content a{
+	color: #fff;
+}
+.ant-menu-submenu-arrow{
+	color: #fff;
+}
+.ant-menu-submenu:hover>.ant-menu-submenu-title>.ant-menu-submenu-arrow, .ant-menu-submenu:hover>.ant-menu-submenu-title>.ant-menu-submenu-expand-icon{
+	color: #fff;
+}
+.ant-menu-inline{
+border-right: none;
+}
+
+
+.ant-menu-submenu-title{
+	border-bottom: 1px solid #dddddd40;
+}
+.ant-menu-item-only-child{
+	border-bottom: 1px solid #dddddd40;
 }

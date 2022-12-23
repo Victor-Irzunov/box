@@ -6,7 +6,9 @@ import checkRole from '../middleware/checkRoleMiddleware.js'
 
 router.post('/', checkRole('ADMIN'), productController.create)
 router.get('/', productController.getAll)
-router.get('/pohozhie/:id', productController.getPohozhie)
+router.put('/:id',checkRole('ADMIN'), productController.updateOneProduct)
+router.get('/new', productController.getNewProduct)
+router.get('/pohozhie', productController.getPohozhie)
 router.get('/:id', productController.getOne)
 router.get('/basket/nouser', productController.getAllProductInBasketNoUser)
 router.delete('/:id', checkRole('ADMIN'), productController.deleteOne)

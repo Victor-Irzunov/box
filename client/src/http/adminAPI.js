@@ -6,7 +6,14 @@ export const createProduct = async (product) => {
 	return data
 }
 
-
+export const updateOneProduct = async (id, product) => {
+	const { data } = await $authHost.put('api/product/' + id, product)
+	return data
+}
+export const deleteOneProduct = async (id) => {
+	const { data } = await $authHost.delete('api/product/' + id)
+	return data
+}
 
 
 export const createType = async type => {

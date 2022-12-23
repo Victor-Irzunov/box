@@ -10,25 +10,32 @@ class OtzyvyRatingController {
 			const { name, contact, description, plus, minus, rate, productId } = req.body
 			const userId = req.user.id
 			// console.log('💊---------req.body:', req.body)
-			await models.Feedback.create({ name, contact, description, plus, minus, userId, productId })
-			await models.Rating.create({ rate, userId, productId })
+			const isOtzyv = await models.Feedback.findOne({ where: { userId, productId } })
+			if (!isOtzyv) {
+				const rating = await models.Rating.create({ rate, userId, productId })
+				await models.Feedback.create({
+					name, contact, description,
+					plus, minus, userId, productId, ratingId: rating.id
+				})
+				const totalRating = await models.Rating.findAndCountAll({
+					attributes: [
+						'productId',
+						[sequelize.fn('sum', sequelize.col('rate')), 'totalRating'],
+					],
+					group: ['productId'],
+					raw: true,
+					where: {
+						'productId': productId
+					}
+				})
+				const product = await models.Product.findOne({ where: { id: productId } })
+				product.rating = totalRating.rows[0].totalRating / totalRating.count[0].count
+				await product.save()
 
-			const totalRating = await models.Rating.findAndCountAll({
-				attributes: [
-					'productId',
-					[sequelize.fn('sum', sequelize.col('rate')), 'totalRating'],
-				],
-				group: ['productId'],
-				raw: true,
-				where: {
-					'productId': productId
-				}
-			})
-			const product = await models.Product.findOne({ where: { id: productId } })
-			product.rating = totalRating.rows[0].totalRating / totalRating.count[0].count
-			await product.save()
-
-			return res.status(201).json({ message: `Отзыв и рейтинг продукта принят, будет опубликован после проверки модератора` })
+				return res.status(201).json({ message: `Отзыв и рейтинг продукта принят, будет опубликован после проверки модератора` })
+			} else {
+				return res.status(201).json({ message: `Вы уже делали оценку данного товара.` })
+			}
 		}
 		catch (e) {
 			console.log('🦺-------err: ', e.message)

@@ -5,13 +5,13 @@ import { NavLink, Link } from 'react-router-dom'
 import logo from '../../../images/logo/logo3.webp'
 import { Context } from '../../../App'
 // import { items } from '../../../content/Content'
-// import { useScreens } from '../../../Constants/constants'
+import { useScreens } from '../../../Constants/constants'
 
 
 const HeaderMenu = () => {
 	const { dataApp } = useContext(Context)
 	const [current, setCurrent] = useState('main')
-	// const screens = useScreens()
+	const screens = useScreens()
 	const onClick = e => { setCurrent(e.key) }
 
 
@@ -53,7 +53,7 @@ const HeaderMenu = () => {
 				onClick={onClick}
 				selectedKeys={[current]}
 				mode="horizontal"
-				// triggerSubMenuAction='click'
+				
 				items={items}
 				style={{
 					background: 'transparent',

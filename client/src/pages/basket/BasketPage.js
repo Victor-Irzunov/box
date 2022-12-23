@@ -1,17 +1,19 @@
 import React, { useState, useContext, useEffect } from 'react'
-import { Button, Typography, message } from 'antd'
+import { Button, Typography, message, Tag } from 'antd'
 import BasketSteps from '../../components/basketSteps/BasketSteps'
 import ModalComponent from '../../components/modalLoginRegistrat/ModalComponent'
 import { Context } from '../../App'
 import { observer } from "mobx-react-lite"
 import { fetchProductNoUser } from '../../http/productsAPI'
 import { getAllBasketUser } from '../../http/basketAPI'
+import { useScreens } from '../../Constants/constants'
 
 const { Title } = Typography
 
 const BasketPage = observer(() => {
 	const { dataApp, dataProducts, user } = useContext(Context)
 	const [data, setData] = useState([])
+	const screens = useScreens()
 
 
 	useEffect(() => {
@@ -62,6 +64,15 @@ const BasketPage = observer(() => {
 	return (
 		<section className='container min-h-screen flex flex-col justify-evenly pb-10 pt-10 '>
 			<Title>Моя корзина</Title>
+			<div className=''>
+			{Object.entries(screens)
+				.filter((screen) => !!screen[1])
+				.map((screen) => (
+					<Tag color="blue" key={screen[0]}>
+						{screen[0]}
+					</Tag>
+				))}
+				</div>
 
 			<BasketSteps data={data} setData={setData} />
 		</section>

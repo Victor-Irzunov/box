@@ -5,9 +5,8 @@ const { Paragraph } = Typography
 
 function BrandMain() {
 	return (
-		<div className='pt-12 pb-12'>
+		<div className='pt-12 pb-12 xs:pt-0 xs:pb-0'>
 			<Typography.Title
-				//   editable
 				level={2}
 				style={{
 					margin: 0,

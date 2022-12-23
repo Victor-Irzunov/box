@@ -20,6 +20,7 @@ import { observer } from 'mobx-react-lite'
 import { Context } from '../../App'
 import { orderUser } from '../../http/orderAPI'
 import { deleteAllProductBasketUser } from '../../http/basketAPI'
+import { useScreens } from '../../Constants/constants'
 
 const { Option } = Select
 const { TextArea } = Input
@@ -33,25 +34,17 @@ const disabledDate = (current) => {
 
 
 const FormBasketOrder = ({ next }) => {
-
-	const { dataProducts, user } = useContext(Context)
+	const screens = useScreens()
+	const { dataProducts, user, dataApp } = useContext(Context)
 	const [autoCompleteResult, setAutoCompleteResult] = useState([])
 	const [tel, setTel] = useState('')
 	const [value, setValue] = useState('kurer_minsk')
 	const [isCheck, setIsCheck] = useState(false)
 	const { deleteAllList } = useCookieList(null)
 	const [form] = Form.useForm()
-	// console.log('dataProducts.sendData: ', [...dataProducts.sendData])
-	// console.log('userData:', user.userData)
 
 	const onFinish = (values) => {
 		console.log('Success:', values)
-		// setTimeout(() => {
-		// next()
-		// message.success('Заказ успешно оформлен!')
-		// deleteAllList('BasketProduct', null)
-		// }, 2000)
-
 
 		const formData = new FormData()
 		formData.append('city', values.address_city)
@@ -79,6 +72,7 @@ const FormBasketOrder = ({ next }) => {
 					deleteAllProductBasketUser(user.userData.id)
 						.then(data => {
 							console.log('--->>>>>data:', data)
+							dataApp.setBasketLength(0)
 						})
 				}
 				next()
@@ -104,7 +98,6 @@ const FormBasketOrder = ({ next }) => {
 		var { value } = newState
 		var selection = newState.selection
 		var cursorPosition = selection ? selection.start : null
-		// keep minus if entered by user
 		if (value.endsWith('-') && userInput !== '-' && !tel.endsWith('-')) {
 			if (cursorPosition === value.length) {
 				cursorPosition--
@@ -137,7 +130,7 @@ const FormBasketOrder = ({ next }) => {
 			name="order"
 			form={form}
 			labelCol={{
-				span: 8,
+				span: 6,
 			}}
 			wrapperCol={{
 				span: 16,
@@ -158,7 +151,6 @@ const FormBasketOrder = ({ next }) => {
 			>
 				Заказчик
 			</Divider>
-
 
 			<Form.Item
 				label="Ваше имя"
@@ -198,7 +190,6 @@ const FormBasketOrder = ({ next }) => {
 				/>
 			</Form.Item>
 
-
 			<Form.Item
 				label="Почта"
 				name="login"
@@ -235,7 +226,7 @@ const FormBasketOrder = ({ next }) => {
 				name="dostavka"
 				rules={[{ required: true, message: 'Выберите регион для доставки!' }]}
 				wrapperCol={{
-					offset: 8,
+					offset: 2,
 					span: 16,
 				}}
 			>
@@ -244,31 +235,6 @@ const FormBasketOrder = ({ next }) => {
 					<Radio value="kurer_belarus">Курьером по Беларуси (+15 BYN)</Radio>
 				</Radio.Group>
 			</Form.Item>
-
-
-			{/* {value !== 'kurer_belarus' ?
-				<Form.Item
-					name="address_city"
-					label="Город"
-				>
-					<Select>
-						<Option value="minsk">Минск</Option>
-					</Select>
-				</Form.Item>
-				:
-				<Form.Item
-					name="address_city"
-					label="Город"
-					rules={[
-						{
-							required: true,
-							message: 'Пожалуйста введите Ваш город!',
-						},
-					]}
-				>
-					<Input />
-				</Form.Item>
-			} */}
 
 			<Form.Item
 				name="address_city"
@@ -283,11 +249,6 @@ const FormBasketOrder = ({ next }) => {
 				<Input />
 			</Form.Item>
 
-
-
-
-
-
 			<Form.Item
 				label="Адрес"
 				name="address_street"
@@ -300,7 +261,6 @@ const FormBasketOrder = ({ next }) => {
 			>
 				<Input />
 			</Form.Item>
-
 
 			{value === 'kurer_belarus' &&
 				<>
@@ -329,9 +289,7 @@ const FormBasketOrder = ({ next }) => {
 						<Input />
 					</Form.Item>
 				</>
-
 			}
-
 
 			<Form.Item
 				label="Выберите число"
@@ -369,12 +327,11 @@ const FormBasketOrder = ({ next }) => {
 				Оплата
 			</Divider>
 
-
 			<Form.Item
 				name="oplata"
 				rules={[{ required: true, message: 'Выберите форму оплаты!' }]}
 				wrapperCol={{
-					offset: 8,
+					offset: 2,
 					span: 16,
 				}}
 			>
@@ -399,13 +356,10 @@ const FormBasketOrder = ({ next }) => {
 				/>
 			</Form.Item>
 
-
-
-
 			<Form.Item
 				name="check"
 				wrapperCol={{
-					offset: 8,
+					offset: 2,
 					span: 16,
 				}}
 			>
@@ -414,14 +368,14 @@ const FormBasketOrder = ({ next }) => {
 
 			<Form.Item
 				wrapperCol={{
-					offset: 18,
+					offset: 14,
 					// span: 8,
 				}}
 				className='mt-8'
 			>
 				<Button
 					type="primary"
-					size='large'
+					size={screens.xs ? 'middle': 'large'}
 					htmlType="submit"
 					disabled={!isCheck}
 				>

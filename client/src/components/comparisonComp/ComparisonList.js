@@ -30,7 +30,7 @@ const { Paragraph, Text } = Typography
 const BtnComp = observer(({ el }) => {
 	const { dataApp, user, dataProducts } = useContext(Context)
 	const [dataModal, setDataModal] = useState({})
-	const { addList, deleteOneList } = useCookieList(null)
+	const { addList } = useCookieList(null)
 	const [isModalOpen, setIsModalOpen] = useState(false)
 	function addBasket(el) {
 		if (!user.isAuth) {

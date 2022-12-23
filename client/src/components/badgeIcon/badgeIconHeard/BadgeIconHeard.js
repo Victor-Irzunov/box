@@ -9,10 +9,10 @@ import { Context } from '../../../App'
 import { observer } from "mobx-react-lite"
 import CyrillicToTranslit from 'cyrillic-to-translit-js'
 
-const BadgeIconHeard = observer(({ cardComp, header, productPage, addToLiked, id }) => {
+const BadgeIconHeard = observer(({ cardComp, header, productPage, addToLiked, id, mobil }) => {
 	const { dataApp } = useContext(Context)
 	const cyrillicToTranslit = new CyrillicToTranslit()
-	
+
 	return (
 		<>
 			{cardComp &&
@@ -34,10 +34,9 @@ const BadgeIconHeard = observer(({ cardComp, header, productPage, addToLiked, id
 					}
 				</div>
 			}
-
 			{
 				header &&
-				<div className='absolute top-5 right-48 cursor-pointer'>
+				<div className='absolute top-5 right-48 md:right-36 sm:right-20 cursor-pointer'>
 					<Link to={`/${cyrillicToTranslit.transform(('список понравившихся').split(' ').join('-'))}`}>
 						<Badge count={dataApp.likedLength} size="small">
 							<img
@@ -66,6 +65,19 @@ const BadgeIconHeard = observer(({ cardComp, header, productPage, addToLiked, id
 								<Heart className={dataApp.likedArr.includes(id) ? 'icon-heart activeliked' : 'icon-heart'} />
 							</Tooltip>
 					}
+				</div>
+			}
+			{
+				mobil &&
+				<div className='cursor-pointer ml-3'>
+					<Link to={`/${cyrillicToTranslit.transform(('список понравившихся').split(' ').join('-'))}`}>
+						<Badge count={dataApp.likedLength} size="small">
+							<img
+								src={heart}
+								className='w-6 hover:scale-110 duration-500'
+							/>
+						</Badge>
+					</Link>
 				</div>
 			}
 		</>

@@ -40,6 +40,7 @@ const App = observer(() => {
   const [user] = useState(new UserStore())
   const [dataApp] = useState(new DataStore())
 
+
   useEffect(() => {
     check()
       .then(data => {
@@ -78,13 +79,11 @@ const App = observer(() => {
         dataProducts: new ProductsStore()
       }}>
 
-
-
         <BrowserRouter>
           <div className="app">
             <Header />
 
-            <main className='bg-gray-50 relative'>
+            <main className='bg-gray-50 relative xs:pt-14 xx:pt-14 xy:pt-14 lg:pt-0'>
               <BreadCrumbComp />
               <Routes>
                 <Route path='/' element={<MainPage />} />

@@ -4,7 +4,7 @@ import CarouselCard from '../carouselCard/CarouselCard'
 import DrawerModal from '../drawerModal/DrawerModal'
 
 
-const MainCard = () => {
+const MainCard = ({cardItem}) => {
 	const [open, setOpen] = useState(false)
 	const showDrawer = () => {
 		setOpen(true)
@@ -12,7 +12,7 @@ const MainCard = () => {
 	return (
 		<div className="site-card-wrapper relative">
 			<Divider orientation="left" style={{ fontSize: '2em', color: '#ccc' }} className=''>Новинки</Divider>
-			<CarouselCard />
+			<CarouselCard cardItem={cardItem} />
 		</div>
 	)
 }

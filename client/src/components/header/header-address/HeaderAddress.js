@@ -3,23 +3,25 @@ import React from 'react'
 // import { useLocation } from 'react-router-dom'
 import HeaderLinks from './headerLinks/HeaderLinks'
 import HeaderTimeTel from './headerTimeTel.js/HeaderTimeTel'
-// import { Space, Row, Col } from 'antd'
-// import {
-// 	UserOutlined,
-// } from '@ant-design/icons'
+import { useScreens } from '../../../Constants/constants'
 
 
+	// xs: '480px',
+	// sm: '576px',
+	// md: '768px',
+	// lg: '992px',
+	// xl: '1200px',
+	// xxl: '1600px',
+ 
 function HeaderAddress() {
-
-	// const location = useLocation()
-	// let isPath = location.pathname === '/'
-
+	// const screens = useScreens()
+	// console.log('screens:',screens)
 
 	return (
-		<section className='pt-1 pb-1 font-light'>
+		<section className={`pt-1 pb-1 font-light`}>
 			<div className='container'>
-				<div className='flex justify-between items-center'>
-					<div className=''>
+				<div className={`flex justify-between items-center`}>
+					<div>
 						<HeaderLinks />
 					</div>
 					<div className=''>

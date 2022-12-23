@@ -44,8 +44,12 @@ const CardComp = ({ itemCard, page, location, deleteOneElCookies }) => {
 				const img = JSON.parse(el.img)
 
 				return (
-					<>
-						<Col xl={8} key={el.id}>
+					<React.Fragment key={el.id}>
+						<Col
+							xl={8}
+							key={el.id}
+							md={12}
+						>
 							<Card
 								className='hover:border-[#ff0084] relative'
 								key={el.id}
@@ -125,7 +129,7 @@ const CardComp = ({ itemCard, page, location, deleteOneElCookies }) => {
 												{el.description}
 											</p>
 											<p className='font-thin text-xs'>Артикул:
-												{el.id}
+												{el.id}GR{el.groupId}
 											</p>
 											<div>
 												<Rate allowHalf defaultValue={el.rating} disabled />
@@ -174,7 +178,7 @@ const CardComp = ({ itemCard, page, location, deleteOneElCookies }) => {
 							</Card>
 						</Col>
 
-					</>
+					</React.Fragment>
 				)
 
 			})}

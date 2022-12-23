@@ -19,29 +19,20 @@ function HisotyStore() {
 		<Space
 			// wrap={true}
 			size={[16, 8]}
-			className='mt-20 pb-10'
+			className='mt-20 pb-10 xs:mt-6'
 		>
 			<Image src={logohistory} width='90%' />
 			<div>
 				<Typography.Title
-					// editable={{
-					// 	triggerType: 'text',
-					// 	onChange: setEditH1,
-					// 	icon: <HighlightOutlined />,
-					// }}
-					level={1}
 					style={{
 						margin: 0,
+						fontSize:'1.6em',
 					}}
 				>
 					{editH1}
 				</Typography.Title>
 				<Paragraph
 					ellipsis={{ rows: 2, expandable: true, symbol: 'читать дальше' }}
-					// editable={{
-					// 	icon: <HighlightOutlined />,
-					// 	onChange:setEditContent,
-					// }}
 					className='text-gray-500'
 				>
 					{editContent}

@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState, useEffect } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 import { Tooltip, Upload, message, Modal } from 'antd'
 import update from 'immutability-helper'
 import { FileImageOutlined } from '@ant-design/icons'
@@ -57,12 +57,10 @@ const DragableUploadListItem = ({ originNode, moveRow, file, fileList }) => {
 const getBase64 = (file) =>
 	new Promise((resolve, reject) => {
 		const reader = new FileReader();
-		reader.readAsDataURL(file);
+		reader.readAsDataURL(file[0]);
 		reader.onload = () => resolve(reader.result);
 		reader.onerror = (error) => reject(error);
 	})
-
-
 
 
 
@@ -112,6 +110,8 @@ const DragableComp = ({onChange ,fileList, setFileList, }) => {
 		},
 		[fileList],
 	)
+
+
 
 	return (
 		<>

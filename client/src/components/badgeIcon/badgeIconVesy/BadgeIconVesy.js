@@ -9,12 +9,14 @@ import { Context } from '../../../App'
 import { Tooltip } from 'antd'
 import { Link } from 'react-router-dom'
 import CyrillicToTranslit from 'cyrillic-to-translit-js'
+import { useScreens } from '../../../Constants/constants'
 
 
 
-const BadgeIconVesy = observer(({ cardComp, header, productPage, addToComparisonList, id }) => {
+const BadgeIconVesy = observer(({ cardComp, header, productPage, addToComparisonList, id, mobil }) => {
 	const { dataApp } = useContext(Context)
 	const cyrillicToTranslit = new CyrillicToTranslit()
+	const screens = useScreens()
 
 	return (
 		<>
@@ -40,7 +42,7 @@ const BadgeIconVesy = observer(({ cardComp, header, productPage, addToComparison
 			}
 			{
 				header &&
-				<div className='absolute top-5 right-60 cursor-pointer'>
+				<div className={`absolute top-5 right-60 md:right-48 sm:right-28 cursor-pointer`}>
 					<Link to={`/${cyrillicToTranslit.transform(('cписок сравнения').split(' ').join('-'))}`}>
 						<Badge count={dataApp.vesyLength} size="small">
 							<img
@@ -69,6 +71,19 @@ const BadgeIconVesy = observer(({ cardComp, header, productPage, addToComparison
 								<Vesy className={dataApp.vesyArr.includes(id) ? 'icon-vesy activevesy' : 'icon-vesy'} />
 							</Tooltip>
 					}
+				</div>
+			}
+			{
+				mobil &&
+				<div className='cursor-pointer'>
+					<Link to={`/${cyrillicToTranslit.transform(('cписок сравнения').split(' ').join('-'))}`}>
+						<Badge count={dataApp.vesyLength} size="small">
+							<img
+								src={vesy}
+								className='w-6 hover:scale-110 duration-500'
+							/>
+						</Badge>
+					</Link>
 				</div>
 			}
 

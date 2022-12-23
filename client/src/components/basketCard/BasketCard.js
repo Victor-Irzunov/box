@@ -11,6 +11,7 @@ import {
 	plusBasketUserOneProduct
 } from '../../http/basketAPI'
 import CyrillicToTranslit from 'cyrillic-to-translit-js'
+import { useScreens } from '../../Constants/constants'
 
 const ButtonGroup = Button.Group
 const { Text } = Typography
@@ -25,10 +26,8 @@ const BasketCard = observer(({ data, isActive, setData }) => {
 	const cyrillicToTranslit = new CyrillicToTranslit()
 	const [isUpload, setUpload] = useState(false)
 	const location = useLocation()
+	const screens = useScreens()
 
-
-	console.log('data: ', data)
-	// console.log('dataApp.basketLength:', dataApp.basketLength)
 
 	useEffect(() => {
 		let totalCost = 0
@@ -102,7 +101,6 @@ const BasketCard = observer(({ data, isActive, setData }) => {
 							dataArr.push({ ...el.product, countBasket: el.count })
 						})
 						dataProducts.setDataBasket(dataArr)
-						// setData(dataArr)
 						message.success('Удалён один товар')
 					} else {
 						setData([])
@@ -137,25 +135,25 @@ const BasketCard = observer(({ data, isActive, setData }) => {
 												pathname: `/${el.categories[0].link}/${el.types[0].link}/${cyrillicToTranslit.transform(el.name.split(' ').join('-'))}`,
 											}}
 												state={{ id: el.id, location: location.pathname }}>
-												<p className='text-lg'>{el.name}</p>
+												<p className='text-lg xs:text-base xx:text-sm xy:text-sm '>{el.name}</p>
 											</Link>
-											<p className='text-xs text-slate-400 font-light'>Артикул: {el.id}</p>
+											<p className='text-xs text-slate-400 font-light xx:mt-2 xy:text-[12px]'>Артикул: {el.id}</p>
 										</div>
-										<p className='text-xs text-slate-300 font-light'>На складе: {el.count}</p>
+										<p className='text-xs text-slate-300 font-light xx:text-[10px] xy:text-[10px]'>На складе: {el.count}</p>
 									</div>
 								</div>
 							</div>
-							<div className='flex justify-center items-center'>
+							<div className='flex justify-center items-center xs:mr-1 xx:mr-1 xy:mr-1'>
 								<ButtonGroup>
 									<Button
 										onClick={() => minusBasket(el.id)}
-										size={isActive ? 'small' : 'large'}
+										size={isActive || screens.sm || screens.xs ? 'small' : 'large'}
 										disabled={count === 1}
 									>
 										<MinusOutlined />
 									</Button>
 									<Button
-										size={isActive ? 'small' : 'large'}
+										size={isActive || screens.sm|| screens.xs ? 'small' : 'large'}
 									>
 										{count}
 									</Button>
@@ -164,7 +162,7 @@ const BasketCard = observer(({ data, isActive, setData }) => {
 										onClick={() => {
 											plusBasket(el.id)
 										}}
-										size={isActive ? 'small' : 'large'}
+										size={isActive || screens.sm || screens.xs ? 'small' : 'large'}
 										disabled={el.count === count}
 									>
 										<PlusOutlined />
@@ -174,11 +172,14 @@ const BasketCard = observer(({ data, isActive, setData }) => {
 							<div className='border-l w-44 flex items-center px-5 bg-gray-100 relative'>
 								<div className=''>
 									<p className='font-extralight'>Цена:</p>
-									<p className='text-2xl mt-2'>{(el.price * count).toFixed(2)} <span className='text-xl font-light'>BYN</span></p>
+									<p className='text-2xl xs:text-xl xx:text-lg xy:text-base mt-2'>
+										{(el.price * count).toFixed(2)}
+										<span className='text-xl xx:text-sm xy:text-xs font-light'>BYN</span></p>
 								</div>
 								<Button
 									onClick={() => deleteBasket(el.id)}
 									className='absolute top-0 right-0'
+									size={screens.xs && 'small'}
 									icon={<CloseOutlined className='text-red-500' />}
 								/>
 							</div>
@@ -195,8 +196,10 @@ const BasketCard = observer(({ data, isActive, setData }) => {
 				<span className='text-lg font-light mb-3'>{totalWithoutDiscount} <span className='text-base font-light'>BYN</span></span>
 				<Text>Cумма скидки:</Text>
 				<Text>{totalDiscount} BYN</Text>
-				<p className='text-xl mt-5'>Итоговая стоимость:</p>
-				<span className='text-2xl font-light'>{total} <span className='text-xl font-light'>BYN</span></span>
+				<p className='text-xl xs:text-lg xx:text-base mt-5'>Итоговая стоимость:</p>
+				<span className='text-2xl xs:text-xl xx:text-lg font-light'>{total}
+					<span className='text-xl xs:text-lg font-light'>BYN</span>
+				</span>
 			</div>
 		</div>
 

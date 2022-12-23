@@ -11,10 +11,11 @@ import FormQuestion from '../forms/formQuestion/FormQuestion'
 import { isBuyThisProductUser } from '../../http/orderAPI'
 import { otzyvRatinOneUserProduct } from '../../http/otzyvyAPI'
 // import { isBuyThisProductUser } from '../../http/orderAPI'
+import { useScreens } from '../../Constants/constants'
 
 const { Paragraph } = Typography
 
-const BtnAndFormOtzyvy = observer(({ product, isBuyProd, isOtzyvUserProd }) => {
+const BtnAndFormOtzyvy = observer(({ product, isBuyProd, isOtzyvUserProd, setIsOtzyvUserProd }) => {
 	const { dataApp, user } = useContext(Context)
 	const [isBtnFormOtzyvy, setIsBtnFormOtzyvy] = useState(false)
 
@@ -23,12 +24,12 @@ const BtnAndFormOtzyvy = observer(({ product, isBuyProd, isOtzyvUserProd }) => {
 			{
 				user.isAuth ?
 					(isBtnFormOtzyvy ?
-						<FormOtzyvy product={product} />
+						<FormOtzyvy product={product} setIsOtzyvUserProd={setIsOtzyvUserProd} setIsBtnFormOtzyvy={setIsBtnFormOtzyvy} />
 						:
 						(
 							isOtzyvUserProd
 								?
-								(<p>Вы уже оставляли отзыв о данном товаре.</p>)
+								(<p>Вы оценили данный товар.</p>)
 								:
 								(<Tooltip title={isBuyProd ? '' : 'Отзыв можно добавить, только после покупки данного товара!'}>
 									<Button
@@ -45,7 +46,7 @@ const BtnAndFormOtzyvy = observer(({ product, isBuyProd, isOtzyvUserProd }) => {
 					<p>Отзывы смогут оставить только зарегистрированные пользователи.</p>
 			}
 			<hr className='mt-5 pb-3' />
-			<Otzyvy />
+			<Otzyvy product={product} />
 		</>
 	)
 })
@@ -103,13 +104,13 @@ const TabsPtoduct = ({ product }) => {
 	const [isBuyProd, setIsBuyProd] = useState(false)
 	const [isOtzyvUserProd, setIsOtzyvUserProd] = useState(false)
 	const { user } = useContext(Context)
+	const screens = useScreens()
 
 	const onChange = key => {
 		if (user.isAuth) {
 			if (key === 2) {
 				isBuyThisProductUser(product.id)
 					.then(data => {
-						console.log('isBuyThisProductUser:', data)
 						if (data) {
 							setIsBuyProd(true)
 						} else {
@@ -141,7 +142,12 @@ const TabsPtoduct = ({ product }) => {
 			label:
 				`Отзывы`,
 			children: (
-				<BtnAndFormOtzyvy product={product} isBuyProd={isBuyProd} isOtzyvUserProd={isOtzyvUserProd} />
+				<BtnAndFormOtzyvy
+					product={product}
+					isBuyProd={isBuyProd}
+					isOtzyvUserProd={isOtzyvUserProd}
+					setIsOtzyvUserProd={setIsOtzyvUserProd}
+				/>
 			)
 		},
 		{
@@ -157,7 +163,8 @@ const TabsPtoduct = ({ product }) => {
 			onChange={onChange}
 			type="card"
 			items={itemTabsProduct}
-			size='large'
+			size={screens.xs ? 'small' : 'large'}
+			className='mt-10'
 		/>
 	)
 }

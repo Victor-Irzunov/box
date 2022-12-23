@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { Helmet } from "react-helmet"
-import { Typography, Layout, Space, Button, Divider, BackTop, Empty } from 'antd'
+import { Typography, Layout, Space, Button, Divider, BackTop, Empty, Tag, Drawer } from 'antd'
 import { HighlightOutlined, UpCircleOutlined, DownCircleOutlined } from '@ant-design/icons'
 import CardComp from '../../components/Card/CardComp'
 import FilterAll from '../../components/filterAll/FilterAll'
@@ -14,6 +14,7 @@ import {
 	useSearchParams
 } from 'react-router-dom'
 import { fetchProducts } from '../../http/productsAPI'
+import { useScreens } from '../../Constants/constants'
 
 const { Sider, Content } = Layout
 const { Paragraph } = Typography
@@ -29,8 +30,10 @@ const UniversalPage = observer(() => {
 	const [editP, setEditP] = useState(textMenPage.p)
 	const [editP2, setEditP2] = useState(textMenPage.p2)
 	const [editP3, setEditP3] = useState(textMenPage.p3)
-
+	const screens = useScreens()
 	let [searchParams, setSearchParams] = useSearchParams()
+	const [open, setOpen] = useState(false);
+
 
 	let location = useLocation()
 	const localPath = location.pathname.split('/').join('')
@@ -140,7 +143,12 @@ const UniversalPage = observer(() => {
 		return setItemCard(prev => prev.sort((a, b) => b.rating - a.rating))
 	}
 
-
+	const showDrawer = () => {
+		setOpen(true);
+	};
+	const onClose = () => {
+		setOpen(false);
+	};
 
 	return (
 		<>
@@ -150,18 +158,28 @@ const UniversalPage = observer(() => {
 			</Helmet>
 
 			<BackTop />
-			<section className='container pt-10'>
+			<section className='container'>
 				{/* {
 					isAdmin && <TitleAffix url={'/muzhskie'} btn={'Изменить Title'} form={'FormTitleChange'} title={'Изменить Title / Description'} />
 				} */}
-				<Space align='center'>
+				{Object.entries(screens)
+					.filter((screen) => !!screen[1])
+					.map((screen) => (
+						<Tag color="blue" key={screen[0]}>
+							{screen[0]}
+						</Tag>
+					))}
+				<Space align='center' className='mt-6'>
 					<Typography.Title
 						level={1}
 						className=''
+						style={screens.xs && {
+							fontSize: '2em',
+						}}
 					>
 						{editH1}
 					</Typography.Title>
-					<h2>{h2}</h2>
+					{/* <h2>{h2}</h2> */}
 					<span className='text-slate-400'>{totalItem} товаров</span>
 				</Space>
 				<br />
@@ -182,12 +200,22 @@ const UniversalPage = observer(() => {
 				</Space>
 				<br />
 				<Space>
+					<Button
+						type='link'
+						className='pl-2 xs:block sm:hidden'
+						onClick={showDrawer}
+					>
+						Показать фильтр по цене
+					</Button>
+				</Space>
+				<br />
+				<Space>
 					<div>
 						<Button
 							type="primary"
 							shape="round"
 							size='small'
-							className='mr-16'
+							className='mr-16 xs:hidden xx:hidden xy:hidden sm:block'
 						>
 							Фильтр подбора
 						</Button>
@@ -222,7 +250,7 @@ const UniversalPage = observer(() => {
 				</Space>
 
 				<Layout className='mt-2'>
-					<Sider theme='light'>
+					<Sider theme='light' className='xs:hidden xx:hidden xy:hidden sm:block'>
 						<FilterAll
 							sendFormFilter={sendFormFilter}
 							inputValueFrom={inputValueFrom}
@@ -233,7 +261,16 @@ const UniversalPage = observer(() => {
 						/>
 					</Sider>
 
-
+					<Drawer title="Фильтр по цене" placement="right" onClose={onClose} open={open}>
+						<FilterAll
+							sendFormFilter={sendFormFilter}
+							inputValueFrom={inputValueFrom}
+							inputValueBefore={inputValueBefore}
+							setInputValueFrom={setInputValueFrom}
+							setInputValueBefore={setInputValueBefore}
+							resetFilter={resetFilter}
+						/>
+					</Drawer>
 
 					<Content className='pb-20 bg-white'>
 
@@ -257,11 +294,12 @@ const UniversalPage = observer(() => {
 								</Empty>
 						}
 						<div className='mt-32'>
-							<Paragraph editable={{ onChange: setEditP }}>{editP}</Paragraph>
+							<Paragraph>
+								{editP}
+							</Paragraph>
 							<Divider orientation="left">
 								<Typography.Title
-									level={2}
-									className=''
+									level={4}
 								>
 									{editH2}
 								</Typography.Title>
@@ -271,7 +309,7 @@ const UniversalPage = observer(() => {
 								{editP2}
 							</Paragraph>
 							<Typography.Title
-								level={3}
+								level={5}
 								className=''
 							>
 								{editH3}

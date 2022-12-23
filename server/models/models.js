@@ -271,7 +271,16 @@ const Order = sequelize.define('order', {
 		type: DataTypes.STRING, allowNull: false
 	}
 })
+// ------------------------------------------
+const Group = sequelize.define('group', {
+	id: {
+		type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true
+	},
+})
 
+
+Group.hasMany(Product)
+Product.belongsTo(Group)
 
 Order.hasMany(BasketOrder)
 BasketOrder.belongsTo(Order)
@@ -305,6 +314,9 @@ Feedback.belongsTo(User)
 Product.hasMany(Feedback)
 Feedback.belongsTo(Product)
 
+
+Rating.hasMany(Feedback)
+Feedback.belongsTo(Rating)
 
 InfoTitle.hasMany(Info)
 Info.belongsTo(InfoTitle)
@@ -346,5 +358,6 @@ export const models = {
 	BasketOrder,
 	Order,
 	BasketProduct,
+	Group,
 }
 

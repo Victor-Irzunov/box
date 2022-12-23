@@ -12,22 +12,26 @@ import { dataListFooter2 } from '../../content/Content'
 
 function Footer() {
   return (
-    <footer className='mt-auto pt-12' style={{ background: '#ff0084', height: '50vh' }}>
+    <footer className='mt-auto pt-12' style={{ background: '#ff0084' }}>
       <div className='container'>
         <Row justify='space-between'>
-          <Col xl={7}>
+          <Col xl={7} xs={24}>
             <TabsFooter />
           </Col>
-          <Col xl={6}>
-            <FooterList data={dataListFooter} title={'Информация'} />
+          <Col xl={6} xs={24}>
+            <FooterList data={dataListFooter}
+              // title={'Информация'}
+            />
           </Col>
-          <Col xl={6}>
-            <FooterList data={dataListFooter2} title={'Категория'} />
+          <Col xl={6} className='ss:hidden lg:block xx:hidden'>
+            <FooterList data={dataListFooter2}
+              // title={'Категория'}
+            />
           </Col>
           <Col xl={{ span: 5 }}
           >
-            <div className='h-full flex flex-col justify-between align-middle'>
-              <Image src={sneaker_1} className='z-10 w-8/12 mt-4 ml-5' />
+            <div className='h-full lg:flex flex-col justify-between align-middle'>
+              <Image src={sneaker_1} className='z-10 w-8/12 xx:w-24 xy:w-16 mt-4 ml-5' />
               <Space className='pl-16'>
                 <Image src={bank} className='w-10' />
                 <Image src={visa} className='w-10' />

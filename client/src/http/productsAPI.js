@@ -25,22 +25,28 @@ export const fetchOneProduct = async (id) => {
 }
 
 
+
+
 export const fetchProductNoUser = async (arrId) => {
 	const { data } = await $host.get('api/product/basket/nouser', { params: { arr: arrId } })
 	return data
 }
 
-
-export const fetchProductsPohozhie = async (id) => {
-	const { data } = await $host.get('api/product/pohozhie/' + id)
+export const getNewProduct = async () => {
+	const { data } = await $host.get('api/product/new')
 	return data
 }
 
-//: search
-// export const searchProducts = async (query = 0) => {
-//     const { data } = await $host.get('products/search?q=' + query)
-//     return data
-// }
+
+export const fetchProductsPohozhie = async ({groupId, id}) => {
+
+	const { data } = await $host.get('api/product/pohozhie', {
+		params: {
+			groupId, id
+		}
+	})
+	return data
+}
 
 
 export const fetchType = async () => {

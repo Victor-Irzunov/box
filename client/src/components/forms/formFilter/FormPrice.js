@@ -138,7 +138,7 @@ const FormPrice = (
 				{/* </Form> */}
 
 				<Row>
-					<Col xl={12}>
+					<Col xl={12} sm={12}>
 						<Row>
 							<Col span={24} offset={2}>
 								<span>от</span>
@@ -175,7 +175,7 @@ const FormPrice = (
 							</Col>
 						</Row>
 					</Col>
-					<Col xl={12}>
+					<Col xl={12} sm={12}>
 						<Row>
 							<Col span={24} offset={2}>
 								<span>до</span>

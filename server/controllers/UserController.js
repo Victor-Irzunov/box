@@ -48,15 +48,10 @@ class UserController {
 				candidate.activationLink = activationLink;
 				await candidate.ave();
 				user = await models.User.findOne({ where: { login } })
-				// user = await models.User.update(
-				// 	{ login, password: hashPassword, activationLink, isActivation: false },
-				// 	{ where: { id: candidate.dataValues.id }, }
-				// )
 			}
 			if (!candidate) {
 				user = await models.User.create({ login, role, password: hashPassword, activationLink, isActivation: false })
 			}
-			// const user = await models.User.create({ login, role, password: hashPassword, activationLink, isActivation: false })
 			const token = generateJwt(user.id, user.login, user.role, user.isActivation)
 
 			await mailService.sendActivationMail(login, `${process.env.API_URL}/api/user/activate/${activationLink}`)

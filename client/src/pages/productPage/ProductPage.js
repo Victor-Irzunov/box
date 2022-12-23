@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
 import CourouselComp from '../../components/react-image-gallery/CurouselComp'
-import { Typography, Row, Col, Rate, Badge, Button, BackTop, message } from 'antd'
+import { Typography, Row, Col, Rate, Badge, Button, BackTop, message, Tag } from 'antd'
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import { Context } from "../../App"
 import { HighlightOutlined, CarOutlined, ArrowLeftOutlined, CheckOutlined } from '@ant-design/icons'
@@ -16,6 +16,7 @@ import { observer } from "mobx-react-lite"
 import { fetchOneProduct } from '../../http/productsAPI'
 import { addBasketUserOneProduct } from '../../http/basketAPI'
 import { isBuyThisProductUser } from '../../http/orderAPI'
+import { useScreens } from '../../Constants/constants'
 
 
 
@@ -24,7 +25,7 @@ const ProductPage = observer(() => {
 	// const { id } = useParams()
 	let location = useLocation()
 	const navigate = useNavigate()
-
+	const screens = useScreens()
 	const [editH1, setEditH1] = useState('')
 	const [product, setProduct] = useState({})
 	const [imgArr, setImgArr] = useState([])
@@ -35,24 +36,20 @@ const ProductPage = observer(() => {
 	const page = location.state?.page
 	const id = location.state?.id
 	const loca = location.state?.location
-
-
-
+	console.log('id: ', id)
 
 	useEffect(() => {
 		fetchOneProduct(id)
 			.then(data => {
+				console.log('data>', data)
 				setProduct(data)
 				setEditH1(data.name)
 				dataProducts.setDataOneProduct(data)
-				declOfNum(5, ['отзывов', 'отзыва', 'отзыв'])
+				declOfNum(data.feedbacks.length, ['отзывов', 'отзыва', 'отзыв'])
 				setImgArr(fuImg(data))
 
 			})
-	}, [])
-
-	
-
+	}, [id])
 
 	const addBasket = id => {
 		if (!user.isAuth) {
@@ -105,6 +102,7 @@ const ProductPage = observer(() => {
 		`${loca}`
 	)
 
+
 	return (
 		<>
 			<Helmet>
@@ -115,6 +113,13 @@ const ProductPage = observer(() => {
 
 			<BackTop />
 			<section className='container pt-5 pb-20'>
+				{Object.entries(screens)
+					.filter((screen) => !!screen[1])
+					.map((screen) => (
+						<Tag color="blue" key={screen[0]}>
+							{screen[0]}
+						</Tag>
+					))}
 				<Button
 					type='link'
 					className='text-sm text-slate-500 font-thin mb-6 pl-0'
@@ -123,17 +128,20 @@ const ProductPage = observer(() => {
 					<ArrowLeftOutlined /> назад
 				</Button>
 				<Typography.Title
-					editable={isAdmin && {
-						onChange: setEditH1,
-						icon: <HighlightOutlined />,
-					}}
+					// editable={isAdmin && {
+					// 	onChange: setEditH1,
+					// 	icon: <HighlightOutlined />,
+					// }}
 					level={1}
 					className=''
 				>
 					{editH1}
 				</Typography.Title>
 
-				<div className='flex w-1/4 justify-between'>
+
+
+
+				<div className='flex w-1/4 sm:w-full xs:w-full xx:w-full xy:w-full justify-between'>
 					<div className='flex'>
 						<Rate allowHalf value={product.rating} disabled />
 						<span className="mt-1.5 ml-3">
@@ -145,7 +153,7 @@ const ProductPage = observer(() => {
 							className='text-slate-400 mt-1.5 underline cursor-pointer'
 							onClick={() => clickScroll()}
 						>
-							5 {review}
+							{product.feedbacks && product.feedbacks.length} {review}
 						</p>
 					</div>
 				</div>
@@ -159,7 +167,7 @@ const ProductPage = observer(() => {
 						<div className='border-b pb-6'>
 							<div className='flex justify-between'>
 								<div>
-									<p className='font-thin text-sm'>Артикул: {product.id}</p>
+									<p className='font-thin text-sm'>Артикул: {product.id}GR{product.groupId}</p>
 								</div>
 								<div className='flex w-16 justify-between'>
 									<BadgeIconVesy
@@ -227,7 +235,9 @@ const ProductPage = observer(() => {
 				</Row>
 
 				<div className='mt-28' />
-				<PohozhieTovary id={id} />
+				{Object.keys(product).length &&
+					<PohozhieTovary product={product} />
+				}
 				<TabsPtoduct product={product} />
 				<Content />
 			</section>
