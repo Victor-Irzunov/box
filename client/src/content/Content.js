@@ -7,12 +7,12 @@ import SearchComp from '../components/searchComp/SearchComp'
 import img from '../images/carousel/1.webp'
 import img2 from '../images/carousel/2.webp'
 import img3 from '../images/carousel/3.webp'
-import sneakers from '../images/mainCardImg/sneakers.webp'
-import sneakers2 from '../images/mainCardImg/sneakers-2.webp'
-import sneakers3 from '../images/mainCardImg/sneakers-3.webp'
-import sneakers4 from '../images/mainCardImg/sneakers-4.webp'
-import box from '../images/mainCardImg/2.webp'
-import box1 from '../images/mainCardImg/1.webp'
+// import sneakers from '../images/mainCardImg/sneakers.webp'
+// import sneakers2 from '../images/mainCardImg/sneakers-2.webp'
+// import sneakers3 from '../images/mainCardImg/sneakers-3.webp'
+// import sneakers4 from '../images/mainCardImg/sneakers-4.webp'
+// import box from '../images/mainCardImg/2.webp'
+// import box1 from '../images/mainCardImg/1.webp'
 import { Badge } from 'antd'
 
 
@@ -183,33 +183,33 @@ export const itemCarousel = [
 	}
 ]
 
-export const cardItem = [
-	{
-		title: 'Box',
-		image: box,
-		id: 1,
-		link: '/'
-	},
-	{
-		title: 'Box-1',
-		image: box1,
-		id: 2,
-		link: '/'
-	},
-	{
-		title: 'Box-2',
-		image: box,
-		id: 3,
-		link: '/'
-	},
-	{
-		title: 'Box-3',
-		image: box1,
-		id: 4,
-		link: '/'
-	},
+// export const cardItem = [
+// 	{
+// 		title: 'Box',
+// 		image: box,
+// 		id: 1,
+// 		link: '/'
+// 	},
+// 	{
+// 		title: 'Box-1',
+// 		image: box1,
+// 		id: 2,
+// 		link: '/'
+// 	},
+// 	{
+// 		title: 'Box-2',
+// 		image: box,
+// 		id: 3,
+// 		link: '/'
+// 	},
+// 	{
+// 		title: 'Box-3',
+// 		image: box1,
+// 		id: 4,
+// 		link: '/'
+// 	},
 
-]
+// ]
 
 export const dataListFooter = [
 	'Возврат товара',
@@ -237,48 +237,48 @@ export const titles = {
 	},
 }
 
-export const itemCard = [
-	{
-		id: 1,
-		img: sneakers,
-		title: 'Nike / Кроссовки',
-		description: 'Jordan 4 Retro',
-		art: '50069669',
-		price: 235,
-		rate: 2.5,
-		rateText: 34,
-	},
-	{
-		id: 2,
-		img: sneakers2,
-		title: 'Nike / Кроссовки',
-		description: 'Jordan 4 Retro',
-		art: '50069669',
-		price: 235,
-		rate: 4.5,
-		rateText: 45,
-	},
-	{
-		id: 3,
-		img: sneakers3,
-		title: 'Nike / Кроссовки',
-		description: 'Jordan 4 Retro',
-		art: '50069669',
-		price: 235,
-		rate: 5,
-		rateText: 14,
-	},
-	{
-		id: 4,
-		img: sneakers4,
-		title: 'Nike / Кроссовки',
-		description: 'Jordan 4 Retro',
-		art: '50069669',
-		price: 235,
-		rate: 1.5,
-		rateText: 31,
-	},
-]
+// export const itemCard = [
+// 	{
+// 		id: 1,
+// 		img: sneakers,
+// 		title: 'Nike / Кроссовки',
+// 		description: 'Jordan 4 Retro',
+// 		art: '50069669',
+// 		price: 235,
+// 		rate: 2.5,
+// 		rateText: 34,
+// 	},
+// 	{
+// 		id: 2,
+// 		img: sneakers2,
+// 		title: 'Nike / Кроссовки',
+// 		description: 'Jordan 4 Retro',
+// 		art: '50069669',
+// 		price: 235,
+// 		rate: 4.5,
+// 		rateText: 45,
+// 	},
+// 	{
+// 		id: 3,
+// 		img: sneakers3,
+// 		title: 'Nike / Кроссовки',
+// 		description: 'Jordan 4 Retro',
+// 		art: '50069669',
+// 		price: 235,
+// 		rate: 5,
+// 		rateText: 14,
+// 	},
+// 	{
+// 		id: 4,
+// 		img: sneakers4,
+// 		title: 'Nike / Кроссовки',
+// 		description: 'Jordan 4 Retro',
+// 		art: '50069669',
+// 		price: 235,
+// 		rate: 1.5,
+// 		rateText: 31,
+// 	},
+// ]
 
 export const textMenPage = {
 	h1: 'Подарочные боксы',
