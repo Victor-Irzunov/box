@@ -190,17 +190,17 @@ const FormProduct = () => {
 							okText="Да"
 							cancelText="Нет"
 						>
-							<Radio.Button className='mr-1' value={1}>Создать группу</Radio.Button>
+							<Radio.Button className='mr-1 mb-1' value={1}>Создать группу</Radio.Button>
 						</Popconfirm>
 
-						<Radio.Button className='mr-1' value={2}>Группа есть</Radio.Button>
+						<Radio.Button className='mr-1 mb-1' value={2}>Группа есть</Radio.Button>
 						<Popconfirm
 							title="Очистить форму?"
 							onConfirm={confirm}
 							okText="Да"
 							cancelText="Нет"
 						>
-							<Radio.Button className='mr-1' value={0}>Не создавать группу</Radio.Button>
+							<Radio.Button className='mr-1 mb-1' value={0}>Не создавать группу</Radio.Button>
 						</Popconfirm>
 
 					</Radio.Group>

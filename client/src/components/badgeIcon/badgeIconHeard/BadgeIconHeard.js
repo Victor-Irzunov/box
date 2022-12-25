@@ -69,7 +69,7 @@ const BadgeIconHeard = observer(({ cardComp, header, productPage, addToLiked, id
 			}
 			{
 				mobil &&
-				<div className='cursor-pointer ml-3'>
+				<div className='cursor-pointer mr-4'>
 					<Link to={`/${cyrillicToTranslit.transform(('список понравившихся').split(' ').join('-'))}`}>
 						<Badge count={dataApp.likedLength} size="small">
 							<img

@@ -111,6 +111,20 @@ class UserController {
 			console.log('🚀🚀🚀🚀-error: ', e)
 		}
 	}
+	async myAccount(req, res, next) {
+		try {
+			
+			const userId = req.user.id
+			// console.log('💊userId:', userId)
+			const userData = await models.UserData.findOne({ where: { userId } })
+			const user = await models.User.findByPk(userId)
+			return res.status(201).json({ userData, user })
+
+		} catch (e) {
+			cconsole.log('🦺-------err: ', e.message)
+			console.log('🦺-------e: ', e)
+		}
+	}
 }
 
 export const userController = new UserController()

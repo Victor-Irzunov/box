@@ -2,7 +2,7 @@ import { $authHost, $host } from "./index"
 import jwt_decode from "jwt-decode"
 
 export const registration = async (login, password, password2) => {
-    const { data } = await $host.post('api/user/registration', { login, password, password2})    //., role: 'ADMIN'
+    const { data } = await $host.post('api/user/registration', { login, password, password2 })  //., role: 'ADMIN' //role: 'COURIER'
     localStorage.setItem('token', data.token)
     return jwt_decode(data.token)
 }
@@ -20,22 +20,13 @@ export const check = async () => {
 }
 
 
+export const getMyAccount = async () => {
+    const { data } = await $authHost.get('api/user/account')
+    return data
+}
 
-// //:MyAccount Name
-// export const createName = async (obj) => {
-//     const { data } = await $authHost.put('api/account', obj)
-//     return data
-// }
-// //:MyAccount getMyAccount
-// export const getMyAccount = async () => {
-//     const { data } = await $authHost.get('api/account')
-//     return data
-// }
-// //:MyAccount addPhone
-// export const mainPhoneAdd = async (i) => {
-//     const { data } = await $authHost.post('api/account', i)
-//     return data
-// }
+
+
 // //:MyAccount changeMainPhone
 // export const changeMainPhone = async (i) => {
 //     const { data } = await $authHost.put('api/account/change', i)

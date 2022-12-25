@@ -92,7 +92,7 @@ const FormRegistration = ({ handleCancel }) => {
 				<Form.Item
 					label="Логин"
 					name="login"
-					tooltip="Обязательное поле"
+					tooltip="Ваша почта"
 					hasFeedback
 					rules={[
 						{
@@ -115,8 +115,7 @@ const FormRegistration = ({ handleCancel }) => {
 				<Form.Item
 					label="Пароль"
 					name="password"
-
-					tooltip="Обязательное поле"
+					tooltip="минимум 4 символа"
 					hasFeedback
 					rules={[
 						{
@@ -125,7 +124,7 @@ const FormRegistration = ({ handleCancel }) => {
 						},
 					]}
 				>
-					<Input.Password />
+					<Input.Password placeholder="мин. 4 символа" />
 				</Form.Item>
 
 				<Form.Item

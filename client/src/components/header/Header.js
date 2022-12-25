@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import HeaderAddress from './header-address/HeaderAddress'
-import { Affix, Button, Typography } from 'antd'
+import { Affix, Button, Typography, Popover } from 'antd'
 import { MenuOutlined, CloseOutlined, PhoneOutlined, HistoryOutlined, UserOutlined } from '@ant-design/icons'
 import HeaderMenu from './headerMenu/HeaderMenu'
 import BadgeIconHeard from '../badgeIcon/badgeIconHeard/BadgeIconHeard'
@@ -14,6 +14,8 @@ import logo from '../../images/logo/logo3.webp'
 import MenuMobil from './menuMobil/MenuMobil'
 import MenuLinkMobil from './menuLinkMobil/MenuLinkMobil'
 import { Link } from 'react-router-dom'
+import ModalComponent from '../modalLoginRegistrat/ModalComponent'
+import { Content, ContentAdmin, ContentCourier } from './header-address/headerTimeTel.js/HeaderTimeTel'
 
 const { Paragraph } = Typography
 
@@ -23,6 +25,11 @@ const Header = observer(() => {
   const [isActiveMenu, setIsActiveMenu] = useState(false)
   const screens = useScreens()
   // console.log('screens:', screens)
+
+  const [open, setOpen] = useState(false)
+  const showModal = () => {
+    setOpen(true)
+  }
 
   // xs: '480px',
   // sm: '576px',
@@ -79,107 +86,115 @@ const Header = observer(() => {
   }, [dataApp.basketLength])
 
   return (
+    <>
+      {screens.lg ?
+        <>
+          <HeaderAddress />
+          <Affix
+            offsetTop={0}
+            className='z-50'
+            onChange={(affixed) => setIsAffix(affixed)}
+          >
+            <header
+              className={isAffix ? 'relative pt-0.5 pb-1.5' : `relative pt-2 pb-2`}
+              style={{
+                background: '#ff0084'
+              }}
+            >
+              <div className='container'>
 
-    screens.lg ?
-      <>
-        <HeaderAddress />
+                <nav>
+                  <HeaderMenu />
+                </nav>
+
+                <BadgeIconVesy header={true} />
+                <BadgeIconHeard header={true} />
+                <BadgeIconBasked />
+              </div>
+            </header>
+          </Affix>
+        </>
+        :
         <Affix
           offsetTop={0}
-          className='z-50'
-          onChange={(affixed) => setIsAffix(affixed)}
+          className='z-10'
         >
-          <header
-            className={isAffix ? 'relative pt-0.5 pb-1.5' : `relative pt-2 pb-2`}
-            style={{
-              background: '#ff0084'
-            }}
-          >
-            <div className='container'>
-
-              <nav>
-                <HeaderMenu />
-              </nav>
-
-              <BadgeIconVesy header={true} />
-              <BadgeIconHeard header={true} />
-              <BadgeIconBasked />
-            </div>
-          </header>
-        </Affix>
-      </>
-      :
-      <Affix
-        offsetTop={0}
-        // onChange={(affixed) => setIsAffix(affixed)}
-        className='z-10'
-      >
-        <div className={`duration-500 ${isActiveMenu ? 'h-screen' : 'h-12'}
+          <div className={`duration-500 ${isActiveMenu ? 'h-screen' : 'h-12'}
          bg-[#ff0084] pt-3 pb-2
          absolute left-0 right-0 top-0
          `}>
+            <div className='container flex justify-between items-center z-50'>
+              <div className='z-50'>
+                {
+                  isActiveMenu ?
+                    <CloseOutlined
+                      className='text-3xl text-white pointer'
+                      onClick={() => setIsActiveMenu(i => !i)}
+                    />
+                    :
+                    <MenuOutlined
+                      className='text-3xl text-white pointer'
+                      onClick={() => setIsActiveMenu(i => !i)}
+                    />
+                }
+              </div>
+              <div className='z-50'>
+                <Link to='/'>
+                  <img src={logo} className='w-28 ml-6' />
+                </Link>
+              </div>
+              <div className='flex justify-between z-50'>
+                <Button type='link' href='tel:80290000000' className='pr-2'>
+                  <PhoneOutlined className='text-white text-2xl' />
+                </Button>
 
-          <div className='container flex justify-between items-center z-50'>
-            <div className='z-50'>
-              {
-                isActiveMenu ?
-                  <CloseOutlined
-                    className='text-3xl text-white pointer'
-                    onClick={() => setIsActiveMenu(i => !i)}
-                  />
+                {user.isAuth
+                  ?
+                  <Popover
+                    placement="bottomRight"
+                    content={user.userData.role === 'ADMIN' && ContentAdmin || user.userData.role === 'COURIER' && ContentCourier || user.userData.role === 'USER' && Content}
+                    trigger="click"
+                  >
+                    <UserOutlined className='text-white text-2xl mr-3' />
+                  </Popover>
                   :
-                  <MenuOutlined
-                    className='text-3xl text-white pointer'
-                    onClick={() => setIsActiveMenu(i => !i)}
+                  <UserOutlined
+                    className='text-white text-2xl mr-3'
+                    onClick={showModal}
                   />
-              }
+                }
 
+                <BadgeIconVesy mobil={true} />
+                <BadgeIconHeard mobil={true} />
+                <BadgeIconBasked mobil={true} />
+              </div>
             </div>
-
-            <div className='z-50'>
-              <Link to='/'>
-                <img src={logo} className='w-28 ml-6' />
-              </Link>
-            </div>
-
-
-            <div className='flex justify-between z-50'>
-              <Button type='link' href='tel:80290000000' className='pr-2'>
-                <PhoneOutlined className='text-white text-2xl' />
-              </Button>
-              <Link to=''>
-                <UserOutlined className='text-white text-2xl mr-3' />
-              </Link>
-              <BadgeIconVesy mobil={true} />
-              <BadgeIconHeard mobil={true} />
-              <BadgeIconBasked mobil={true} />
-            </div>
-          </div>
-
-          <div className={`container duration-300	${isActiveMenu ? 'block' : 'hidden'}`}>
-            <div className={`pt-10`}>
-              <MenuMobil setIsActiveMenu={setIsActiveMenu} />
-            </div>
-            <div className={``}>
-              <MenuLinkMobil setIsActiveMenu={setIsActiveMenu} />
-            </div>
-            <div className={`flex justify-center items-center absolute bottom-3 left-0 right-0`}>
-              <HistoryOutlined className='text-base mr-1 text-white' />
-              <Paragraph
-                className='text-white ml-2'
-              >
-                08:30-20:00 пн-пт
-              </Paragraph>
-              <Paragraph
-                className='text-white ml-2'
-              >
-                10:00-19:00 сб-вс
-              </Paragraph>
-
+            <div className={`container duration-300	${isActiveMenu ? 'block' : 'hidden'}`}>
+              <div className={`pt-10`}>
+                <MenuMobil setIsActiveMenu={setIsActiveMenu} />
+              </div>
+              <div className={``}>
+                <MenuLinkMobil setIsActiveMenu={setIsActiveMenu} />
+              </div>
+              <div className={`flex justify-center items-center absolute bottom-3 left-0 right-0`}>
+                <HistoryOutlined className='text-base mr-1 text-white' />
+                <Paragraph
+                  className='text-white ml-2'
+                >
+                  08:30-20:00 пн-пт
+                </Paragraph>
+                <Paragraph
+                  className='text-white ml-2'
+                >
+                  10:00-19:00 сб-вс
+                </Paragraph>
+              </div>
             </div>
           </div>
-
-        </div>
-      </Affix>
+        </Affix>
+      }
+      <ModalComponent open={open} setOpen={setOpen} />
+    </>
   )
 })
 

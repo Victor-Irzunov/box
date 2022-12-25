@@ -68,7 +68,7 @@ const FormInfo = ({ setMessages }) => {
 					span:24
 				}}
 				wrapperCol={{
-					span: 16,
+					span: 14,
 				}}
 				rules={[
 					{
@@ -80,7 +80,7 @@ const FormInfo = ({ setMessages }) => {
 				<Radio.Group buttonStyle="solid">
 					{infoTitle.map(el => {
 						return (
-							<Radio.Button key={el.id} className='mr-1' value={el.id}>{el.name}</Radio.Button>
+							<Radio.Button key={el.id} className='mr-1 mb-1' value={el.id}>{el.name}</Radio.Button>
 						)
 					})
 					}

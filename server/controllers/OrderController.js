@@ -1,5 +1,6 @@
 import { models } from "../models/models.js"
 import { ApiError } from '../error/ApiError.js'
+import { Op } from "sequelize"
 
 
 class OrderController {
@@ -23,6 +24,8 @@ class OrderController {
 				oplata, phone: tel,
 				comment, date, time
 			})
+
+
 			JSON.parse(dataBasket).forEach(async (el) => {
 				await models.BasketOrder.create({
 					productId: el.poductId,
@@ -30,6 +33,7 @@ class OrderController {
 					price: el.price,
 					basketId: dataCreateBasket.id,
 					orderId: order.id,
+					status: true
 				})
 				const product = await models.Product.findOne({ where: { id: el.poductId } })
 				if (product.count - el.count >= 0) {
@@ -57,7 +61,19 @@ class OrderController {
 				userData.city = city
 				await userData.save()
 			}
-			return res.status(201).json({ message: `Заказ оформлен` })
+
+			const orderData = await models.BasketOrder.findOne({
+				where: { orderId: order.id },
+				include: [
+					{
+						model: models.Product
+					},
+					{
+						model: models.Order
+					}
+				]
+			})
+			return res.status(201).json(orderData)
 		}
 		catch (e) {
 			console.log('🦺-------err: ', e.message)
@@ -68,22 +84,120 @@ class OrderController {
 
 	async isBuyProduct(req, res, next) {
 		try {
-
 			const userId = req.user.id
 			const { id } = req.params
 			const basket = await models.Basket.findOne({ where: { userId } })
 			const data = await models.BasketOrder.findOne({
 				where: {
-				basketId: basket.id, productId: id
+					basketId: basket.id, productId: id
 				}
 			})
-				res.status(201).json(data)
+			res.status(201).json(data)
+		} catch (e) {
+			console.log('🦺-------err: ', e.message)
+			console.log('🦺-------e: ', e)
+			next(ApiError.badRequest(e.message))
+		}
+	}
+
+
+	async getAll(req, res, next) {
+		try {
+
+			const userId = req.user.id
+
+			const basket = await models.Basket.findOne({ where: { userId } })
+			const data = await models.BasketOrder.findAll({
+				where: {
+					basketId: basket.id
+				},
+				include: [
+					{
+						model: models.Order
+					},
+					{
+						model: models.Product
+					}
+				]
+
+			})
+			res.status(201).json(data)
 		} catch (e) {
 			console.log('🦺-------err: ', e.message)
 			console.log('🦺-------e: ', e)
 			next(ApiError.badRequest(e.message))
 		}
 
+	}
+
+
+	async getDateAdmin(req, res, next) {
+		try {
+			// console.log('-----------------🦺', '🦺-------------------')
+			const { date } = req.query
+			const data = await models.BasketOrder.findAll({
+				where: {
+					createdAt: {
+						[Op.gte]: new Date(date)
+					}
+				},
+				include: [
+					{
+						model: models.Order
+					},
+					{
+						model: models.Product
+					}
+				]
+			})
+			// console.log('🦺data:', data)
+			res.status(201).json(data)
+		} catch (e) {
+			console.log('🦺-------err: ', e.message)
+			console.log('🦺-------e: ', e)
+			next(ApiError.badRequest(e.message))
+		}
+	}
+
+	async changeStatusOrder(req, res, next) {
+		try {
+			// console.log('-----------------🦺', '🦺-------------------')
+			const { id, status } = req.query
+			console.log('--🦺status:', status)
+			const data = await models.BasketOrder.findOne({
+				where: { id }
+			})
+			// console.log('🦺data:', data)
+			if (status === '1') {
+				data.status = true
+			} else {
+				data.status = false
+			}
+			data.save()
+
+			res.status(201).json({ message: `Статус заказа номер: ${id} изменён` })
+		} catch (e) {
+			console.log('🦺-------err: ', e.message)
+			console.log('🦺-------e: ', e)
+			next(ApiError.badRequest(e.message))
+		}
+	}
+	async getOneAdmin(req, res, next) {
+		try {
+			// console.log('-----------------🦺', '🦺-------------------')
+			const { id } = req.params
+			const data = await models.BasketOrder.findOne({
+				where: { id }
+			})
+			// console.log('🦺data:', data)
+			data.status =
+				res.status(201).json(data)
+
+		} catch (e) {
+			console.log('🦺-------err: ', e.message)
+			console.log('🦺-------e: ', e)
+			next(ApiError.badRequest(e.message))
+		}
 	}
 }
 export const orderController = new OrderController()

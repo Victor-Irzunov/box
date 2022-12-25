@@ -11,7 +11,7 @@ const BadgeIconBasked = observer(({ mobil }) => {
 	return (
 		mobil ?
 			<div
-				className='cursor-pointer ml-3'
+				className='cursor-pointer mr-2'
 			>
 				<Badge count={dataApp.basketLength} size="small" showZero>
 					<Link to='/korzina'>

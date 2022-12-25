@@ -237,6 +237,9 @@ const BasketOrder = sequelize.define('basket_order', {
 	productId: {
 		type: DataTypes.INTEGER
 	},
+	status: {
+		type:DataTypes.BOOLEAN, defaultValue: false
+	}
 })
 
 const Order = sequelize.define('order', {
@@ -284,6 +287,9 @@ Product.belongsTo(Group)
 
 Order.hasMany(BasketOrder)
 BasketOrder.belongsTo(Order)
+
+Product.hasMany(BasketOrder)
+BasketOrder.belongsTo(Product)
 
 Order.belongsTo(User)
 

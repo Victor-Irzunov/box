@@ -23,6 +23,9 @@ import UniversalPage from './pages/universal/UniversalPage'
 import BasketPage from './pages/basket/BasketPage'
 import ProductComparison from './pages/comparison/ProductComparison'
 import LikedList from './pages/likedList/LikedList'
+import OrderHistory from './pages/orderHistory/OrderHistory'
+import MyProfile from './pages/myProfile/MyProfile'
+import CourierPage from './pages/kurer/CourierPage'
 
 
 ConfigProvider.config({
@@ -94,6 +97,9 @@ const App = observer(() => {
                 <Route path='/korzina' element={<BasketPage />} />
                 <Route path='/cpisok-sravneniya' element={<ProductComparison />} />
                 <Route path='/spisok-ponravivshikhsya' element={<LikedList />} />
+                <Route path='/istoriya-zakazov' element={<OrderHistory />} />
+                <Route path='/moi-dannye' element={<MyProfile />} />
+                <Route path='/dlya-voditelya' element={<CourierPage />} />
                 <Route
                   path='/:category/:type/:title'
                   element={<ProductPage />}

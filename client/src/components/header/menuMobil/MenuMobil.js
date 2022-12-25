@@ -17,8 +17,6 @@ const MenuMobil = ({setIsActiveMenu}) => {
 					Главная
 				</NavLink>),
 			key: 'main',
-
-
 		},
 	]
 	dataApp.dataMenu.forEach(el => {
@@ -52,13 +50,10 @@ const MenuMobil = ({setIsActiveMenu}) => {
 
 
 	return (
-
 		<Menu
-			// onClick={onClick}
 			style={{
 				background: 'transparent',
 				color: '#fff',
-				// borderBottom: '1px solid #03030317',
 				paddingBottom: '1em'
 			}}
 			selectedKeys={[current]}

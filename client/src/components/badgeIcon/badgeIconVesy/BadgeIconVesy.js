@@ -75,7 +75,7 @@ const BadgeIconVesy = observer(({ cardComp, header, productPage, addToComparison
 			}
 			{
 				mobil &&
-				<div className='cursor-pointer'>
+				<div className='cursor-pointer mr-3'>
 					<Link to={`/${cyrillicToTranslit.transform(('cписок сравнения').split(' ').join('-'))}`}>
 						<Badge count={dataApp.vesyLength} size="small">
 							<img

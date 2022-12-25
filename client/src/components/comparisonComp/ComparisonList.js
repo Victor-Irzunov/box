@@ -116,30 +116,33 @@ const ComparisonList = observer(() => {
 												size='small'
 											>
 												<DeleteOutlined />
-												удалить
+
 											</Button>
 										</div>
 									</div>,
 									render: () => {
 										return (
-											<div key={el.id} >
-												<Link to={{
-													pathname: `/${el.categories[0].link}/${el.types[0].link}/${cyrillicToTranslit.transform(el.name.split(' ').join('-'))}`,
-												}}
-													state={{ id: el.id, location: location.pathname }}
-												>
-													<Paragraph
-														ellipsis={{ rows: 1, symbol: '...' }}
-														className='font-semibold text-base'
+											<div key={el.id} className='block'>
+												<div className=''>
+													<Link to={{
+														pathname: `/${el.categories[0].link}/${el.types[0].link}/${cyrillicToTranslit.transform(el.name.split(' ').join('-'))}`,
+													}}
+														state={{ id: el.id, location: location.pathname }}
 													>
-														{el.name}
-													</Paragraph>
-												</Link>
-												<div className='flex justify-between'>
-													<p>{el.price} BYN</p>
-													<BtnComp el={el} />
+														<Paragraph
+															ellipsis={{ rows: 1, symbol: '...' }}
+															className='font-semibold text-base mt-2'
+														>
+															{el.name}
+														</Paragraph>
+													</Link>
+													<div className='flex justify-between'>
+														<p>{el.price} BYN</p>
+														<BtnComp el={el} />
+													</div>
+													<Rate allowHalf defaultValue={4.5} disabled />
 												</div>
-												<Rate allowHalf defaultValue={4.5} disabled />
+												<p className='text-center mt-2 text-base'>Характеристики</p>
 												{dataTitleInfo && dataTitleInfo.map((elem) => {
 													return (
 														<div className='mb-3 mt-2 border-b' key={elem.id}>
@@ -151,8 +154,10 @@ const ComparisonList = observer(() => {
 																	return (
 																		<div key={item.id}>
 																			<div className='flex justify-between mb-2'>
-																				<p>{item.title}</p>
-																				<Tag color="pink">{item.description}</Tag>
+																				<p className='xs:text-xs xx:text-xs xy:text-xs sm:text-base w-1/2'>{item.title}:</p>
+
+																				<p className='xs:text-xs xx:text-xs xy:text-xs sm:text-base text-right'>{item.description}</p>
+
 																			</div>
 																		</div>
 																	)

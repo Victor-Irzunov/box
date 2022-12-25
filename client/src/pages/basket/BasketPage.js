@@ -38,7 +38,6 @@ const BasketPage = observer(() => {
 		} else {
 			getAllBasketUser()
 				.then(data => {
-					console.log('-basket----data:', data)
 					if (data.length) {
 						// dataApp.setBasketLength(data.length)
 						const dataArr = []
@@ -65,14 +64,14 @@ const BasketPage = observer(() => {
 		<section className='container min-h-screen flex flex-col justify-evenly pb-10 pt-10 '>
 			<Title>Моя корзина</Title>
 			<div className=''>
-			{Object.entries(screens)
-				.filter((screen) => !!screen[1])
-				.map((screen) => (
-					<Tag color="blue" key={screen[0]}>
-						{screen[0]}
-					</Tag>
-				))}
-				</div>
+				{Object.entries(screens)
+					.filter((screen) => !!screen[1])
+					.map((screen) => (
+						<Tag color="blue" key={screen[0]}>
+							{screen[0]}
+						</Tag>
+					))}
+			</div>
 
 			<BasketSteps data={data} setData={setData} />
 		</section>

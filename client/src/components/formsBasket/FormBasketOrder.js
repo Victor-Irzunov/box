@@ -4,7 +4,7 @@ import {
 	Radio,
 	Form,
 	Input,
-	Select,
+	// Select,
 	DatePicker,
 	Divider,
 	message,
@@ -16,13 +16,14 @@ import InputMask from 'react-input-mask'
 // import { FieldTimeOutlined } from '@ant-design/icons'
 import { useCookieList } from '../../hooks/useCookieList'
 import moment from 'moment'
-import { observer } from 'mobx-react-lite'
+// import { observer } from 'mobx-react-lite'
 import { Context } from '../../App'
 import { orderUser } from '../../http/orderAPI'
 import { deleteAllProductBasketUser } from '../../http/basketAPI'
 import { useScreens } from '../../Constants/constants'
+import { sendOrderTelegram } from '../../http/telegramAPI'
 
-const { Option } = Select
+// const { Option } = Select
 const { TextArea } = Input
 const dateFormat = 'DD.MM.YYYY'
 
@@ -63,21 +64,23 @@ const FormBasketOrder = ({ next }) => {
 
 		orderUser(formData)
 			.then(data => {
-				console.log('data order: ', data)
 				message.success('Заказ оформлен!')
+				sendOrderTelegram(data)
 				form.resetFields()
 				if (!user.isAuth) {
 					deleteAllList('BasketProduct', null)
 				} else {
 					deleteAllProductBasketUser(user.userData.id)
 						.then(data => {
-							console.log('--->>>>>data:', data)
 							dataApp.setBasketLength(0)
 						})
 				}
 				next()
 			})
 	}
+
+
+
 
 	const onFinishFailed = (errorInfo) => {
 		console.log('Failed:', errorInfo)
@@ -111,7 +114,6 @@ const FormBasketOrder = ({ next }) => {
 		}
 	}
 	const onChange = e => {
-		console.log('radio checked', e.target.value)
 		if (value === 'kurer_minsk') {
 			form.setFieldsValue({ address_city: '' })
 		} else {
@@ -130,10 +132,10 @@ const FormBasketOrder = ({ next }) => {
 			name="order"
 			form={form}
 			labelCol={{
-				span: 6,
+				span: 7,
 			}}
 			wrapperCol={{
-				span: 16,
+				span: 15,
 			}}
 			initialValues={{
 				address_city: 'Минск',
@@ -331,7 +333,7 @@ const FormBasketOrder = ({ next }) => {
 				name="oplata"
 				rules={[{ required: true, message: 'Выберите форму оплаты!' }]}
 				wrapperCol={{
-					offset: 2,
+					offset: 4,
 					span: 16,
 				}}
 			>
