@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import ChangeStatusOrder from '../../components/changeStatus/ChangeStatusOrder'
-import GetOrderAdmin from '../../components/ordersAdmin/GetOrderAdmin'
-import RenderingDataOrder from '../../components/ordersAdmin/RenderingDataOrder'
+import GetOrderAdmin from '../../components/formsAdmin/formOrdersAdmin/GetOrderAdmin'
+import RenderingDataOrder from '../../components/formsAdmin/formOrdersAdmin/RenderingDataOrder'
 import { Collapse } from 'antd'
 
 const { Panel } = Collapse

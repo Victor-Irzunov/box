@@ -3,27 +3,15 @@ import { useLocation, Link } from "react-router-dom"
 import { HomeOutlined } from '@ant-design/icons'
 import { Breadcrumb, Menu } from "antd"
 import CyrillicToTranslit from 'cyrillic-to-translit-js'
-import { items } from '../../content/Content'
-
-
 
 
 const BreadCrumbComp = () => {
 	const cyrillicToTranslit = new CyrillicToTranslit()
-
-
-	const menu = (
-		<Menu
-			items={items[2].children}
-		/>
-	)
 	const location = useLocation()
-
 	const breadCrumbView = () => {
 		const { pathname } = location
 		const pathnames = pathname.split("/").filter((item) => item)
 		const capatilize = s => s.charAt(0).toUpperCase() + s.slice(1)
-
 
 		return (
 			<div className="container">
@@ -59,15 +47,13 @@ const BreadCrumbComp = () => {
 											{capatilize(names)}
 										</Link>
 									</Breadcrumb.Item>
-								);
+								)
 						}
 					})}
 				</Breadcrumb>
 			</div>
 		)
 	}
-
 	return <>{breadCrumbView()}</>
 }
-
 export default BreadCrumbComp

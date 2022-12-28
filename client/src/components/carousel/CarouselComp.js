@@ -1,23 +1,21 @@
 import { Carousel } from 'antd'
 import React from 'react'
-import { itemCarousel } from '../../content/Content'
-import UploadImg from '../carousel/uploadImg/UploadImg'
-// import { cardItem } from '../../content/Content'
+// import { useScreens } from '../../Constants/constants'
 
 
-
-const CarouselComp = () => {
+const CarouselComp = ({imgData}) => {
+	// const screens = useScreens()
+	
 	return (
 		<div className='mt-5'>
 			<Carousel autoplay>
-				{itemCarousel.map(el => {
+				{imgData.map(el => {
 					return (
 						<div key={el.id} className='w-full relative'>
 							<img
 								style={{ width: '100%' }}
-								src={el.box}
+								src={process.env.REACT_APP_API_URL + el.img}
 							/>
-							{/* <UploadImg id={el.id} /> */}
 						</div>
 					)
 				})}

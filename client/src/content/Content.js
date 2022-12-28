@@ -1,215 +1,163 @@
-import {
-	GiftOutlined,
-} from '@ant-design/icons'
-import { NavLink, Link } from 'react-router-dom'
-import logo from '../images/logo/logo3.webp'
-import SearchComp from '../components/searchComp/SearchComp'
-import img from '../images/carousel/1.webp'
-import img2 from '../images/carousel/2.webp'
-import img3 from '../images/carousel/3.webp'
-// import sneakers from '../images/mainCardImg/sneakers.webp'
-// import sneakers2 from '../images/mainCardImg/sneakers-2.webp'
-// import sneakers3 from '../images/mainCardImg/sneakers-3.webp'
-// import sneakers4 from '../images/mainCardImg/sneakers-4.webp'
-// import box from '../images/mainCardImg/2.webp'
-// import box1 from '../images/mainCardImg/1.webp'
-import { Badge } from 'antd'
+// import {
+// 	GiftOutlined,
+// } from '@ant-design/icons'
+// import { NavLink, Link } from 'react-router-dom'
+// import logo from '../images/logo/logo3.webp'
+// import { Badge } from 'antd'
 
 
-export const items = [
-	{
-		label: (
-			<NavLink to="/">
-				<img src={logo} className='inline w-36' />
-			</NavLink>),
-		key: 'main',
-	},
-	{
-		label: <Badge
-		offset={[9, -1]}
-		count={
-			<GiftOutlined 
-				style={{
-					color: '#00FF26',
-				}}
-			/>
-		}
-		>
-			<NavLink to="/новогодние-боксы" className='text-white' >
-				Новогодние боксы
-			</NavLink>
-		</Badge>,
-		key: 'box1',
-		children: [
-			{
-				label: (
-					<Link to="/" >
-						Для парня
-					</Link>
-				),
-				key: 'setting:1',
-
-			},
-			{
-				label: (
-					<Link to="/">
-						Для девушки
-					</Link>),
-				key: 'setting:2',
-
-			},
-			{
-				label: (
-					<Link to="/">
-						Для мальчика
-					</Link>),
-				key: 'setting:3',
-			},
-			{
-				label: (
-					<Link to="/">
-						Для девочки
-					</Link>),
-				key: 'setting:4',
-			},
-		],
-	},
-	{
-		label: <NavLink to="/boks-na-23-fevralya" >
-			Боксы на 23 февраля
-		</NavLink>,
-		key: 'box2',
-		children: [
-			{
-				label: (
-					<Link to="/" >
-						Для мужчины
-					</Link>
-				),
-				key: 'setting:5',
-			},
-			{
-				label: (
-					<Link to="/">
-						Для мальчика
-					</Link>),
-				key: 'setting:6',
-			},
-		],
-	},
-	{
-		label: <NavLink to="/boks-na-8-marta" >
-			Боксы на 8 марта
-		</NavLink>,
-		key: 'box3',
-		children: [
-
-			{
-				label: (
-					<Link to="/">
-						Для девушки
-					</Link>),
-				key: 'setting:7',
-
-			},
-			{
-				label: (
-					<Link to="/">
-						Для девочки
-					</Link>),
-				key: 'setting:8',
-			},
-		],
-	},
-	{
-		label: <NavLink to="/boks-na-den-rozhdeniya" >
-			Боксы на день рождения
-		</NavLink>,
-		key: 'box4',
-		children: [
-			{
-				label: (
-					<Link to="/" >
-						Для парня
-					</Link>
-				),
-				key: 'setting:1',
-
-			},
-			{
-				label: (
-					<Link to="/">
-						Для девушки
-					</Link>),
-				key: 'setting:2',
-
-			},
-			{
-				label: (
-					<Link to="/">
-						Для мальчика
-					</Link>),
-				key: 'setting:3',
-			},
-			{
-				label: (
-					<Link to="/">
-						Для девочки
-					</Link>),
-				key: 'setting:4',
-			},
-		],
-	},
-	{
-		label: <NavLink to="/boks-syurpriz" >
-			Сюрприз боксы
-		</NavLink>,
-		key: 'box5',
-	},
-]
-
-export const itemCarousel = [
-	{
-		id: 1,
-		box: img,
-	},
-	{
-		id: 2,
-		box: img2,
-	},
-	{
-		id: 3,
-		box: img3,
-	}
-]
-
-// export const cardItem = [
+// export const items = [
 // 	{
-// 		title: 'Box',
-// 		image: box,
-// 		id: 1,
-// 		link: '/'
+// 		label: (
+// 			<NavLink to="/">
+// 				<img src={logo} className='inline w-36' />
+// 			</NavLink>),
+// 		key: 'main',
 // 	},
 // 	{
-// 		title: 'Box-1',
-// 		image: box1,
-// 		id: 2,
-// 		link: '/'
-// 	},
-// 	{
-// 		title: 'Box-2',
-// 		image: box,
-// 		id: 3,
-// 		link: '/'
-// 	},
-// 	{
-// 		title: 'Box-3',
-// 		image: box1,
-// 		id: 4,
-// 		link: '/'
-// 	},
+// 		label: <Badge
+// 		offset={[9, -1]}
+// 		count={
+// 			<GiftOutlined 
+// 				style={{
+// 					color: '#00FF26',
+// 				}}
+// 			/>
+// 		}
+// 		>
+// 			<NavLink to="/новогодние-боксы" className='text-white' >
+// 				Новогодние боксы
+// 			</NavLink>
+// 		</Badge>,
+// 		key: 'box1',
+// 		children: [
+// 			{
+// 				label: (
+// 					<Link to="/" >
+// 						Для парня
+// 					</Link>
+// 				),
+// 				key: 'setting:1',
 
+// 			},
+// 			{
+// 				label: (
+// 					<Link to="/">
+// 						Для девушки
+// 					</Link>),
+// 				key: 'setting:2',
+
+// 			},
+// 			{
+// 				label: (
+// 					<Link to="/">
+// 						Для мальчика
+// 					</Link>),
+// 				key: 'setting:3',
+// 			},
+// 			{
+// 				label: (
+// 					<Link to="/">
+// 						Для девочки
+// 					</Link>),
+// 				key: 'setting:4',
+// 			},
+// 		],
+// 	},
+// 	{
+// 		label: <NavLink to="/boks-na-23-fevralya" >
+// 			Боксы на 23 февраля
+// 		</NavLink>,
+// 		key: 'box2',
+// 		children: [
+// 			{
+// 				label: (
+// 					<Link to="/" >
+// 						Для мужчины
+// 					</Link>
+// 				),
+// 				key: 'setting:5',
+// 			},
+// 			{
+// 				label: (
+// 					<Link to="/">
+// 						Для мальчика
+// 					</Link>),
+// 				key: 'setting:6',
+// 			},
+// 		],
+// 	},
+// 	{
+// 		label: <NavLink to="/boks-na-8-marta" >
+// 			Боксы на 8 марта
+// 		</NavLink>,
+// 		key: 'box3',
+// 		children: [
+
+// 			{
+// 				label: (
+// 					<Link to="/">
+// 						Для девушки
+// 					</Link>),
+// 				key: 'setting:7',
+
+// 			},
+// 			{
+// 				label: (
+// 					<Link to="/">
+// 						Для девочки
+// 					</Link>),
+// 				key: 'setting:8',
+// 			},
+// 		],
+// 	},
+// 	{
+// 		label: <NavLink to="/boks-na-den-rozhdeniya" >
+// 			Боксы на день рождения
+// 		</NavLink>,
+// 		key: 'box4',
+// 		children: [
+// 			{
+// 				label: (
+// 					<Link to="/" >
+// 						Для парня
+// 					</Link>
+// 				),
+// 				key: 'setting:1',
+
+// 			},
+// 			{
+// 				label: (
+// 					<Link to="/">
+// 						Для девушки
+// 					</Link>),
+// 				key: 'setting:2',
+
+// 			},
+// 			{
+// 				label: (
+// 					<Link to="/">
+// 						Для мальчика
+// 					</Link>),
+// 				key: 'setting:3',
+// 			},
+// 			{
+// 				label: (
+// 					<Link to="/">
+// 						Для девочки
+// 					</Link>),
+// 				key: 'setting:4',
+// 			},
+// 		],
+// 	},
+// 	{
+// 		label: <NavLink to="/boks-syurpriz" >
+// 			Сюрприз боксы
+// 		</NavLink>,
+// 		key: 'box5',
+// 	},
 // ]
+
 
 export const dataListFooter = [
 	'Возврат товара',
@@ -237,49 +185,6 @@ export const titles = {
 	},
 }
 
-// export const itemCard = [
-// 	{
-// 		id: 1,
-// 		img: sneakers,
-// 		title: 'Nike / Кроссовки',
-// 		description: 'Jordan 4 Retro',
-// 		art: '50069669',
-// 		price: 235,
-// 		rate: 2.5,
-// 		rateText: 34,
-// 	},
-// 	{
-// 		id: 2,
-// 		img: sneakers2,
-// 		title: 'Nike / Кроссовки',
-// 		description: 'Jordan 4 Retro',
-// 		art: '50069669',
-// 		price: 235,
-// 		rate: 4.5,
-// 		rateText: 45,
-// 	},
-// 	{
-// 		id: 3,
-// 		img: sneakers3,
-// 		title: 'Nike / Кроссовки',
-// 		description: 'Jordan 4 Retro',
-// 		art: '50069669',
-// 		price: 235,
-// 		rate: 5,
-// 		rateText: 14,
-// 	},
-// 	{
-// 		id: 4,
-// 		img: sneakers4,
-// 		title: 'Nike / Кроссовки',
-// 		description: 'Jordan 4 Retro',
-// 		art: '50069669',
-// 		price: 235,
-// 		rate: 1.5,
-// 		rateText: 31,
-// 	},
-// ]
-
 export const textMenPage = {
 	h1: 'Подарочные боксы',
 	h2: 'Где купить подарочные боксы?',
@@ -297,40 +202,40 @@ export const textMenPage = {
 	·Совет № 5 Пройдитесь в новой паре по магазину. Обувь не должна нигде давить, но и болтаться на ней тоже не должна.`
 }
 
-export const user = [
-	{
-		user: 'Хомичь Надежда Ивановна',
-		id: 1,
-		nik: 'jaqueline',
-		text: 'Перевозили диван в Минске. Вышла на улицу без телефона к указанному времени, прождала 25 минут, сказали, что звонили предупрудить об пробке на дороге.  А так я очень давольна, вежливые и аккуратные сотрудники, еще и по адекватной цене. Рекомендую!',
-		date: '2022-06-22 11:22:33'
-	},
-	{
-		user: 'Сацук Сергей',
-		id: 2,
-		nik: 'jed',
-		text: 'Вывозили строительный мусор, не ожидал, что придут со щёткой. В подьезде и лифте осталось чисто и это круто)) ',
-		date: '2022-07-12 09:31:33'
-	},
-	{
-		user: 'Лукашевич Петр',
-		id: 3,
-		nik: 'jai',
-		text: 'Отличная компания. Остались очень довольны. Цены средние. В общем всем рекомендую этих ребят!!!',
-		date: '2022-07-25 18:01:33'
-	},
-	{
-		user: 'Окуневич Егор',
-		id: 4,
-		nik: 'jerry',
-		text: 'Заказал переезд на другой офис в Минске, позвонил и в этот же день все было перевезено. Спасибо за сервис!',
-		date: '2022-08-01 20:11:13'
-	},
-	{
-		user: 'Корачун Настя',
-		id: 5,
-		nik: 'jodi',
-		text: 'Заказала доставку бытовой техники, предлагали в магазине доставку, надо было долго ждать. Узнала от подруги об этой компании, когда заносили немного ударили холодильник (маленькая вмятина), но это я виновата долго решала куда ставить технику. Очень довольна, рекомендую!',
-		date: '2022-08-10 21:22:18'
-	},
-]
+// export const user = [
+// 	{
+// 		user: 'Хомичь Надежда Ивановна',
+// 		id: 1,
+// 		nik: 'jaqueline',
+// 		text: 'Перевозили диван в Минске. Вышла на улицу без телефона к указанному времени, прождала 25 минут, сказали, что звонили предупрудить об пробке на дороге.  А так я очень давольна, вежливые и аккуратные сотрудники, еще и по адекватной цене. Рекомендую!',
+// 		date: '2022-06-22 11:22:33'
+// 	},
+// 	{
+// 		user: 'Сацук Сергей',
+// 		id: 2,
+// 		nik: 'jed',
+// 		text: 'Вывозили строительный мусор, не ожидал, что придут со щёткой. В подьезде и лифте осталось чисто и это круто)) ',
+// 		date: '2022-07-12 09:31:33'
+// 	},
+// 	{
+// 		user: 'Лукашевич Петр',
+// 		id: 3,
+// 		nik: 'jai',
+// 		text: 'Отличная компания. Остались очень довольны. Цены средние. В общем всем рекомендую этих ребят!!!',
+// 		date: '2022-07-25 18:01:33'
+// 	},
+// 	{
+// 		user: 'Окуневич Егор',
+// 		id: 4,
+// 		nik: 'jerry',
+// 		text: 'Заказал переезд на другой офис в Минске, позвонил и в этот же день все было перевезено. Спасибо за сервис!',
+// 		date: '2022-08-01 20:11:13'
+// 	},
+// 	{
+// 		user: 'Корачун Настя',
+// 		id: 5,
+// 		nik: 'jodi',
+// 		text: 'Заказала доставку бытовой техники, предлагали в магазине доставку, надо было долго ждать. Узнала от подруги об этой компании, когда заносили немного ударили холодильник (маленькая вмятина), но это я виновата долго решала куда ставить технику. Очень довольна, рекомендую!',
+// 		date: '2022-08-10 21:22:18'
+// 	},
+// ]

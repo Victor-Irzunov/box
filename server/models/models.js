@@ -160,6 +160,7 @@ const SliderImg = sequelize.define('sliderImg', {
 	img: { type: DataTypes.STRING, allowNull: false },
 })
 
+
 const CategoryProduct = sequelize.define('category_product', {
 	id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 })

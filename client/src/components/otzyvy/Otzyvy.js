@@ -6,7 +6,7 @@ import moment from 'moment'
 import { user } from '../../content/Content'
 
 const Otzyvy = ({ product }) => {
-	const [likes, setLikes] = useState(13)
+	const [likes, setLikes] = useState(0)
 	const [dislikes, setDislikes] = useState(0)
 	const [action, setAction] = useState(null)
 

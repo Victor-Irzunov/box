@@ -2,14 +2,13 @@ import React, { useEffect, useState } from 'react'
 import {
 	Button, InputNumber,
 	Form, Input, Radio,
-	message, Select,
+	message, 
 	Tooltip,
-	Collapse,
 	Image,
 	Checkbox,
 	Empty,
 	Divider, Alert,
-	Affix, Popconfirm
+	Affix,
 } from 'antd'
 import DragableComp from '../../upload/DragableComp'
 import {
@@ -18,11 +17,10 @@ import {
 	fetchInfo,
 } from '../../../http/productsAPI'
 import { InfoCircleOutlined, CopyOutlined } from '@ant-design/icons'
-import { createProduct, updateOneProduct } from '../../../http/adminAPI'
+import { updateOneProduct } from '../../../http/adminAPI'
 
 
 import Resizer from "react-image-file-resizer"
-import UploadImg from '../../uploadImg/UploadImg'
 const resizeFile = (file, size, size2) =>
 	new Promise((resolve) => {
 		Resizer.imageFileResizer(
@@ -30,7 +28,7 @@ const resizeFile = (file, size, size2) =>
 			size,
 			size2,
 			"WEBP",
-			100,
+			90,
 			0,
 			(uri) => {
 				resolve(uri)
@@ -40,10 +38,6 @@ const resizeFile = (file, size, size2) =>
 	})
 
 const { TextArea } = Input
-const { Option } = Select
-
-
-
 
 
 const FormChangeProduct = ({ product, setProduct }) => {
@@ -55,9 +49,6 @@ const FormChangeProduct = ({ product, setProduct }) => {
 	const [group, setGroup] = useState(2)
 	const [groupId, setGroupId] = useState(null)
 	const [title, setTitle] = useState('')
-
-
-
 
 	useEffect(() => {
 		fetchInfo()
@@ -81,22 +72,7 @@ const FormChangeProduct = ({ product, setProduct }) => {
 			.catch(err => {
 				message.error(err.message)
 			})
-
-
-		// if (Object.keys(product)) {
-		// 	const arr = []
-		// 	JSON.parse(product.img).forEach((el, idx) => {
-		// 		arr.push({
-		// 			uid: idx +1,
-		// 			name: el.image,
-		// 			url: `${process.env.REACT_APP_API_URL + el.image}`,
-		// 		})
-		// 	})
-		// 	setFileList(arr)
-		// }
 	}, [])
-
-
 
 	const onFinish = async values => {
 		console.log('Success:', values)

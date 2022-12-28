@@ -65,16 +65,16 @@ export const getDateOrders = async (date) => {
 	})
 	return data
 }
-export const changeStatusOrder = async ({id, status}) => {
+export const changeStatusOrder = async ({ id, status }) => {
 	const { data } = await $authHost.get('api/order/change/status', {
 		params: {
 			id, status
 		}
-	} )
+	})
 	return data
 }
 export const getOneOrder = async (id) => {
-	const { data } = await $authHost.get('api/order/'+ id )
+	const { data } = await $authHost.get('api/order/' + id)
 	return data
 }
 
@@ -90,16 +90,27 @@ export const getDateOrdersCourier = async (date) => {
 	})
 	return data
 }
-export const changeStatusOrderCourier = async ({id, status}) => {
+export const changeStatusOrderCourier = async ({ id, status }) => {
 	const { data } = await $authHost.get('api/order/courier/change/status', {
 		params: {
 			id, status
 		}
-	} )
+	})
 	return data
 }
 export const getOneOrderCourier = async (id) => {
-	const { data } = await $authHost.get('api/order/courier/'+ id )
+	const { data } = await $authHost.get('api/order/courier/' + id)
+	return data
+}
+
+export const createSliderImg = async (obj) => {
+	const { data } = await $authHost.post('api/img', obj)
+	return data
+}
+
+export const deleteSliderImg = async ( obj ) => {
+	console.log('obj: ', obj)
+	const { data } = await $authHost.put('api/img', obj)
 	return data
 }
 

@@ -15,8 +15,8 @@ const ButtonGroup = ({ next, previous, product, ...rest }) => {
 	return (
 		<div className={!product
 			?
-			"absolute sm:top-56 xs:top-28 xx:top-56 right-2"
-			: 'absolute sm:top-72 xs:top-36 xx:top-64 xy:top-56 right-2'}
+			"absolute sm:top-56 ss:top-56 xm:top-48 xs:top-32 xx:top-56 xy:top-56 right-2"
+			: 'absolute sm:top-72 xm:top-52 xs:top-44 xx:top-72 xy:top-72 right-2'}
 		>
 			<Button className={currentSlide === 0 ? 'disable' : ''}
 				onClick={() => previous()} >
@@ -56,25 +56,28 @@ const CarouselCard = ({ product, cardItem }) => {
 	let location = useLocation()
 
 	return (
-		<div className='overflow-hidden sm:h-80 xs:h-44 xx:h-72 xy:h-64'>
+		<div className='overflow-hidden
+		 sm:h-80 xm:h-64 xs:h-52 xx:h-80 xy:h-80
+		 '>
 			<Carousel
 				arrows={false}
 				customButtonGroup={<ButtonGroup product={product} />}
 				responsive={responsive}
-			// className='h-auto'
+				className='relative'
 			>
 				{product ?
 					product.map((el) => {
 						return (
 							<Card
-								bordered={false}
+								// bordered={false}
 								hoverable={true}
 								key={el.id}
 								style={{
-									background: '#efefef',
 									marginRight: '1em',
-									overflow: 'hidden'
-								}}>
+									overflow: 'hidden',
+								}}
+								className='border-[#d8d6d7]'
+							>
 								<Space>
 									<Image src={process.env.REACT_APP_API_URL + JSON.parse(el.imgMini)[0].image} />
 									<div>
@@ -84,6 +87,10 @@ const CarouselCard = ({ product, cardItem }) => {
 											state={{ id: el.id, location: location.pathname }}
 										>
 											{el.name}
+											<Button type='text' className='pl-0'>
+												Посмотреть{' '}
+												<ArrowRightOutlined />
+											</Button>
 										</Link>
 										<p className='text-right mr-4'>{el.price} BYN</p>
 									</div>
@@ -100,20 +107,19 @@ const CarouselCard = ({ product, cardItem }) => {
 								key={el.id}
 								hoverable={true}
 								style={{
-									// background: '#eed7e5',
-									// height: '220px',
+									background: '#fff',
 									marginLeft: '0.5em',
 									marginRight: '0.5em',
 									overflow: 'hidden',
-									border: '1px solid #ff0084'
+									border: '1px solid #ddd'
 								}}
 
 							>
 								<Space>
 									<Image src={process.env.REACT_APP_API_URL + JSON.parse(el.imgMini)[0].image} />
 									<div>
-										
-										
+
+
 										<Link to={{
 											pathname: `/${el.categories[0].link}/${el.types[0].link}/${cyrillicToTranslit.transform(el.name.split(' ').join('-'))}`,
 										}}
@@ -121,9 +127,9 @@ const CarouselCard = ({ product, cardItem }) => {
 										>
 											{el.name}
 											<Button type='text' className='pl-0'>
-											Посмотреть{' '}
-											<ArrowRightOutlined />
-										</Button>
+												Посмотреть{' '}
+												<ArrowRightOutlined />
+											</Button>
 										</Link>
 									</div>
 								</Space>

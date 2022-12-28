@@ -25,7 +25,7 @@ const PohozhieTovary = ({ product }) => {
 				style={{ fontSize: '1.5em', color: '#ccc' }}
 				className=''
 			>
-				Похожие товары
+				Похожие боксы
 			</Divider>
 			<CarouselCard product={productData} />
 		</div>

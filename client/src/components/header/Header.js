@@ -120,7 +120,7 @@ const Header = observer(() => {
           className='z-10'
         >
           <div className={`duration-500 ${isActiveMenu ? 'h-screen' : 'h-12'}
-         bg-[#ff0084] pt-3 pb-2
+         bg-[#ff0084] pt-3 pb-2 px-3
          absolute left-0 right-0 top-0
          `}>
             <div className='container flex justify-between items-center z-50'>

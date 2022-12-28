@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react'
 import { PlusOutlined } from '@ant-design/icons'
 import { Divider, Input, Select, Space, Button, message, Tag } from 'antd'
 // import { createBrand, deleteBrand } from '../../http/adminAPI'
-import { SketchPicker } from 'react-color'
+// import { SketchPicker } from 'react-color'
 import CyrillicToTranslit from 'cyrillic-to-translit-js'
 
 
@@ -32,7 +32,7 @@ const FormComp = ({ data, setIsLoad, fuCreate, fuDelete, text, row, color }) => 
 					setIsLoad(i => !i)
 				})
 				.catch(data => {
-					message.error(data.message)
+					message.error(data.response.data.message)
 				})
 			setName('')
 			setTimeout(() => {

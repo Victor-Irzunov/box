@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react'
 import {
 	Button, InputNumber,
 	Form, Input, Radio,
-	message, Select,
+	message,
 	Tooltip,
-	Collapse,
 	Checkbox,
 	Empty,
 	Divider, Alert,
@@ -18,10 +17,7 @@ import {
 } from '../../../http/productsAPI'
 import { InfoCircleOutlined, CopyOutlined } from '@ant-design/icons'
 import { createProduct } from '../../../http/adminAPI'
-// import { CirclePicker } from 'react-color'
-
 import Resizer from "react-image-file-resizer"
-// const { Panel } = Collapse
 
 const resizeFile = (file, size, size2) =>
 	new Promise((resolve) => {
@@ -30,7 +26,7 @@ const resizeFile = (file, size, size2) =>
 			size,
 			size2,
 			"WEBP",
-			100,
+			90,
 			0,
 			(uri) => {
 				resolve(uri)
@@ -39,11 +35,7 @@ const resizeFile = (file, size, size2) =>
 		)
 	})
 
-
 const { TextArea } = Input
-const { Option } = Select
-
-
 
 const FormProduct = () => {
 	const [form] = Form.useForm()
@@ -53,7 +45,6 @@ const FormProduct = () => {
 	const [fileList, setFileList] = useState([])
 	const [group, setGroup] = useState(null)
 	const [groupId, setGroupId] = useState(null)
-	// const [groupNumInput, setGroupNumInput] = useState(null)
 
 	const [title, setTitle] = useState('')
 
@@ -144,9 +135,6 @@ const FormProduct = () => {
 
 	const groupNumber = num => {
 		setGroup(num.target.value)
-		// if (num.target.value === 0 || num.target.value === 1) {
-
-		// }
 	}
 
 	const confirm = (e) => {
@@ -158,8 +146,6 @@ const FormProduct = () => {
 
 	return (
 		<>
-
-
 			<Form
 				name="product"
 				form={form}
@@ -260,7 +246,6 @@ const FormProduct = () => {
 										key={el.id}
 										value={el.id}
 										className='mr-1 mb-1'
-									// onClick={() => fu(el.name, 1)}
 									>
 										{el.name}
 									</Radio.Button>)
@@ -284,7 +269,6 @@ const FormProduct = () => {
 					<Input
 						allowClear
 						onBlur={e => {
-							// requestTitle(e)
 							setTitle(e.target.value)
 						}}
 						addonAfter={<Tooltip title="скопировать название">
@@ -318,8 +302,6 @@ const FormProduct = () => {
 						autoSize allowClear showCount
 					/>
 				</Form.Item>
-
-
 				<Form.Item
 					label="Цена"
 					name="price"

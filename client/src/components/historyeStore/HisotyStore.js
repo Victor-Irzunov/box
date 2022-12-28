@@ -1,6 +1,6 @@
 import { Space, Image, Switch, Typography } from 'antd'
-import { HighlightOutlined,  } from '@ant-design/icons'
-import React,{useState} from 'react'
+import { HighlightOutlined, } from '@ant-design/icons'
+import React, { useState } from 'react'
 import logohistory from '../../images/historyStore/box-history.jpeg'
 
 const { Paragraph } = Typography
@@ -14,31 +14,36 @@ function HisotyStore() {
 	Design, a design language for background applications, is refined by Ant UED Team. Ant
 	Design, a design language for background applications, is refined by Ant UED Team.`)
 
-	
+
 	return (
-		<Space
-			// wrap={true}
-			size={[16, 8]}
-			className='mt-20 pb-10 xs:mt-6'
+		<div
+			className='sm:mt-20 pb-10 xm:mt-12 ss:mt-12
+			 xx:mt-6 xy:mt-6
+			 flex justify-between 
+			 xy:flex-wrap xy:justify-center
+			  xx:flex-wrap xx:justify-center 
+			  xs:flex-wrap xs:justify-center 
+			  sm:flex-nowrap'
 		>
-			<Image src={logohistory} width='90%' />
+			<Image src={logohistory} width='90%' className='mb-5' />
 			<div>
 				<Typography.Title
 					style={{
 						margin: 0,
-						fontSize:'1.6em',
+						fontSize: '1.6em',
+						marginLeft: '1em',
 					}}
 				>
 					{editH1}
 				</Typography.Title>
 				<Paragraph
 					ellipsis={{ rows: 2, expandable: true, symbol: 'читать дальше' }}
-					className='text-gray-500'
+					className='text-gray-500 ml-6'
 				>
 					{editContent}
 				</Paragraph>
 			</div>
-		</Space>
+		</div>
 	)
 }
 

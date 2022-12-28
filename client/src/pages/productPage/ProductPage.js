@@ -128,18 +128,9 @@ const ProductPage = observer(() => {
 					<ArrowLeftOutlined /> назад
 				</Button>
 				<Typography.Title
-					// editable={isAdmin && {
-					// 	onChange: setEditH1,
-					// 	icon: <HighlightOutlined />,
-					// }}
-					level={1}
-					className=''
 				>
 					{editH1}
 				</Typography.Title>
-
-
-
 
 				<div className='flex w-1/4 sm:w-full xs:w-full xx:w-full xy:w-full justify-between'>
 					<div className='flex'>

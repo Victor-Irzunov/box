@@ -1,11 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { Helmet } from "react-helmet"
 import { Typography, Layout, Space, Button, Divider, BackTop, Empty, Tag, Drawer } from 'antd'
-import { HighlightOutlined, UpCircleOutlined, DownCircleOutlined } from '@ant-design/icons'
+import { UpCircleOutlined, DownCircleOutlined } from '@ant-design/icons'
 import CardComp from '../../components/Card/CardComp'
 import FilterAll from '../../components/filterAll/FilterAll'
 import { textMenPage } from '../../content/Content'
-import TitleAffix from '../../components/titleAffix/TitleAffix'
 import { Context } from '../../App'
 import { observer } from "mobx-react-lite"
 import PaginationComp from '../../components/pagination/PaginationComp'
@@ -104,10 +103,8 @@ const UniversalPage = observer(() => {
 	])
 
 	const sendFormFilter = () => {
-		console.log('⛑️---------⛑️')
 		fetchProducts(page, pageSize, categoryId, typeId, inputValueFrom, inputValueBefore)
 			.then(data => {
-				console.log('-----data2: ', data)
 				setItemCard(data.rows)
 				setTotalItem(data.count)
 			})
@@ -159,9 +156,7 @@ const UniversalPage = observer(() => {
 
 			<BackTop />
 			<section className='container'>
-				{/* {
-					isAdmin && <TitleAffix url={'/muzhskie'} btn={'Изменить Title'} form={'FormTitleChange'} title={'Изменить Title / Description'} />
-				} */}
+			
 				{Object.entries(screens)
 					.filter((screen) => !!screen[1])
 					.map((screen) => (
@@ -179,7 +174,6 @@ const UniversalPage = observer(() => {
 					>
 						{editH1}
 					</Typography.Title>
-					{/* <h2>{h2}</h2> */}
 					<span className='text-slate-400'>{totalItem} товаров</span>
 				</Space>
 				<br />
