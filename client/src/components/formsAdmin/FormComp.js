@@ -1,8 +1,6 @@
 import React, { useState, useRef } from 'react'
 import { PlusOutlined } from '@ant-design/icons'
 import { Divider, Input, Select, Space, Button, message, Tag } from 'antd'
-// import { createBrand, deleteBrand } from '../../http/adminAPI'
-// import { SketchPicker } from 'react-color'
 import CyrillicToTranslit from 'cyrillic-to-translit-js'
 
 

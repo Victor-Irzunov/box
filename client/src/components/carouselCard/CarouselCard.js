@@ -95,7 +95,6 @@ const CarouselCard = ({ product, cardItem }) => {
 											{el.name}
 											<Button type='text'
 												className='pl-0'
-												
 											>
 												Посмотреть{' '}
 												<ArrowRightOutlined />
