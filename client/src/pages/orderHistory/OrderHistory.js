@@ -1,8 +1,6 @@
 import React, { useContext, useState } from 'react'
-import { Typography, Empty, Result, Spin } from 'antd'
+import { Typography, Empty, Spin } from 'antd'
 import { Context } from '../../App'
-import { Link } from 'react-router-dom'
-import { MehOutlined } from '@ant-design/icons';
 import { useEffect } from 'react';
 import { getAllOrderUser } from '../../http/orderAPI';
 import DescriptionHistoryOrder from '../../components/descriptionsHistoryOrder/DescriptionHistoryOrder';
@@ -10,7 +8,6 @@ import DescriptionHistoryOrder from '../../components/descriptionsHistoryOrder/D
 const { Title } = Typography
 
 function OrderHistory() {
-	const { user } = useContext(Context)
 	const [data, setData] = useState({})
 	const [loading, setLoading] = useState(false)
 
@@ -27,7 +24,6 @@ function OrderHistory() {
 	if (loading) {
 		return <Spin />
 	}
-
 	return (
 		<section className='container pt-5 pb-20'>
 			<div className=''>
@@ -41,5 +37,4 @@ function OrderHistory() {
 		</section>
 	)
 }
-
 export default OrderHistory

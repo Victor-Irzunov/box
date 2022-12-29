@@ -11,12 +11,10 @@ const PohozhieTovary = ({ product }) => {
 		if (Object.keys(product).length) {
 			fetchProductsPohozhie({groupId: product.groupId, id: product.id })
 				.then(data => {
-					console.log('data-data: ', data)
 					setProductData(data)
 				})
 		}
 	}, [])
-
 
 	return (
 		<div className="site-card-wrapper relative">

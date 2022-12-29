@@ -12,8 +12,6 @@ import { observer } from "mobx-react-lite"
 
 const { Title } = Typography
 
-
-
 const LikedList = observer(() => {
 	const { dataApp } = useContext(Context)
 	let location = useLocation()
@@ -34,20 +32,15 @@ const LikedList = observer(() => {
 			setItemCard([])
 			message.success('Тут пусто')
 		}
-		
 	}, [dataApp.likedLength])
-
-	console.log('dataApp.likedLength:', dataApp.likedLength)
 
 	function clearAllList() {
 		deleteAllList('LikedList')
 		setItemCard([])
 	}
-
 	function deleteOneElCookies(id) {
 		deleteOneList('LikedList', id)
 	}
-
 
 	return (
 		<section className='container pt-9 pb-12'>
@@ -70,9 +63,7 @@ const LikedList = observer(() => {
 					<CardComp itemCard={itemCard} location={location} likedList={true} deleteOneElCookies={deleteOneElCookies} />
 				</Col>
 			</Row>
-
 		</section>
 	)
 })
-
 export default LikedList

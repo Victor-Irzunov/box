@@ -1,6 +1,5 @@
 import React from 'react'
 import { Card, Space, Button, Image } from 'antd'
-// import { cardItem } from '../../content/Content'
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import {
@@ -12,6 +11,8 @@ import CyrillicToTranslit from 'cyrillic-to-translit-js'
 
 const ButtonGroup = ({ next, previous, product, ...rest }) => {
 	const { carouselState: { currentSlide } } = rest
+
+
 	return (
 		<div className={!product
 			?
@@ -49,11 +50,16 @@ const responsive = {
 	}
 }
 
-
-
 const CarouselCard = ({ product, cardItem }) => {
 	const cyrillicToTranslit = new CyrillicToTranslit()
 	let location = useLocation()
+
+	function scrollToTop() {
+		window.scrollTo({
+			top: 0,
+			behavior: 'smooth'
+		})
+	}
 
 	return (
 		<div className='overflow-hidden
@@ -69,7 +75,6 @@ const CarouselCard = ({ product, cardItem }) => {
 					product.map((el) => {
 						return (
 							<Card
-								// bordered={false}
 								hoverable={true}
 								key={el.id}
 								style={{
@@ -85,9 +90,13 @@ const CarouselCard = ({ product, cardItem }) => {
 											pathname: `/${el.categories[0].link}/${el.types[0].link}/${cyrillicToTranslit.transform(el.name.split(' ').join('-'))}`,
 										}}
 											state={{ id: el.id, location: location.pathname }}
+											onClick={scrollToTop}
 										>
 											{el.name}
-											<Button type='text' className='pl-0'>
+											<Button type='text'
+												className='pl-0'
+												
+											>
 												Посмотреть{' '}
 												<ArrowRightOutlined />
 											</Button>

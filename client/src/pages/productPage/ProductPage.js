@@ -1,9 +1,9 @@
 import React, { useState, useContext, useEffect } from 'react'
 import CourouselComp from '../../components/react-image-gallery/CurouselComp'
 import { Typography, Row, Col, Rate, Badge, Button, BackTop, message, Tag } from 'antd'
-import { useParams, useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { Context } from "../../App"
-import { HighlightOutlined, CarOutlined, ArrowLeftOutlined, CheckOutlined } from '@ant-design/icons'
+import { CarOutlined, ArrowLeftOutlined, CheckOutlined,DownCircleOutlined } from '@ant-design/icons'
 import { Helmet } from "react-helmet"
 import BadgeIconHeard from '../../components/badgeIcon/badgeIconHeard/BadgeIconHeard'
 import BadgeIconVesy from '../../components/badgeIcon/badgeIconVesy/BadgeIconVesy'
@@ -15,39 +15,31 @@ import { useCookieList } from '../../hooks/useCookieList'
 import { observer } from "mobx-react-lite"
 import { fetchOneProduct } from '../../http/productsAPI'
 import { addBasketUserOneProduct } from '../../http/basketAPI'
-import { isBuyThisProductUser } from '../../http/orderAPI'
-import { useScreens } from '../../Constants/constants'
+// import { useScreens } from '../../Constants/constants'
 
 
 
 const ProductPage = observer(() => {
-	const { isAdmin, dataApp, dataProducts, user } = useContext(Context)
-	// const { id } = useParams()
+	const { dataApp, dataProducts, user } = useContext(Context)
 	let location = useLocation()
 	const navigate = useNavigate()
-	const screens = useScreens()
+	// const screens = useScreens()
 	const [editH1, setEditH1] = useState('')
 	const [product, setProduct] = useState({})
 	const [imgArr, setImgArr] = useState([])
 	const [review, setReview] = useState('')
 	const { addList } = useCookieList(null)
-	// const [isBuyProd, setIsBuyProd] = useState(false)
-
-	const page = location.state?.page
 	const id = location.state?.id
 	const loca = location.state?.location
-	console.log('id: ', id)
 
 	useEffect(() => {
 		fetchOneProduct(id)
 			.then(data => {
-				console.log('data>', data)
 				setProduct(data)
 				setEditH1(data.name)
 				dataProducts.setDataOneProduct(data)
 				declOfNum(data.feedbacks.length, ['отзывов', 'отзыва', 'отзыв'])
 				setImgArr(fuImg(data))
-
 			})
 	}, [id])
 
@@ -91,9 +83,9 @@ const ProductPage = observer(() => {
 		if (n1 === 0) setReview(text_forms[0])
 	}
 
-	const clickScroll = () => {
+	const clickScroll = (params) => {
 		setTimeout(() => window.scrollBy({
-			top: 800,
+			top: params,
 			left: 0,
 			behavior: 'smooth',
 		}), 150)
@@ -102,24 +94,14 @@ const ProductPage = observer(() => {
 		`${loca}`
 	)
 
-
 	return (
 		<>
 			<Helmet>
 				<title>{dataApp.data['/muzhskie'].title}</title>
 				<meta name="description" content={dataApp.data['/muzhskie'].description} />
 			</Helmet>
-
-
 			<BackTop />
 			<section className='container pt-5 pb-20'>
-				{Object.entries(screens)
-					.filter((screen) => !!screen[1])
-					.map((screen) => (
-						<Tag color="blue" key={screen[0]}>
-							{screen[0]}
-						</Tag>
-					))}
 				<Button
 					type='link'
 					className='text-sm text-slate-500 font-thin mb-6 pl-0'
@@ -132,7 +114,7 @@ const ProductPage = observer(() => {
 					{editH1}
 				</Typography.Title>
 
-				<div className='flex w-1/4 sm:w-full xs:w-full xx:w-full xy:w-full justify-between'>
+				<div className='flex w-1/4 sm:w-full xs:w-full xx:w-full xy:w-full justify-start'>
 					<div className='flex'>
 						<Rate allowHalf value={product.rating} disabled />
 						<span className="mt-1.5 ml-3">
@@ -142,7 +124,7 @@ const ProductPage = observer(() => {
 					<div>
 						<p
 							className='text-slate-400 mt-1.5 underline cursor-pointer'
-							onClick={() => clickScroll()}
+							onClick={() => clickScroll(1400)}
 						>
 							{product.feedbacks && product.feedbacks.length} {review}
 						</p>
@@ -152,8 +134,12 @@ const ProductPage = observer(() => {
 				<Row gutter={[56, 56]}>
 					<Col xl={14} className='mt-10'>
 						<CourouselComp className='' imgArr={imgArr} />
+						<Button
+							type='text'
+							className='mt-3'
+							onClick={() => clickScroll(900)}
+						>похожие боксы <DownCircleOutlined /></Button>
 					</Col>
-
 					<Col xl={10} className='p-2 mt-10'>
 						<div className='border-b pb-6'>
 							<div className='flex justify-between'>
@@ -173,9 +159,7 @@ const ProductPage = observer(() => {
 									/>
 								</div>
 							</div>
-
 							<div className='mt-10'>
-
 								<p>{product.description}</p>
 							</div>
 						</div>
@@ -220,12 +204,10 @@ const ProductPage = observer(() => {
 								<CarOutlined style={{ fontSize: '1.7em', color: 'gray' }} className='mt-1' />
 								<Button type='link'>Доставка по Беларуси</Button>
 							</div>
-
 						</div>
 					</Col>
 				</Row>
-
-				<div className='mt-28' />
+				<div className='mt-28' id='box' />
 				{Object.keys(product).length &&
 					<PohozhieTovary product={product} />
 				}

@@ -25,7 +25,7 @@ import { addBasketUserOneProduct } from '../../http/basketAPI'
 import { useScreens } from '../../Constants/constants'
 import CyrillicToTranslit from 'cyrillic-to-translit-js'
 
-const { Paragraph, Text } = Typography
+const { Paragraph } = Typography
 
 const BtnComp = observer(({ el }) => {
 	const { dataApp, user, dataProducts } = useContext(Context)
@@ -77,16 +77,13 @@ const BtnComp = observer(({ el }) => {
 	)
 })
 
-
-
 const ComparisonList = observer(() => {
-	const { dataApp, user, dataProducts } = useContext(Context)
+	const { dataApp } = useContext(Context)
 	const screens = useScreens()
 	const [colomns, setColomns] = useState([])
 	const { deleteAllList, deleteOneList } = useCookieList(null)
 	const [isLoading, setIsLoading] = useState(true)
 	const [selectionType, setSelectionType] = useState('')
-	const [isUpdate, setIsUpdate] = useState(false)
 	const cyrillicToTranslit = new CyrillicToTranslit()
 	let location = useLocation()
 
@@ -238,13 +235,6 @@ const ComparisonList = observer(() => {
 
 	return (
 		<div>
-			{Object.entries(screens)
-				.filter((screen) => !!screen[1])
-				.map((screen) => (
-					<Tag color="blue" key={screen[0]}>
-						{screen[0]}
-					</Tag>
-				))}
 			{dataApp.vesyLength ?
 				<div className='w-full flex justify-end mb-3'>
 					<Button
@@ -287,7 +277,6 @@ const ComparisonList = observer(() => {
 					y: 300,
 				}}
 			/>
-
 		</div>
 	)
 })

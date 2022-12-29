@@ -6,14 +6,14 @@ import { Context } from '../../App'
 import { observer } from "mobx-react-lite"
 import { fetchProductNoUser } from '../../http/productsAPI'
 import { getAllBasketUser } from '../../http/basketAPI'
-import { useScreens } from '../../Constants/constants'
+// import { useScreens } from '../../Constants/constants'
 
 const { Title } = Typography
 
 const BasketPage = observer(() => {
 	const { dataApp, dataProducts, user } = useContext(Context)
 	const [data, setData] = useState([])
-	const screens = useScreens()
+	// const screens = useScreens()
 
 
 	useEffect(() => {
@@ -63,15 +63,6 @@ const BasketPage = observer(() => {
 	return (
 		<section className='container min-h-screen flex flex-col justify-evenly pb-10 pt-10 '>
 			<Title>Моя корзина</Title>
-			<div className=''>
-				{Object.entries(screens)
-					.filter((screen) => !!screen[1])
-					.map((screen) => (
-						<Tag color="blue" key={screen[0]}>
-							{screen[0]}
-						</Tag>
-					))}
-			</div>
 
 			<BasketSteps data={data} setData={setData} />
 		</section>

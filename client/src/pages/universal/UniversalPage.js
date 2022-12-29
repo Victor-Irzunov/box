@@ -32,8 +32,6 @@ const UniversalPage = observer(() => {
 	const screens = useScreens()
 	let [searchParams, setSearchParams] = useSearchParams()
 	const [open, setOpen] = useState(false);
-
-
 	let location = useLocation()
 	const localPath = location.pathname.split('/').join('')
 	const arrLocalPath = location.pathname.split('/').filter(function (el) {
@@ -42,21 +40,16 @@ const UniversalPage = observer(() => {
 
 	const [itemCard, setItemCard] = useState([])
 	const [totalItem, setTotalItem] = useState(1)
-
 	const [page, setPage] = useState(1)
 	const [pageSize, setPageSize] = useState(10)
-
 	const [categoryId, setCategoryId] = useState(null)
 	const [typeId, setTypeId] = useState(null)
 	const [type, setType] = useState([])
 	const [isReset, setIsReset] = useState(false)
-
 	const [isBtnSortRatng, setIsBtnSortRatng] = useState(false)
 	const [isBtnSortPrice, setIsBtnSortPrice] = useState(false)
-
 	const [inputValueFrom, setInputValueFrom] = useState(15)
 	const [inputValueBefore, setInputValueBefore] = useState(null)
-
 	const params = searchParams.get('page')
 
 	useEffect(() => {
@@ -156,14 +149,6 @@ const UniversalPage = observer(() => {
 
 			<BackTop />
 			<section className='container'>
-			
-				{Object.entries(screens)
-					.filter((screen) => !!screen[1])
-					.map((screen) => (
-						<Tag color="blue" key={screen[0]}>
-							{screen[0]}
-						</Tag>
-					))}
 				<Space align='center' className='mt-6'>
 					<Typography.Title
 						level={1}
@@ -267,7 +252,6 @@ const UniversalPage = observer(() => {
 					</Drawer>
 
 					<Content className='pb-20 bg-white'>
-
 						{
 							totalItem
 								?
@@ -313,17 +297,10 @@ const UniversalPage = observer(() => {
 								{editP3}
 							</Paragraph>
 						</div>
-
-
 					</Content>
-
-
-
 				</Layout>
-
 			</section>
 		</>
 	)
 })
-
 export default UniversalPage

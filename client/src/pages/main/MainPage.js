@@ -17,7 +17,6 @@ const MainPage = observer(() => {
   const screens = useScreens()
   const [cardItem, setCardItem] = useState([])
   const [imgData, setImgData] = useState([])
-  // console.log('screens:', screens)
 
   useEffect(() => {
     getNewProduct()
@@ -27,7 +26,6 @@ const MainPage = observer(() => {
     getSliderImg()
       .then(data => {
         setImgData(data)
-        // dataApp.setImgSliderMain(data)
       })
   }, [])
 
@@ -40,13 +38,6 @@ const MainPage = observer(() => {
 
       <BackTop />
       <section className='container'>
-        {Object.entries(screens)
-          .filter((screen) => !!screen[1])
-          .map((screen) => (
-            <Tag color="blue" key={screen[0]}>
-              {screen[0]}
-            </Tag>
-          ))}
         <CarouselComp imgData={imgData} />
         <MainCard cardItem={cardItem} />
         <HisotyStore />
