@@ -1,49 +1,32 @@
 import { Menu } from 'antd'
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { Context } from '../../../App'
-import { NavLink, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 const MenuLinkMobil = ({ setIsActiveMenu }) => {
 	const { dataApp } = useContext(Context)
 	const [current, setCurrent] = useState('1')
-	const onClick = (e) => {
-		setCurrent(e.key)
-	}
+	// const onClick = (e) => {
+	// 	setCurrent(e.key)
+	// }
 
-	const items = [
-		{
-			label: (
-				<NavLink to="/oplata"
-					className=''
-					onClick={() => setIsActiveMenu(i => !i)}
-				>
-					Оплата
-				</NavLink>),
-			key: 'oplata',
-		},
-		{
-			label: (
-				<NavLink to="/vozvrat"
-					className=''
-					onClick={() => setIsActiveMenu(i => !i)}
-				>
-					Доставка
-				</NavLink>),
-			key: 'dostavka',
-		},
-		{
-			label: (
-				<NavLink to="/vozvrat"
-					className=''
-					onClick={() => setIsActiveMenu(i => !i)}
-				>
-					Возврат
-				</NavLink>),
-			key: 'vozvrat',
-		},
-	]
+	const items = []
 
-
+	dataApp.infoPages.forEach(el => {
+		items.push(
+			{
+				label: (
+					<Link to={{
+						pathname: `/info/${el.link}`
+					}}
+						state={{ id: el.id }}
+						onClick={() => setIsActiveMenu(i => !i)}
+					>
+						{el.name}
+					</Link>),
+			},
+		)
+	})
 
 
 	return (
@@ -53,8 +36,6 @@ const MenuLinkMobil = ({ setIsActiveMenu }) => {
 			style={{
 				background: 'transparent',
 				color: '#fff',
-				// borderBottom: '1px solid #03030317',
-				// paddingBottom: '1em'
 			}}
 			triggerSubMenuAction='click'
 			selectedKeys={[current]}

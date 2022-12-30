@@ -161,9 +161,3 @@ border-right: none;
 }
 
 
-.ant-menu-submenu-title{
-	border-bottom: 1px solid #dddddd40;
-}
-.ant-menu-item-only-child{
-	border-bottom: 1px solid #dddddd40;
-}

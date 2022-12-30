@@ -95,10 +95,7 @@ const Property = () => {
 				{dataTitleInfo.map((elem, idx) => {
 					return (
 						<Col
-							xl={{
-								span: 8,
-								// offset: `${idx === 1 && 2 || idx === 3 && 2}`
-							}}
+							xl={8} sm={12} xm={24} xs={24}
 							className='mt-10 p-3'
 							key={elem.id}
 						>

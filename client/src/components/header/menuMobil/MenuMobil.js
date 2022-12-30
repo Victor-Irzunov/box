@@ -1,14 +1,14 @@
 import { Menu } from 'antd'
 import React, { useState, useContext } from 'react'
 import { Context } from '../../../App'
-import { NavLink, Link } from 'react-router-dom'
+import { NavLink} from 'react-router-dom'
 
 const MenuMobil = ({setIsActiveMenu}) => {
 	const { dataApp } = useContext(Context)
 	const [current, setCurrent] = useState('1')
-	const onClick = (e) => {
-		setCurrent(e.key)
-	}
+	// const onClick = (e) => {
+	// 	setCurrent(e.key)
+	// }
 
 	const items = [
 		{
@@ -46,8 +46,6 @@ const MenuMobil = ({setIsActiveMenu}) => {
 			children: type
 		})
 	})
-
-
 
 	return (
 		<Menu

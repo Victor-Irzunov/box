@@ -4,18 +4,17 @@ import React, { useState, useContext } from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import logo from '../../../images/logo/logo3.webp'
 import { Context } from '../../../App'
-// import { items } from '../../../content/Content'
-import { useScreens } from '../../../Constants/constants'
+// import { useScreens } from '../../../Constants/constants'
 
 
 const HeaderMenu = () => {
 	const { dataApp } = useContext(Context)
 	const [current, setCurrent] = useState('main')
-	const screens = useScreens()
+	// const screens = useScreens()
 	const onClick = e => { setCurrent(e.key) }
 
 
-	const items = [
+	 const items = [
 		{
 			label: (
 				<NavLink to="/">
@@ -26,7 +25,7 @@ const HeaderMenu = () => {
 	]
 	dataApp.dataMenu.forEach(el => {
 		const type = []
-		el.types.forEach((elem, idx) => {
+		el.types.forEach((elem) => {
 			type.push({
 				label: (
 					<Link to={`/${el.link}/${elem.link}`} >

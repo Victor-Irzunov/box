@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
-import { Collapse } from 'antd'
+import { Collapse,BackTop } from 'antd'
 import {
 	PictureOutlined, ScheduleOutlined,
 	DollarCircleOutlined, DeleteOutlined,
 	FormOutlined, AppstoreAddOutlined,
 	BarsOutlined, ProfileOutlined,
-	PartitionOutlined, ApartmentOutlined, CloseSquareOutlined
+	PartitionOutlined, ApartmentOutlined,
+	CloseSquareOutlined, InfoCircleOutlined,
+	EditOutlined,
 } from '@ant-design/icons'
 import FormType from '../../components/formsAdmin/formType/FormType'
 import FormCategory from '../../components/formsAdmin/formCategory/FormCategory'
@@ -19,6 +21,8 @@ import FormSliderImg from '../../components/formsAdmin/formSliderImg/FormSliderI
 import FormDelSliderOneImg from '../../components/formsAdmin/formSliderImg/formDelSliderOneImg/FormDelSliderOneImg'
 import GetOrderAdmin from '../../components/formsAdmin/formOrdersAdmin/GetOrderAdmin'
 import RenderingDataOrder from '../../components/formsAdmin/formOrdersAdmin/RenderingDataOrder'
+import FormInfoPages from '../../components/formsAdmin/formInfoPages/FormInfoPages'
+import FomrGetOneInfoPage from '../../components/formsAdmin/formInfoPages/changeInfoPage/FomrGetOneInfoPage'
 
 const { Panel } = Collapse
 
@@ -29,6 +33,7 @@ const AdminPage = () => {
 	return (
 		<section className='pb-28'>
 			<div className='container'>
+				<BackTop />
 				<p className='text-2xl mt-8 mb-8'>Страница администратора</p>
 				<Collapse accordion bordered={false}>
 					<Panel header="Добавить / Удалить категорию боксов" extra={<ApartmentOutlined className='text-xl text-rose-600 ml-1' />} key="1" className='p-2'>
@@ -68,13 +73,20 @@ const AdminPage = () => {
 					<Panel header="Изменить статус заказа" extra={<ScheduleOutlined className='text-xl text-green-500 ml-1' />} key="9" className='p-2'>
 						<ChangeStatusOrder />
 					</Panel>
-
+					{/* <p className='mt-4 text-xl font-semibold'>Банер</p> */}
 					<Panel header='Добавить банер слайдера на главной странице' extra={<PictureOutlined className='text-xl text-blue-500 ml-1' />} key="10" className='p-2'>
 						<FormSliderImg />
 					</Panel>
 
 					<Panel header='Удалить банер слайдера на главной странице' extra={<CloseSquareOutlined className='text-xl text-red-500 ml-1' />} key="11" className='p-2'>
 						<FormDelSliderOneImg />
+					</Panel>
+
+					<Panel header='Добавить страницу с информацией' extra={<InfoCircleOutlined className='text-xl text-lime-500 ml-1' />} key="12" className='p-2'>
+						<FormInfoPages />
+					</Panel>
+					<Panel header='Изменить / удалить страницу с информацией' extra={<EditOutlined className='text-xl text-lime-500 ml-1' />} key="13" className='p-2'>
+						<FomrGetOneInfoPage />
 					</Panel>
 				</Collapse>
 			</div>

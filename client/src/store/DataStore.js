@@ -14,7 +14,7 @@ export default class DataStore {
 		this._isBtnFormOtzyvy = false
 		this._isBtnFormQuestion = false
 		this._isBuyProd = false
-		// this._imgSliderMain = []
+		this._infoPages = []
 
 
 		makeAutoObservable(this)
@@ -52,9 +52,9 @@ export default class DataStore {
 	setIsBuyProd(data) {
 		this._isBuyProd = data
 	}
-	// setImgSliderMain(data) {
-	// 	this._imgSliderMain = data
-	// }
+	setInfoPages(data) {
+		this._infoPages = data
+	}
 
 
 	get data() {
@@ -90,8 +90,8 @@ export default class DataStore {
 	get isBuyProd() {
 		return this._isBuyProd
 	}
-	// get imgSliderMain() {
-	// 	return this._imgSliderMain
-	// }
+	get infoPages() {
+		return this._infoPages
+	}
 
 }

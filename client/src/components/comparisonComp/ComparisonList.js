@@ -142,7 +142,7 @@ const ComparisonList = observer(() => {
 												<p className='text-center mt-2 text-base'>Характеристики</p>
 												{dataTitleInfo && dataTitleInfo.map((elem) => {
 													return (
-														<div className='mb-3 mt-2 border-b' key={elem.id}>
+														<div className={`mb-3 mt-2 border-b h-[120px]`} key={elem.id}>
 															<p className='font-semibold text-sm mb-2'>
 																{elem.name}
 															</p>

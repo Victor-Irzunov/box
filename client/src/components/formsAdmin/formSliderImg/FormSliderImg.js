@@ -50,10 +50,10 @@ const FormSliderImg = () => {
 			name="slider-img"
 			form={form}
 			labelCol={{
-				span: 8,
+				span: 24,
 			}}
 			wrapperCol={{
-				span: 16,
+				span: 24,
 			}}
 			onFinish={onFinish}
 			onFinishFailed={onFinishFailed}

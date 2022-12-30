@@ -1,21 +1,16 @@
 import React, { useState, useContext, useEffect } from 'react'
-import { Button, Typography, message, Tag } from 'antd'
+import { BackTop, Typography, message } from 'antd'
 import BasketSteps from '../../components/basketSteps/BasketSteps'
-import ModalComponent from '../../components/modalLoginRegistrat/ModalComponent'
 import { Context } from '../../App'
 import { observer } from "mobx-react-lite"
 import { fetchProductNoUser } from '../../http/productsAPI'
 import { getAllBasketUser } from '../../http/basketAPI'
 // import { useScreens } from '../../Constants/constants'
-
 const { Title } = Typography
-
 const BasketPage = observer(() => {
 	const { dataApp, dataProducts, user } = useContext(Context)
 	const [data, setData] = useState([])
 	// const screens = useScreens()
-
-
 	useEffect(() => {
 		if (!user.isAuth) {
 			if (dataApp.basketLength) {
@@ -57,16 +52,12 @@ const BasketPage = observer(() => {
 		dataApp.basketArr,
 		dataProducts.dataBasket
 	])
-
-
-
 	return (
 		<section className='container min-h-screen flex flex-col justify-evenly pb-10 pt-10 '>
 			<Title>Моя корзина</Title>
-
+			<BackTop />
 			<BasketSteps data={data} setData={setData} />
 		</section>
 	)
 })
-
 export default BasketPage

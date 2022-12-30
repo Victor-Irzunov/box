@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { Helmet } from "react-helmet"
-import { Typography, Layout, Space, Button, Divider, BackTop, Empty, Tag, Drawer } from 'antd'
-import { UpCircleOutlined, DownCircleOutlined } from '@ant-design/icons'
+import { Typography, Layout, Space, Button, Divider, BackTop, Empty,  Drawer } from 'antd'
+import { UpCircleOutlined, DownCircleOutlined, FilterOutlined } from '@ant-design/icons'
 import CardComp from '../../components/Card/CardComp'
 import FilterAll from '../../components/filterAll/FilterAll'
 import { textMenPage } from '../../content/Content'
@@ -184,7 +184,7 @@ const UniversalPage = observer(() => {
 						className='pl-2 xs:block sm:hidden'
 						onClick={showDrawer}
 					>
-						Показать фильтр по цене
+						Показать фильтр по цене <FilterOutlined />
 					</Button>
 				</Space>
 				<br />

@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react'
 import './App.css'
-import { Spin, ConfigProvider, theme } from 'antd'
-import { Routes, Route, BrowserRouter, Navigate } from 'react-router-dom'
+import { Spin, ConfigProvider } from 'antd'
+import { Routes, Route, BrowserRouter, NavLink } from 'react-router-dom'
 import UserStore from './store/UserStore'
 import DataStore from './store/DataStore'
 import ProductsStore from './store/ProductsStore'
@@ -15,7 +15,7 @@ import ProductPage from './pages/productPage/ProductPage'
 import { observer } from "mobx-react-lite"
 import { check } from './http/userAPI'
 import ResultComp from './components/result/ResultComp'
-import { duration } from 'moment'
+// import { duration } from 'moment'
 import AdminPage from './pages/admin/AdminPage'
 import locale from 'antd/es/locale/ru_RU'
 import { categoryType } from './http/productsAPI'
@@ -26,15 +26,16 @@ import LikedList from './pages/likedList/LikedList'
 import OrderHistory from './pages/orderHistory/OrderHistory'
 import MyProfile from './pages/myProfile/MyProfile'
 import CourierPage from './pages/kurer/CourierPage'
+import { getAllInfoPages } from './http/infoPagesAPI'
+import CyrillicToTranslit from 'cyrillic-to-translit-js'
+import InfoUniversalPage from './pages/infoUniversalPages/InfoUniversalPage'
 
 
 ConfigProvider.config({
   theme: {
     primaryColor: '#ff0084',
   },
-});
-
-
+})
 
 export const Context = createContext(null)
 
@@ -42,7 +43,7 @@ const App = observer(() => {
   const [loading, setLoading] = useState(true)
   const [user] = useState(new UserStore())
   const [dataApp] = useState(new DataStore())
-
+  const cyrillicToTranslit = new CyrillicToTranslit()
 
   useEffect(() => {
     check()
@@ -63,6 +64,24 @@ const App = observer(() => {
     categoryType()
       .then(data => {
         dataApp.setDataMenu(data)
+      })
+
+      getAllInfoPages()
+        .then(data => {
+        const items = []
+        if (Array.isArray(data)) {
+          data.forEach(el => {
+           
+            items.push({
+              link: (cyrillicToTranslit.transform(el.link.split(' ').join('-'))).toLowerCase(),
+              name: el.link,
+              id: el.id,
+              content: el.content,
+              title: el.title
+            })
+          })
+        }
+        dataApp.setInfoPages(items)
       })
   }, [])
 
@@ -100,6 +119,7 @@ const App = observer(() => {
                 <Route path='/istoriya-zakazov' element={<OrderHistory />} />
                 <Route path='/moi-dannye' element={<MyProfile />} />
                 <Route path='/dlya-voditelya' element={<CourierPage />} />
+                <Route path='/info/:link' element={<InfoUniversalPage />} />
                 <Route
                   path='/:category/:type/:title'
                   element={<ProductPage />}

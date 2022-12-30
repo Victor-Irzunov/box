@@ -11,6 +11,7 @@ import basketRouter from "./basketRouter.js"
 import orderRouter from "./orderRouter.js"
 import otzyvyRouter from "./otzyvyRatingRouter.js"
 import imgRouter from "./imgRouter.js"
+import infoPagesRouter from "./infoPagesRouter.js"
 
 
 
@@ -30,6 +31,7 @@ router.use('/basket', basketRouter)
 router.use('/order', orderRouter)
 router.use('/otzyvy', otzyvyRouter)
 router.use('/img', imgRouter)
+router.use('/info', infoPagesRouter)
 
 
 

@@ -124,7 +124,7 @@ const ProductPage = observer(() => {
 					<div>
 						<p
 							className='text-slate-400 mt-1.5 underline cursor-pointer'
-							onClick={() => clickScroll(1400)}
+							onClick={() => clickScroll(1500)}
 						>
 							{product.feedbacks && product.feedbacks.length} {review}
 						</p>

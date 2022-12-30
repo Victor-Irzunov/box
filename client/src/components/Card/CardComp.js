@@ -1,4 +1,3 @@
-// import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons'
 import { Rate, Card, Row, Col, Button, Tooltip, Badge, Image, message } from 'antd'
 import React, { useContext, useState } from 'react'
 import Svg from '../../images/menuIcon/Svg'
@@ -12,8 +11,6 @@ import { useCookieList } from '../../hooks/useCookieList'
 import CyrillicToTranslit from 'cyrillic-to-translit-js'
 import ModalCookies from '../modalCookies/ModalCookies'
 import { addBasketUserOneProduct } from '../../http/basketAPI'
-
-
 const CardComp = ({ itemCard, page, location, deleteOneElCookies }) => {
 	const { dataApp, user, dataProducts } = useContext(Context)
 	const [visible, setVisible] = useState(false)
@@ -22,7 +19,6 @@ const CardComp = ({ itemCard, page, location, deleteOneElCookies }) => {
 	const { addList } = useCookieList(null)
 	const [dataModal, setDataModal] = useState({})
 	const [isModalOpen, setIsModalOpen] = useState(false)
-
 	const addBasket = el => {
 		if (!user.isAuth) {
 			addList('BasketProduct', el.id)
@@ -37,12 +33,10 @@ const CardComp = ({ itemCard, page, location, deleteOneElCookies }) => {
 		setDataModal(el)
 		setIsModalOpen(true)
 	}
-
 	return (
 		<Row gutter={[0, 0]}>
 			{itemCard && itemCard.map((el, idx) => {
 				const img = JSON.parse(el.img)
-
 				return (
 					<React.Fragment key={el.id}>
 						<Col
@@ -66,7 +60,7 @@ const CardComp = ({ itemCard, page, location, deleteOneElCookies }) => {
 										id={el.id}
 									/>
 									:
-									<div className='absolute top-0 right-0 bg-white cursor-pointer z-10'>
+									<div className='absolute top-0 right-0 bg-white cursor-pointer z-[2]'>
 										<Tooltip title="удалить">
 											<Button type="text"
 												danger
@@ -115,8 +109,6 @@ const CardComp = ({ itemCard, page, location, deleteOneElCookies }) => {
 										</Image.PreviewGroup>
 									</div>
 								</div>
-
-
 								<div className='h-72 p-2 cursor-pointer'>
 									<Link to={{
 										pathname: `/${el.categories[0].link}/${el.types[0].link}/${cyrillicToTranslit.transform(el.name.split(' ').join('-'))}`,
@@ -139,7 +131,6 @@ const CardComp = ({ itemCard, page, location, deleteOneElCookies }) => {
 											</div>
 										</div>
 									</Link>
-
 									<div
 									>
 										<Badge
@@ -180,17 +171,12 @@ const CardComp = ({ itemCard, page, location, deleteOneElCookies }) => {
 
 					</React.Fragment>
 				)
-
 			})}
-
 			{
 				Object.keys(dataModal).length !== 0
 				&&
 				<ModalCookies isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} data={dataModal} />
 			}
-
-
-
 		</Row >
 
 	)

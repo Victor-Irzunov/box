@@ -1,18 +1,9 @@
 import React from 'react'
-// import logo from './img/logo.png'
 // import { useLocation } from 'react-router-dom'
 import HeaderLinks from './headerLinks/HeaderLinks'
 import HeaderTimeTel from './headerTimeTel.js/HeaderTimeTel'
-import { useScreens } from '../../../Constants/constants'
+// import { useScreens } from '../../../Constants/constants'
 
-
-	// xs: '480px',
-	// sm: '576px',
-	// md: '768px',
-	// lg: '992px',
-	// xl: '1200px',
-	// xxl: '1600px',
- 
 function HeaderAddress() {
 	// const screens = useScreens()
 	// console.log('screens:',screens)

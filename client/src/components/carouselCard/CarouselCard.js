@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Space, Button, Image } from 'antd'
+import { Card, Rate, Button, Image } from 'antd'
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import {
@@ -16,8 +16,8 @@ const ButtonGroup = ({ next, previous, product, ...rest }) => {
 	return (
 		<div className={!product
 			?
-			"absolute sm:top-56 ss:top-56 xm:top-48 xs:top-32 xx:top-56 xy:top-56 right-2"
-			: 'absolute sm:top-72 xm:top-52 xs:top-44 xx:top-72 xy:top-72 right-2'}
+			"absolute sm:top-56 ss:top-56 xm:top-64 xs:top-60 xx:top-56 xy:top-56 right-2"
+			: 'absolute sm:top-72 xm:top-64 xs:top-64 xx:top-72 xy:top-56 right-2'}
 		>
 			<Button className={currentSlide === 0 ? 'disable' : ''}
 				onClick={() => previous()} >
@@ -45,7 +45,7 @@ const responsive = {
 		items: 2
 	},
 	mobile: {
-		breakpoint: { max: 464, min: 0 },
+		breakpoint: { max: 620, min: 0 },
 		items: 1
 	}
 }
@@ -63,7 +63,8 @@ const CarouselCard = ({ product, cardItem }) => {
 
 	return (
 		<div className='overflow-hidden
-		 sm:h-80 xm:h-64 xs:h-52 xx:h-80 xy:h-80
+		 sm:h-80 xm:h-72 xs:h-72 xx:h-80 xy:h-72
+		 mb-20
 		 '>
 			<Carousel
 				arrows={false}
@@ -83,31 +84,31 @@ const CarouselCard = ({ product, cardItem }) => {
 								}}
 								className='border-[#d8d6d7]'
 							>
-								<Space>
+								<div className='flex'>
 									<Image src={process.env.REACT_APP_API_URL + JSON.parse(el.imgMini)[0].image} />
-									<div>
+									<div className='w-9/12 p-2'>
 										<Link to={{
 											pathname: `/${el.categories[0].link}/${el.types[0].link}/${cyrillicToTranslit.transform(el.name.split(' ').join('-'))}`,
 										}}
 											state={{ id: el.id, location: location.pathname }}
 											onClick={scrollToTop}
 										>
-											{el.name}
+											<p className='font-semibold text-lg xm:text-base'>{el.name}</p>
 											<Button type='text'
-												className='pl-0'
+												 className='absolute bottom-4 right-0'
 											>
 												Посмотреть{' '}
 												<ArrowRightOutlined />
 											</Button>
 										</Link>
-										<p className='text-right mr-4'>{el.price} BYN</p>
+										<Rate allowHalf defaultValue={el.rating} disabled />
+										<p className='mr-2 mt-2'>Цена: {el.price} BYN</p>
 									</div>
-								</Space>
+								</div>
 							</Card>
 						)
 					})
 					:
-
 					cardItem.map(el => {
 						return (
 							<Card
@@ -119,33 +120,32 @@ const CarouselCard = ({ product, cardItem }) => {
 									marginLeft: '0.5em',
 									marginRight: '0.5em',
 									overflow: 'hidden',
-									border: '1px solid #ddd'
+									border: '1px solid #ddd',
+									position: 'relative'
 								}}
-
 							>
-								<Space>
+								<div className='flex'>
 									<Image src={process.env.REACT_APP_API_URL + JSON.parse(el.imgMini)[0].image} />
-									<div>
-
-
+									<div className='w-9/12 p-2'>
 										<Link to={{
 											pathname: `/${el.categories[0].link}/${el.types[0].link}/${cyrillicToTranslit.transform(el.name.split(' ').join('-'))}`,
 										}}
 											state={{ id: el.id, location: location.pathname }}
 										>
-											{el.name}
-											<Button type='text' className='pl-0'>
+											<p className='font-semibold text-lg xm:text-base'>{el.name}</p>
+											<Button type='text' className='absolute bottom-4 right-0'>
 												Посмотреть{' '}
 												<ArrowRightOutlined />
 											</Button>
 										</Link>
+										<Rate allowHalf defaultValue={el.rating} disabled />
+										<p className='mr-2 mt-2'>Цена: {el.price} BYN</p>
 									</div>
-								</Space>
+								</div>
 							</Card>
 						)
 					})
 				}
-
 			</Carousel>
 		</div>
 	)

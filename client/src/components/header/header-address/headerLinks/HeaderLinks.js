@@ -1,15 +1,23 @@
-import React from 'react'
-import { Divider, Space, Typography } from 'antd'
-import { Link as LinkDom } from 'react-router-dom'
+import React, { useContext } from 'react'
+import { Divider, Space } from 'antd'
+import { Link } from 'react-router-dom'
+import { Context } from '../../../../App'
 
 function HeaderLinks() {
+	const { dataApp } = useContext(Context)
 	return (
 		<Space split={<Divider type="vertical" />}>
-				<LinkDom to=''>Оплата и доставка</LinkDom>
-				<LinkDom to=''>Кредит</LinkDom>
-				<LinkDom to=''>Рассрочка</LinkDom>
-				<LinkDom to=''>Возврат</LinkDom>
-				<LinkDom to=''>Гарантия</LinkDom>
+			{dataApp.infoPages.length && dataApp.infoPages.map(el => {
+				return (
+						<Link to={{
+						pathname: `/info/${el.link}`
+					}}
+						state={{ id: el.id }}
+					>
+						{el.name}
+					</Link>
+				)
+			})}
 		</Space>
 	)
 }

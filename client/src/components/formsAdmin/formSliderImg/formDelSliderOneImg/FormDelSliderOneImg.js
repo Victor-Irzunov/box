@@ -40,7 +40,7 @@ function FormDelSliderOneImg() {
 
 
 	return (
-		<>
+		<div className='pb-12'>
 			<p>Выберите банер для удаления</p>
 			<Checkbox.Group onChange={onChange}>
 				<div className='flex justify-between'>
@@ -64,7 +64,7 @@ function FormDelSliderOneImg() {
 					Удалить
 				</Button>
 			</Popconfirm>
-		</>
+		</div>
 	)
 }
 

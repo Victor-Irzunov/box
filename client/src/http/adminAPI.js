@@ -114,3 +114,17 @@ export const deleteSliderImg = async ( obj ) => {
 	return data
 }
 
+export const createInfoPage = async ( obj ) => {
+	const { data } = await $authHost.post('api/info/page', obj)
+	return data
+}
+export const changeInfoPage = async ( obj ) => {
+	const { data } = await $authHost.put('api/info/page', obj)
+	return data
+}
+export const deleteOneInfoPage = async ( id ) => {
+	const { data } = await $authHost.delete('api/info/page/'+ id)
+	return data
+}
+
+

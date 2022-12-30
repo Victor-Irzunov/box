@@ -1,23 +1,18 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { Row, Col, Typography, Button, message, Empty } from 'antd'
+import { Row, Col, Typography, Button, message, Empty, BackTop } from 'antd'
 import CardComp from '../../components/Card/CardComp'
 import { ClearOutlined } from '@ant-design/icons'
 import { Context } from '../../App'
 import { fetchProductNoUser } from '../../http/productsAPI'
-import {
-	useLocation,
-} from 'react-router-dom'
+import {useLocation} from 'react-router-dom'
 import { useCookieList } from '../../hooks/useCookieList'
 import { observer } from "mobx-react-lite"
-
 const { Title } = Typography
-
 const LikedList = observer(() => {
 	const { dataApp } = useContext(Context)
 	let location = useLocation()
 	const { deleteAllList, deleteOneList } = useCookieList(null)
 	const [itemCard, setItemCard] = useState([])
-
 	useEffect(() => {
 		if (dataApp.likedLength) {
 			fetchProductNoUser(dataApp.likedArr)
@@ -41,10 +36,10 @@ const LikedList = observer(() => {
 	function deleteOneElCookies(id) {
 		deleteOneList('LikedList', id)
 	}
-
 	return (
 		<section className='container pt-9 pb-12'>
 			<Title>Понравившиеся товары</Title>
+			<BackTop />
 			{itemCard.length ?
 				<div className='w-full flex justify-end mb-3'>
 					<Button

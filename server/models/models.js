@@ -83,6 +83,20 @@ const Rating = sequelize.define('rating', {
 		type: DataTypes.STRING
 	},
 })
+const InfoPages = sequelize.define('infoPages', {
+	id: {
+		type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true
+	},
+	link: {
+		type: DataTypes.STRING, allowNull: false
+	},
+	title: {
+		type: DataTypes.STRING, allowNull: false
+	},
+	content: {
+		type: DataTypes.TEXT('long'), allowNull: false
+	},
+})
 
 const Type = sequelize.define('type', {
 	id: {
@@ -239,7 +253,7 @@ const BasketOrder = sequelize.define('basket_order', {
 		type: DataTypes.INTEGER
 	},
 	status: {
-		type:DataTypes.BOOLEAN, defaultValue: false
+		type: DataTypes.BOOLEAN, defaultValue: false
 	}
 })
 
@@ -366,5 +380,6 @@ export const models = {
 	Order,
 	BasketProduct,
 	Group,
+	InfoPages,
 }
 

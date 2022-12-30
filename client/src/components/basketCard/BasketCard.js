@@ -169,7 +169,7 @@ const BasketCard = observer(({ data, isActive, setData }) => {
 									</Button>
 								</ButtonGroup>
 							</div>
-							<div className='border-l w-44 flex items-center px-5 bg-gray-100 relative'>
+							<div className='border-l w-44 flex items-center sm:px-5 xs:px-2 xx:px-2 xy:pl-2 bg-gray-100 relative'>
 								<div className=''>
 									<p className='font-extralight'>Цена:</p>
 									<p className='text-2xl xs:text-xl xx:text-lg xy:text-base mt-2'>

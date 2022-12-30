@@ -1,0 +1,9 @@
+.editor {
+	height: 50vh;
+	max-height: 50vh;
+	overflow-y: scroll;
+}
+
+.ck-content{
+	height: 45vh !important;
+}

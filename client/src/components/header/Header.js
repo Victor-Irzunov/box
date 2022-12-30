@@ -31,13 +31,6 @@ const Header = observer(() => {
     setOpen(true)
   }
 
-  // xs: '480px',
-  // sm: '576px',
-  // md: '768px',
-  // lg: '992px',
-  // xl: '1200px',
-  // xxl: '1600px',
-
   useEffect(() => {
     let cookie = {}
     decodeURIComponent(document.cookie).split(';').forEach(el => {
@@ -122,6 +115,7 @@ const Header = observer(() => {
           <div className={`duration-500 ${isActiveMenu ? 'h-screen' : 'h-12'}
          bg-[#ff0084] pt-3 pb-2 px-3
          absolute left-0 right-0 top-0
+         overflow-y-auto
          `}>
             <div className='container flex justify-between items-center z-50'>
               <div className='z-50'>
@@ -169,14 +163,14 @@ const Header = observer(() => {
                 <BadgeIconBasked mobil={true} />
               </div>
             </div>
-            <div className={`container duration-300	${isActiveMenu ? 'block' : 'hidden'}`}>
-              <div className={`pt-10`}>
+            <div className={`container duration-500	${isActiveMenu ? 'translate-y-0' : '-translate-y-[150%]'} flex flex-col justify-between`}>
+              <div className={`pt-8`}>
                 <MenuMobil setIsActiveMenu={setIsActiveMenu} />
               </div>
               <div className={``}>
                 <MenuLinkMobil setIsActiveMenu={setIsActiveMenu} />
               </div>
-              <div className={`flex justify-center items-center absolute bottom-3 left-0 right-0`}>
+              <div className={`flex justify-center items-center mt-10`}>
                 <HistoryOutlined className='text-base mr-1 text-white' />
                 <Paragraph
                   className='text-white ml-2'

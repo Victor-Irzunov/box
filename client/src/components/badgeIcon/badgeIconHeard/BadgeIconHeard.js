@@ -17,7 +17,7 @@ const BadgeIconHeard = observer(({ cardComp, header, productPage, addToLiked, id
 		<>
 			{cardComp &&
 				<div
-					className='absolute top-2 right-4 cursor-pointer z-10'
+					className='absolute top-2 right-4 cursor-pointer z-[2]'
 					onClick={() => addToLiked('LikedList', id)}
 				>
 					{
