@@ -1,5 +1,5 @@
 
-import dotenv, { config } from 'dotenv'
+import dotenv, { config } from 'dotenv';
 import express from 'express'
 import chalk from 'chalk'
 import cors from 'cors'
@@ -10,15 +10,15 @@ import fileUpload from 'express-fileupload'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import compression from 'compression'
-import helmet from 'helmet'
+import helmet from 'helmet';
 
 
-dotenv.config()
+dotenv.config();
 
 
-const PORT = process.env.PORT || config.get("port")
+const PORT = process.env.PORT || config.get("port");
 
-const app = express()
+const app = express();
 
 const __filename = fileURLToPath(import.meta.url)
 
@@ -33,12 +33,6 @@ app.use(fileUpload({}))
 app.use(compression())
 app.use('/api', router)
 
-// app.all('/*', function (req, res, next) {
-// 	res.header("Cross-Origin-Resource-Policy", "cross-origin");
-// 	next();
-// });
-
-
 
 if (process.env.NODE_ENV === 'production') {
 	app.use('/', express.static(path.join(__dirname, '../client', 'build')))
@@ -47,8 +41,6 @@ if (process.env.NODE_ENV === 'production') {
 		res.sendFile(path.resolve(__dirname, '../client', 'build', 'index.html'))
 	})
 }
-
-
 
 //: middleware c err обязательно в конце
 app.use(errorHandler)
