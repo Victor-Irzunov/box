@@ -7,19 +7,19 @@ import {
 	AutoComplete,
 } from 'antd'
 import React, { useState, useContext } from 'react'
-import InputMask from 'react-input-mask'
+// import InputMask from 'react-input-mask'
 import { login } from '../../../http/userAPI'
 import { useNavigate } from 'react-router-dom'
 import { Context } from '../../../App'
 
 
 
-const FormLogin = ({ handleCancel }) => {
+const FormLogin = ({ handleCancel, fromPage }) => {
 	const { user } = useContext(Context)
 	const [form] = Form.useForm()
 	const [isCheck, setIsCheck] = useState(false)
 	const navigate = useNavigate()
-	const [tel, setTel] = useState('')
+	// const [tel, setTel] = useState('')
 	const [autoCompleteResult, setAutoCompleteResult] = useState([]);
 
 	const onWebsiteChange = (value) => {
@@ -41,7 +41,7 @@ const FormLogin = ({ handleCancel }) => {
 			login(values.login, values.password)
 				.then(res => {
 					message.success('Личность подтверждена!')
-					navigate('/')
+					navigate(`${fromPage ? fromPage : '/'}`)
 					user.setIsAuth(true)
 					user.setUser(user)
 					user.setUserData(res)
@@ -61,22 +61,22 @@ const FormLogin = ({ handleCancel }) => {
 		setIsCheck(e.target.checked)
 	}
 
-	const beforeMaskedValueChange = (newState, oldState, userInput) => {
-		var { value } = newState
-		var selection = newState.selection
-		var cursorPosition = selection ? selection.start : null
-		if (value.endsWith('-') && userInput !== '-' && !tel.endsWith('-')) {
-			if (cursorPosition === value.length) {
-				cursorPosition--
-				selection = { start: cursorPosition, end: cursorPosition }
-			}
-			value = value.slice(0, -1)
-		}
-		return {
-			value,
-			selection
-		}
-	}
+	// const beforeMaskedValueChange = (newState, oldState, userInput) => {
+	// 	var { value } = newState
+	// 	var selection = newState.selection
+	// 	var cursorPosition = selection ? selection.start : null
+	// 	if (value.endsWith('-') && userInput !== '-' && !tel.endsWith('-')) {
+	// 		if (cursorPosition === value.length) {
+	// 			cursorPosition--
+	// 			selection = { start: cursorPosition, end: cursorPosition }
+	// 		}
+	// 		value = value.slice(0, -1)
+	// 	}
+	// 	return {
+	// 		value,
+	// 		selection
+	// 	}
+	// }
 
 
 	return (

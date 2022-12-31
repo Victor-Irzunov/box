@@ -29,6 +29,8 @@ import CourierPage from './pages/kurer/CourierPage'
 import { getAllInfoPages } from './http/infoPagesAPI'
 import CyrillicToTranslit from 'cyrillic-to-translit-js'
 import InfoUniversalPage from './pages/infoUniversalPages/InfoUniversalPage'
+import ResultFalseLogin from './components/result/ResultFalseLogin'
+import RequireAuth from '../src/hoc/RequireAuth'
 
 
 ConfigProvider.config({
@@ -66,12 +68,12 @@ const App = observer(() => {
         dataApp.setDataMenu(data)
       })
 
-      getAllInfoPages()
-        .then(data => {
+    getAllInfoPages()
+      .then(data => {
         const items = []
         if (Array.isArray(data)) {
           data.forEach(el => {
-           
+
             items.push({
               link: (cyrillicToTranslit.transform(el.link.split(' ').join('-'))).toLowerCase(),
               name: el.link,
@@ -112,7 +114,11 @@ const App = observer(() => {
                 <Route path='/:category' element={<UniversalPage />} />
                 <Route path='/:category/:type' element={<UniversalPage />} />
                 <Route path='/uspeshno' element={<ResultComp />} />
-                <Route path='/super-adminka' element={<AdminPage />} />
+                <Route path='/super-adminka' element={
+                  <RequireAuth>
+                    <AdminPage />
+                  </RequireAuth>
+                } />
                 <Route path='/korzina' element={<BasketPage />} />
                 <Route path='/cpisok-sravneniya' element={<ProductComparison />} />
                 <Route path='/spisok-ponravivshikhsya' element={<LikedList />} />
@@ -120,10 +126,8 @@ const App = observer(() => {
                 <Route path='/moi-dannye' element={<MyProfile />} />
                 <Route path='/dlya-voditelya' element={<CourierPage />} />
                 <Route path='/info/:link' element={<InfoUniversalPage />} />
-                <Route
-                  path='/:category/:type/:title'
-                  element={<ProductPage />}
-                />
+                <Route path='/false/auth' element={<ResultFalseLogin />} />
+                <Route path='/:category/:type/:title' element={<ProductPage />}/>
                 <Route path='*' element={<ErrorPage />} />
               </Routes>
             </main>

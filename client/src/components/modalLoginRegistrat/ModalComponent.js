@@ -3,7 +3,7 @@ import { Button, Modal } from 'antd'
 import FormLogin from '../forms/formLogin/FormLogin'
 import FormRegistration from '../forms/formRegistration/FormRegistration'
 
-const ModalComponent = ({ open, setOpen }) => {
+const ModalComponent = ({ open, setOpen, fromPage }) => {
 	const [isAccount, setIsAccount] = useState(false)
 
 	const handleCancel = () => {
@@ -22,7 +22,7 @@ const ModalComponent = ({ open, setOpen }) => {
 				!isAccount &&
 				<>
 					<p className='font-extralight mb-3'>Для доступа в Ваш личный кабинет введите e-mail.</p>
-					<FormLogin handleCancel={handleCancel} />
+					<FormLogin handleCancel={handleCancel} fromPage={fromPage} />
 					<span>Нет аккаунта?</span>
 					<Button type='link' onClick={() => {
 						setIsAccount(true)
