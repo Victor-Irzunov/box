@@ -15,7 +15,7 @@ import MenuMobil from './menuMobil/MenuMobil'
 import MenuLinkMobil from './menuLinkMobil/MenuLinkMobil'
 import { Link } from 'react-router-dom'
 import ModalComponent from '../modalLoginRegistrat/ModalComponent'
-import { Content, ContentAdmin, ContentCourier } from './header-address/headerTimeTel.js/HeaderTimeTel'
+import { Content, ContentAdmin, ContentCourier } from './header-address/headerTimeTel/HeaderTimeTel'
 
 const { Paragraph } = Typography
 

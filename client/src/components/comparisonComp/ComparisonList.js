@@ -3,7 +3,7 @@ import {
 	Radio, Table,
 	Tooltip, Typography,
 	Image, Rate,
-	Button, message, Tag
+	Button, message
 } from 'antd'
 import { CheckOutlined, DeleteOutlined, ClearOutlined } from '@ant-design/icons'
 import { fetchInfoTitle, fetchProductNoUser } from '../../http/productsAPI'

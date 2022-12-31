@@ -27,7 +27,7 @@ const LikedList = observer(() => {
 			setItemCard([])
 			message.success('Тут пусто')
 		}
-	}, [dataApp.likedLength])
+	}, [dataApp.likedLength, dataApp.likedArr])
 
 	function clearAllList() {
 		deleteAllList('LikedList')

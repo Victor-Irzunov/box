@@ -4,7 +4,6 @@ import {
 	Radio,
 	Form,
 	Input,
-	// Select,
 	DatePicker,
 	Divider,
 	message,
@@ -13,27 +12,18 @@ import {
 } from 'antd'
 import React, { useState, useContext } from 'react'
 import InputMask from 'react-input-mask'
-// import { FieldTimeOutlined } from '@ant-design/icons'
 import { useCookieList } from '../../hooks/useCookieList'
 import moment from 'moment'
-// import { observer } from 'mobx-react-lite'
 import { Context } from '../../App'
 import { orderUser } from '../../http/orderAPI'
 import { deleteAllProductBasketUser } from '../../http/basketAPI'
 import { useScreens } from '../../Constants/constants'
 import { sendOrderTelegram } from '../../http/telegramAPI'
-
-// const { Option } = Select
 const { TextArea } = Input
 const dateFormat = 'DD.MM.YYYY'
-
 const disabledDate = (current) => {
-	// Can not select days before today and today
-	return current && current < moment() //.endOf('day')
+	return current && current < moment()
 }
-
-
-
 const FormBasketOrder = ({ next }) => {
 	const screens = useScreens()
 	const { dataProducts, user, dataApp } = useContext(Context)
@@ -43,10 +33,8 @@ const FormBasketOrder = ({ next }) => {
 	const [isCheck, setIsCheck] = useState(false)
 	const { deleteAllList } = useCookieList(null)
 	const [form] = Form.useForm()
-
 	const onFinish = (values) => {
 		console.log('Success:', values)
-
 		const formData = new FormData()
 		formData.append('city', values.address_city)
 		formData.append('street', values.address_street)
@@ -78,10 +66,6 @@ const FormBasketOrder = ({ next }) => {
 				next()
 			})
 	}
-
-
-
-
 	const onFinishFailed = (errorInfo) => {
 		console.log('Failed:', errorInfo)
 		message.error('Заполните пожалуйста корректно форму')
@@ -125,8 +109,6 @@ const FormBasketOrder = ({ next }) => {
 	const onChangeCheck = (e) => {
 		setIsCheck(e.target.checked)
 	}
-
-
 	return (
 		<Form
 			name="order"

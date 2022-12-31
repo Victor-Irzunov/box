@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
 import CourouselComp from '../../components/react-image-gallery/CurouselComp'
-import { Typography, Row, Col, Rate, Badge, Button, BackTop, message, Tag } from 'antd'
+import { Typography, Row, Col, Rate, Badge, Button, BackTop, message } from 'antd'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { Context } from "../../App"
 import { CarOutlined, ArrowLeftOutlined, CheckOutlined,DownCircleOutlined } from '@ant-design/icons'
@@ -15,15 +15,10 @@ import { useCookieList } from '../../hooks/useCookieList'
 import { observer } from "mobx-react-lite"
 import { fetchOneProduct } from '../../http/productsAPI'
 import { addBasketUserOneProduct } from '../../http/basketAPI'
-// import { useScreens } from '../../Constants/constants'
-
-
-
 const ProductPage = observer(() => {
 	const { dataApp, dataProducts, user } = useContext(Context)
 	let location = useLocation()
 	const navigate = useNavigate()
-	// const screens = useScreens()
 	const [editH1, setEditH1] = useState('')
 	const [product, setProduct] = useState({})
 	const [imgArr, setImgArr] = useState([])
@@ -31,7 +26,6 @@ const ProductPage = observer(() => {
 	const { addList } = useCookieList(null)
 	const id = location.state?.id
 	const loca = location.state?.location
-
 	useEffect(() => {
 		fetchOneProduct(id)
 			.then(data => {
@@ -41,8 +35,7 @@ const ProductPage = observer(() => {
 				declOfNum(data.feedbacks.length, ['отзывов', 'отзыва', 'отзыв'])
 				setImgArr(fuImg(data))
 			})
-	}, [id])
-
+	}, [id, dataProducts])
 	const addBasket = id => {
 		if (!user.isAuth) {
 			addList('BasketProduct', id)
@@ -56,7 +49,6 @@ const ProductPage = observer(() => {
 				})
 		}
 	}
-
 	function fuImg(data) {
 		const img = JSON.parse(data.img)
 		const imgMini = JSON.parse(data.imgMini)
@@ -72,7 +64,6 @@ const ProductPage = observer(() => {
 		})
 		return imgArray
 	}
-
 	function declOfNum(n, text_forms) {
 		n = Math.abs(n) % 100;
 		var n1 = n % 10;
@@ -82,7 +73,6 @@ const ProductPage = observer(() => {
 		if (n1 === 1) setReview(text_forms[2])
 		if (n1 === 0) setReview(text_forms[0])
 	}
-
 	const clickScroll = (params) => {
 		setTimeout(() => window.scrollBy({
 			top: params,
@@ -93,7 +83,6 @@ const ProductPage = observer(() => {
 	const goBack = () => navigate(
 		`${loca}`
 	)
-
 	return (
 		<>
 			<Helmet>
@@ -130,7 +119,6 @@ const ProductPage = observer(() => {
 						</p>
 					</div>
 				</div>
-
 				<Row gutter={[56, 56]}>
 					<Col xl={14} className='mt-10'>
 						<CourouselComp className='' imgArr={imgArr} />
@@ -217,5 +205,4 @@ const ProductPage = observer(() => {
 		</>
 	)
 })
-
 export default ProductPage

@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react'
 import './App.css'
 import { Spin, ConfigProvider } from 'antd'
-import { Routes, Route, BrowserRouter, NavLink } from 'react-router-dom'
+import { Routes, Route, BrowserRouter } from 'react-router-dom'
 import UserStore from './store/UserStore'
 import DataStore from './store/DataStore'
 import ProductsStore from './store/ProductsStore'
@@ -60,20 +60,18 @@ const App = observer(() => {
         console.log('check err:', data.response.data.message)
       })
       .finally(() => setLoading(false))
-  }, [])
+  }, [user])
 
   useEffect(() => {
     categoryType()
       .then(data => {
         dataApp.setDataMenu(data)
       })
-
     getAllInfoPages()
       .then(data => {
         const items = []
         if (Array.isArray(data)) {
           data.forEach(el => {
-
             items.push({
               link: (cyrillicToTranslit.transform(el.link.split(' ').join('-'))).toLowerCase(),
               name: el.link,
@@ -85,7 +83,7 @@ const App = observer(() => {
         }
         dataApp.setInfoPages(items)
       })
-  }, [])
+  }, [dataApp])
 
 
   if (loading) {

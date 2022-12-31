@@ -3,26 +3,20 @@ import { Avatar, Tooltip, Rate, Comment } from 'antd'
 import React, { createElement, useState } from 'react'
 import moment from 'moment'
 // import { Helmet } from "react-helmet"
-import { user } from '../../content/Content'
-
 const Otzyvy = ({ product }) => {
 	const [likes, setLikes] = useState(0)
 	const [dislikes, setDislikes] = useState(0)
 	const [action, setAction] = useState(null)
-
 	const like = () => {
 		setLikes(prev => prev + 1)
 		setDislikes(0)
 		setAction('liked')
 	}
-
 	const dislike = () => {
 		setLikes(0)
 		setDislikes(1)
 		setAction('disliked')
 	}
-
-
 	return (
 		<>
 			<section className='container'>

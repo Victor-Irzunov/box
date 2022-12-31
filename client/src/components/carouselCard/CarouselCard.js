@@ -8,11 +8,8 @@ import {
 } from '@ant-design/icons'
 import { Link, useLocation } from 'react-router-dom'
 import CyrillicToTranslit from 'cyrillic-to-translit-js'
-
 const ButtonGroup = ({ next, previous, product, ...rest }) => {
 	const { carouselState: { currentSlide } } = rest
-
-
 	return (
 		<div className={!product
 			?
@@ -49,7 +46,6 @@ const responsive = {
 		items: 1
 	}
 }
-
 const CarouselCard = ({ product, cardItem }) => {
 	const cyrillicToTranslit = new CyrillicToTranslit()
 	let location = useLocation()
@@ -60,7 +56,6 @@ const CarouselCard = ({ product, cardItem }) => {
 			behavior: 'smooth'
 		})
 	}
-
 	return (
 		<div className='overflow-hidden
 		 sm:h-80 xm:h-72 xs:h-72 xx:h-80 xy:h-72
@@ -150,5 +145,4 @@ const CarouselCard = ({ product, cardItem }) => {
 		</div>
 	)
 }
-
 export default CarouselCard

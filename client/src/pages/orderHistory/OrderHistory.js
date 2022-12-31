@@ -1,12 +1,9 @@
-import React, { useContext, useState } from 'react'
+import React, {  useState } from 'react'
 import { Typography, Empty, Spin } from 'antd'
-import { Context } from '../../App'
 import { useEffect } from 'react';
 import { getAllOrderUser } from '../../http/orderAPI';
 import DescriptionHistoryOrder from '../../components/descriptionsHistoryOrder/DescriptionHistoryOrder';
-
 const { Title } = Typography
-
 function OrderHistory() {
 	const [data, setData] = useState({})
 	const [loading, setLoading] = useState(false)

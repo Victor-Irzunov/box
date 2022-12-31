@@ -1,24 +1,19 @@
-import { Tabs, Typography, Button, Descriptions, Row, Col, Tooltip } from 'antd'
+import { Tabs, Typography, Button, Tooltip } from 'antd'
 import React, { useContext, useEffect, useState } from 'react'
 import FormOtzyvy from '../forms/formOtzyvy/FormOtzyvy'
 import { Context } from '../../App'
 import { observer } from "mobx-react-lite"
 import Otzyvy from '../otzyvy/Otzyvy'
 import VoprosOtvet from '../vopros-otvet/VoprosOtvet'
-// import { HighlightOutlined, } from '@ant-design/icons'
 import Property from './property/Property'
 import FormQuestion from '../forms/formQuestion/FormQuestion'
 import { isBuyThisProductUser } from '../../http/orderAPI'
 import { otzyvRatinOneUserProduct } from '../../http/otzyvyAPI'
-// import { isBuyThisProductUser } from '../../http/orderAPI'
 import { useScreens } from '../../Constants/constants'
-
 const { Paragraph } = Typography
-
 const BtnAndFormOtzyvy = observer(({ product, isBuyProd, isOtzyvUserProd, setIsOtzyvUserProd }) => {
-	const { dataApp, user } = useContext(Context)
+	const { user } = useContext(Context)
 	const [isBtnFormOtzyvy, setIsBtnFormOtzyvy] = useState(false)
-
 	return (
 		<>
 			{
@@ -60,7 +55,6 @@ const BtnAndFormQuestion = observer(() => {
 					:
 					<Button
 						type='primary'
-						// disabled={!isAdmin}
 						onClick={() => dataApp.setIsBtnFormQuestion(true)}
 					>
 						Задать вопрос
@@ -72,18 +66,12 @@ const BtnAndFormQuestion = observer(() => {
 	)
 })
 
-
-
-
 const ListProperty = observer(() => {
 	const { dataProducts } = useContext(Context)
 	const [editP, setEditP] = useState('')
-
 	useEffect(() => {
 		setEditP(dataProducts.dataOneProduct.description)
 	}, [dataProducts.dataOneProduct])
-
-
 	return (
 		<>
 			<Paragraph
@@ -96,16 +84,11 @@ const ListProperty = observer(() => {
 		</>
 	)
 })
-
-
-
-
 const TabsPtoduct = ({ product }) => {
 	const [isBuyProd, setIsBuyProd] = useState(false)
 	const [isOtzyvUserProd, setIsOtzyvUserProd] = useState(false)
 	const { user } = useContext(Context)
 	const screens = useScreens()
-
 	const onChange = key => {
 		if (user.isAuth) {
 			if (key === 2) {
@@ -128,7 +111,6 @@ const TabsPtoduct = ({ product }) => {
 			}
 		}
 	}
-
 	const itemTabsProduct = [
 		{
 			key: 1,
@@ -156,8 +138,6 @@ const TabsPtoduct = ({ product }) => {
 			children: (<BtnAndFormQuestion />),
 		},
 	]
-
-
 	return (
 		<Tabs
 			onChange={onChange}

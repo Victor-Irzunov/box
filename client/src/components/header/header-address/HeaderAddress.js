@@ -1,13 +1,7 @@
 import React from 'react'
-// import { useLocation } from 'react-router-dom'
 import HeaderLinks from './headerLinks/HeaderLinks'
-import HeaderTimeTel from './headerTimeTel.js/HeaderTimeTel'
-// import { useScreens } from '../../../Constants/constants'
-
+import HeaderTimeTel from './headerTimeTel/HeaderTimeTel'
 function HeaderAddress() {
-	// const screens = useScreens()
-	// console.log('screens:',screens)
-
 	return (
 		<section className={`pt-1 pb-1 font-light`}>
 			<div className='container'>
@@ -23,5 +17,4 @@ function HeaderAddress() {
 		</section >
 	)
 }
-
 export default HeaderAddress

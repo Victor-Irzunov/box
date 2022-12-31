@@ -23,12 +23,12 @@ const { Paragraph } = Typography
 const UniversalPage = observer(() => {
 	const { dataApp } = useContext(Context)
 	const [editH1, setEditH1] = useState('')
-	const [editH2, setEditH2] = useState(textMenPage.h2)
-	const [h2, setH2] = useState('')
-	const [editH3, setEditH3] = useState(textMenPage.h3)
-	const [editP, setEditP] = useState(textMenPage.p)
-	const [editP2, setEditP2] = useState(textMenPage.p2)
-	const [editP3, setEditP3] = useState(textMenPage.p3)
+	const [editH2] = useState(textMenPage.h2)
+	// const [h2, setH2] = useState('')
+	const [editH3] = useState(textMenPage.h3)
+	const [editP] = useState(textMenPage.p)
+	const [editP2] = useState(textMenPage.p2)
+	const [editP3] = useState(textMenPage.p3)
 	const screens = useScreens()
 	let [searchParams, setSearchParams] = useSearchParams()
 	const [open, setOpen] = useState(false);
@@ -51,11 +51,9 @@ const UniversalPage = observer(() => {
 	const [inputValueFrom, setInputValueFrom] = useState(15)
 	const [inputValueBefore, setInputValueBefore] = useState(null)
 	const params = searchParams.get('page')
-
 	useEffect(() => {
 		if (!params) setPage(1)
 		if (params && page !== params) setPage(+params)
-
 		if (dataApp.dataMenu) {
 			dataApp.dataMenu.forEach(el => {
 				if (el.link === arrLocalPath[0]) {
@@ -68,7 +66,7 @@ const UniversalPage = observer(() => {
 					el.types.forEach(elem => {
 						if (elem.link === arrLocalPath[1]) {
 							setTypeId(elem.id)
-							setH2(elem.name)
+							// setH2(elem.name)
 						}
 					})
 				}
@@ -77,7 +75,6 @@ const UniversalPage = observer(() => {
 	}, [
 		arrLocalPath,
 	])
-
 	useEffect(() => {
 		if (categoryId) {
 			fetchProducts(page, pageSize, categoryId, typeId)
@@ -106,15 +103,12 @@ const UniversalPage = observer(() => {
 				setInputValueBefore(null)
 			})
 	}
-
 	const onChangePage = (page, pageSize) => {
 		setPage(page)
 		setPageSize(pageSize)
 		setSearchParams({ page: page })
 	}
-
 	const resetFilter = () => setIsReset(i => !i)
-
 	const filterUpDownPrice = () => {
 		if (!isBtnSortPrice) {
 			setIsBtnSortPrice(i => !i)
@@ -123,7 +117,6 @@ const UniversalPage = observer(() => {
 		setIsBtnSortPrice(i => !i)
 		return setItemCard(prev => prev.sort((a, b) => b.price - a.price))
 	}
-
 	const filterUpDownRating = () => {
 		if (!isBtnSortRatng) {
 			setIsBtnSortRatng(i => !i)
@@ -132,21 +125,18 @@ const UniversalPage = observer(() => {
 		setIsBtnSortRatng(i => !i)
 		return setItemCard(prev => prev.sort((a, b) => b.rating - a.rating))
 	}
-
 	const showDrawer = () => {
 		setOpen(true);
-	};
+	}
 	const onClose = () => {
 		setOpen(false);
-	};
-
+	}
 	return (
 		<>
 			<Helmet>
 				<title>{dataApp.data['/muzhskie'].title}</title>
 				<meta name="description" content={dataApp.data['/muzhskie'].description} />
 			</Helmet>
-
 			<BackTop />
 			<section className='container'>
 				<Space align='center' className='mt-6'>
@@ -227,7 +217,6 @@ const UniversalPage = observer(() => {
 						</span>
 					</div>
 				</Space>
-
 				<Layout className='mt-2'>
 					<Sider theme='light' className='xs:hidden xx:hidden xy:hidden sm:block'>
 						<FilterAll
@@ -250,7 +239,6 @@ const UniversalPage = observer(() => {
 							resetFilter={resetFilter}
 						/>
 					</Drawer>
-
 					<Content className='pb-20 bg-white'>
 						{
 							totalItem

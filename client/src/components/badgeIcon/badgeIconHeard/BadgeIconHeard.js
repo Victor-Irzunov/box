@@ -8,11 +8,9 @@ import { Link } from 'react-router-dom'
 import { Context } from '../../../App'
 import { observer } from "mobx-react-lite"
 import CyrillicToTranslit from 'cyrillic-to-translit-js'
-
 const BadgeIconHeard = observer(({ cardComp, header, productPage, addToLiked, id, mobil }) => {
 	const { dataApp } = useContext(Context)
 	const cyrillicToTranslit = new CyrillicToTranslit()
-
 	return (
 		<>
 			{cardComp &&
@@ -41,7 +39,8 @@ const BadgeIconHeard = observer(({ cardComp, header, productPage, addToLiked, id
 						<Badge count={dataApp.likedLength} size="small">
 							<img
 								src={heart}
-								className='w-6 hover:scale-110 duration-500'
+									className='w-6 hover:scale-110 duration-500'
+									alt='список избранных'
 							/>
 						</Badge>
 					</Link>
@@ -74,14 +73,14 @@ const BadgeIconHeard = observer(({ cardComp, header, productPage, addToLiked, id
 						<Badge count={dataApp.likedLength} size="small">
 							<img
 								src={heart}
-								className='w-6 hover:scale-110 duration-500'
+									className='w-6 hover:scale-110 duration-500'
+									alt='список избранных'
 							/>
 						</Badge>
 					</Link>
 				</div>
 			}
 		</>
-
 	)
 })
 export default BadgeIconHeard

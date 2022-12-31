@@ -1,6 +1,4 @@
-import { $authHost, $host } from "./index"
-
-
+import { $authHost} from "./index"
 export const addBasketUserOneProduct = async (id) => {
 	const { data } = await $authHost.post('api/basket/add/' + id)
 	return data
@@ -21,9 +19,6 @@ export const deleteAllProductBasketUser = async (id) => {
 	const { data } = await $authHost.delete('api/basket/delete/all/' + id)
 	return data
 }
-
-
-//_getAll basket
 export const getAllBasketUser = async () => {
 	const { data } = await $authHost.get('api/basket')
 	return data

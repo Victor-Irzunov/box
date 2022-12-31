@@ -1,26 +1,18 @@
 import React, { useState, useRef } from 'react'
 import { PlusOutlined } from '@ant-design/icons'
-import { Divider, Input, Select, Space, Button, message, Tag } from 'antd'
+import { Divider, Input, Select, Space, Button, message } from 'antd'
 import CyrillicToTranslit from 'cyrillic-to-translit-js'
-
-
-
-
-
 const FormComp = ({ data, setIsLoad, fuCreate, fuDelete, text, row, color }) => {
 	const [name, setName] = useState('')
 	const inputRef = useRef(null)
 	const cyrillicToTranslit = new CyrillicToTranslit()
-
 	const onNameChange = event => {
 		setName(event.target.value)
 	}
-
 	const createLink = name => {
 		let link = cyrillicToTranslit.transform(name, "-").toLowerCase()
 		return link
 	}
-
 	const addItem = e => {
 		e.preventDefault()
 		if (name !== '') {
@@ -39,7 +31,6 @@ const FormComp = ({ data, setIsLoad, fuCreate, fuDelete, text, row, color }) => 
 		} else {
 			message.warning(`Введите ${text} для добавления!`)
 		}
-
 	}
 	const deleteItem = id => {
 		fuDelete(id)
@@ -52,15 +43,10 @@ const FormComp = ({ data, setIsLoad, fuCreate, fuDelete, text, row, color }) => 
 			})
 		setName('')
 	}
-
-
-
-
 	return (
 		<Select
 			style={{
 				width: 370,
-				// marginBottom:'2em',
 			}}
 			showSearch
 			placeholder={`${text}`}
@@ -95,7 +81,6 @@ const FormComp = ({ data, setIsLoad, fuCreate, fuDelete, text, row, color }) => 
 								</Button>
 							</>
 						}
-
 					</Space>
 				</>
 			)}

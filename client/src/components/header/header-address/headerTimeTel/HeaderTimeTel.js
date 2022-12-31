@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { Button, Space, Typography, Popover } from 'antd'
+import { Button, Typography, Popover } from 'antd'
 import {
 	HistoryOutlined,
 	PhoneOutlined,
@@ -10,7 +10,6 @@ import ModalComponent from '../../../modalLoginRegistrat/ModalComponent'
 import { Link } from 'react-router-dom'
 import { observer } from "mobx-react-lite"
 import { useScreens } from '../../../../Constants/constants'
-
 export const ContentAdmin = () => {
 	const { user } = useContext(Context)
 	const exit = () => {
@@ -34,7 +33,6 @@ export const ContentAdmin = () => {
 		</div>
 	)
 }
-
 export const ContentCourier = () => {
 	const { user } = useContext(Context)
 	const exit = () => {
@@ -65,7 +63,6 @@ export const Content = () => {
 		user.setIsAuth(false)
 		user.setUser(false)
 	}
-
 	return (
 		<div>
 			<p className='mb-2'>
@@ -91,26 +88,17 @@ export const Content = () => {
 		</div>
 	)
 }
-
-
 const { Paragraph } = Typography
-
 const HeaderTimeTel = observer(() => {
 	const { user } = useContext(Context)
 	const [open, setOpen] = useState(false)
-	const screens = useScreens()
-
-
-
 	const showModal = () => {
 		setOpen(true)
 	}
 	return (
-
 		<div
 			className={`border-l pl-2 flex justify-between items-center w-full`}
 		>
-
 			<div className={`flex items-center`}>
 				<HistoryOutlined className='text-base mr-3' />
 				<div>
@@ -130,9 +118,6 @@ const HeaderTimeTel = observer(() => {
 					</Paragraph>
 				</div>
 			</div>
-
-
-
 			<div
 				className='ml-5 mr-5'
 			>
@@ -142,7 +127,6 @@ const HeaderTimeTel = observer(() => {
 					+375 29 000-00-00
 				</Button>
 			</div>
-
 			<div>
 				{
 					user.isAuth ?
@@ -171,11 +155,8 @@ const HeaderTimeTel = observer(() => {
 						</Button>
 				}
 			</div>
-
-
 			<ModalComponent open={open} setOpen={setOpen} />
 		</div>
 	)
 })
-
 export default HeaderTimeTel

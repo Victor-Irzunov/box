@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import {
 	Button,
-	Form, Space, Input
+	Form, Input
 } from 'antd'
 import { getOneInfoPages } from '../../../../http/infoPagesAPI'
 import FormChangeInfoPage from './FormChangeInfoPage'

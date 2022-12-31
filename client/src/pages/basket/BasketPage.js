@@ -5,12 +5,10 @@ import { Context } from '../../App'
 import { observer } from "mobx-react-lite"
 import { fetchProductNoUser } from '../../http/productsAPI'
 import { getAllBasketUser } from '../../http/basketAPI'
-// import { useScreens } from '../../Constants/constants'
 const { Title } = Typography
 const BasketPage = observer(() => {
 	const { dataApp, dataProducts, user } = useContext(Context)
 	const [data, setData] = useState([])
-	// const screens = useScreens()
 	useEffect(() => {
 		if (!user.isAuth) {
 			if (dataApp.basketLength) {
@@ -34,12 +32,10 @@ const BasketPage = observer(() => {
 			getAllBasketUser()
 				.then(data => {
 					if (data.length) {
-						// dataApp.setBasketLength(data.length)
 						const dataArr = []
 						data.forEach(el => {
 							dataArr.push({ ...el.product, countBasket: el.count })
 						})
-						// dataProducts.setDataBasket(dataArr)
 						setData(dataArr)
 					} else {
 						message.warning('Пока в корзине пусто')
@@ -50,7 +46,8 @@ const BasketPage = observer(() => {
 	}, [
 		dataApp.basketLength,
 		dataApp.basketArr,
-		dataProducts.dataBasket
+		dataProducts.dataBasket,
+		user.isAuth
 	])
 	return (
 		<section className='container min-h-screen flex flex-col justify-evenly pb-10 pt-10 '>

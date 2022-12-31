@@ -1,24 +1,18 @@
-import { Button, message, Steps, Divider, Form } from 'antd'
+import { Button, Steps, Divider } from 'antd'
 import React, { useState } from 'react'
 import BasketCard from '../basketCard/BasketCard'
 import BasketDostavkaIOplata from '../basketDostavkaIOplata/BasketDostavkaIOplata'
 import ResultComp from '../result/ResultComp'
 import { useScreens } from '../../Constants/constants'
-
-
-
 const BasketSteps = ({ data, setData }) => {
 	const [current, setCurrent] = useState(0)
 	const screens = useScreens()
-
 	const next = () => {
 		setCurrent(current + 1)
 	}
 	const prev = () => {
 		setCurrent(current - 1)
 	}
-
-
 	const steps = [
 		{
 			title: 'Товары и услуги',
@@ -35,18 +29,14 @@ const BasketSteps = ({ data, setData }) => {
 			disabled: true
 		},
 	]
-
 	const onChange = (value) => {
 		setCurrent(value)
 	}
-
 	const items = steps.map((item) => ({
 		key: item.title,
 		title: item.title,
 		disabled: item.disabled
 	}))
-
-
 	return (
 		<>
 			<Steps
@@ -54,7 +44,6 @@ const BasketSteps = ({ data, setData }) => {
 				items={items}
 				onChange={onChange}
 				type="navigation"
-				// status=""
 				className="site-navigation-steps"
 			/>
 			<div className="steps-content">
@@ -86,14 +75,8 @@ const BasketSteps = ({ data, setData }) => {
 						Оформить заказ
 					</Button>
 				)}
-				{/* {current === steps.length - 1 && (
-					<Button type="primary" onClick={() => message.success('Processing complete!')}>
-						Done
-					</Button>
-				)} */}
-
 			</div>
 		</>
-	);
-};
+	)
+}
 export default BasketSteps

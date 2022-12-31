@@ -6,16 +6,10 @@ import master from '../../images/footer/Master-Card.svg'
 import bank from '../../images/footer/bank_card.svg'
 import TabsFooter from './tabsFooter/TabsFooter'
 import FooterList from './listFooter/FooterList'
-import { dataListFooter } from '../../content/Content'
-// import { dataListFooter2 } from '../../content/Content'
 import { Context } from '../../App'
 import { NavLink, Link } from 'react-router-dom'
-
-
 function Footer() {
   const { dataApp } = useContext(Context)
-
-
   const items = []
   dataApp.dataMenu.forEach(el => {
     const type = []
@@ -40,7 +34,6 @@ function Footer() {
     })
   })
   const itemsInfo = []
-
 	dataApp.infoPages.forEach(el => {
 		itemsInfo.push(
 			{
@@ -52,7 +45,6 @@ function Footer() {
 			},
 		)
 	})
-
   return (
     <footer className='mt-auto pt-12' style={{ background: '#ff0084' }}>
       <div className='container'>
@@ -94,6 +86,5 @@ function Footer() {
     </footer>
   )
 }
-
 export default Footer
 

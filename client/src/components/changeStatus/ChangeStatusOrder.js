@@ -1,13 +1,9 @@
 import { Button, Form, Space, InputNumber, Radio, Popconfirm, message } from 'antd'
 import React, { useState } from 'react'
 import { changeStatusOrder, changeStatusOrderCourier, getOneOrder, getOneOrderCourier } from '../../http/adminAPI'
-
-
 const ChangeStatusOrder = ({ courier }) => {
 	const [data, setData] = useState({})
-	const [status, setStatus] = useState(null)
 	const [form] = Form.useForm()
-
 	const onFinish = values => {
 		if (courier) {
 			getOneOrderCourier(values.id)

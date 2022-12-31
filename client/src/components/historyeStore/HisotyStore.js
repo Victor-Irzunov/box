@@ -1,20 +1,15 @@
-import { Space, Image, Switch, Typography } from 'antd'
-import { HighlightOutlined, } from '@ant-design/icons'
+import { Image, Typography } from 'antd'
 import React, { useState } from 'react'
 import logohistory from '../../images/historyStore/box-history.jpeg'
-
 const { Paragraph } = Typography
-
 function HisotyStore() {
-	const [editH1, setEditH1] = useState('box-Store - самый крупный онлайн-магазин подарочных боксов в Беларуси.')
-	const [editContent, setEditContent] = useState(`Ant Design, a design language for background applications, is refined by Ant UED Team. Ant
+	const [editH1] = useState('box-Store - самый крупный онлайн-магазин подарочных боксов в Беларуси.')
+	const [editContent] = useState(`Ant Design, a design language for background applications, is refined by Ant UED Team. Ant
 	Design, a design language for background applications, is refined by Ant UED Team. Ant
 	Design, a design language for background applications, is refined by Ant UED Team. Ant
 	Design, a design language for background applications, is refined by Ant UED Team. Ant
 	Design, a design language for background applications, is refined by Ant UED Team. Ant
 	Design, a design language for background applications, is refined by Ant UED Team.`)
-
-
 	return (
 		<div
 			className='sm:mt-20 pb-10 xm:mt-12 ss:mt-12
@@ -46,5 +41,4 @@ function HisotyStore() {
 		</div>
 	)
 }
-
 export default HisotyStore

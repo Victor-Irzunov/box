@@ -1,10 +1,8 @@
 import React from "react"
 import { useLocation, Link } from "react-router-dom"
 import { HomeOutlined } from '@ant-design/icons'
-import { Breadcrumb, Menu } from "antd"
+import { Breadcrumb } from "antd"
 import CyrillicToTranslit from 'cyrillic-to-translit-js'
-
-
 const BreadCrumbComp = () => {
 	const cyrillicToTranslit = new CyrillicToTranslit()
 	const location = useLocation()
@@ -12,7 +10,6 @@ const BreadCrumbComp = () => {
 		const { pathname } = location
 		const pathnames = pathname.split("/").filter((item) => item)
 		const capatilize = s => s.charAt(0).toUpperCase() + s.slice(1)
-
 		return (
 			<div className="container">
 				<Breadcrumb>

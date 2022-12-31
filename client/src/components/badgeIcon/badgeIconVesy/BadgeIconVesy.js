@@ -9,15 +9,9 @@ import { Context } from '../../../App'
 import { Tooltip } from 'antd'
 import { Link } from 'react-router-dom'
 import CyrillicToTranslit from 'cyrillic-to-translit-js'
-import { useScreens } from '../../../Constants/constants'
-
-
-
 const BadgeIconVesy = observer(({ cardComp, header, productPage, addToComparisonList, id, mobil }) => {
 	const { dataApp } = useContext(Context)
 	const cyrillicToTranslit = new CyrillicToTranslit()
-	const screens = useScreens()
-
 	return (
 		<>
 			{
@@ -47,7 +41,8 @@ const BadgeIconVesy = observer(({ cardComp, header, productPage, addToComparison
 						<Badge count={dataApp.vesyLength} size="small">
 							<img
 								src={vesy}
-								className='w-6 hover:scale-110 duration-500'
+									className='w-6 hover:scale-110 duration-500'
+									alt='список сравнения'
 							/>
 						</Badge>
 					</Link>
@@ -80,7 +75,8 @@ const BadgeIconVesy = observer(({ cardComp, header, productPage, addToComparison
 						<Badge count={dataApp.vesyLength} size="small">
 							<img
 								src={vesy}
-								className='w-6 hover:scale-110 duration-500'
+									className='w-6 hover:scale-110 duration-500'
+									alt='список сравнения'
 							/>
 						</Badge>
 					</Link>

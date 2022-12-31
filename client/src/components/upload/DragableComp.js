@@ -1,13 +1,10 @@
 import React, { useCallback, useRef, useState } from 'react'
-import { Tooltip, Upload, message, Modal } from 'antd'
+import { Tooltip, Upload, Modal } from 'antd'
 import update from 'immutability-helper'
 import { FileImageOutlined } from '@ant-design/icons'
 import { DndProvider, useDrag, useDrop } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 const type = 'DragableUploadList'
-
-
-
 const DragableUploadListItem = ({ originNode, moveRow, file, fileList }) => {
 	const ref = useRef(null)
 	const index = fileList.indexOf(file)
@@ -27,7 +24,6 @@ const DragableUploadListItem = ({ originNode, moveRow, file, fileList }) => {
 			moveRow(item.index, index);
 		},
 	})
-
 	const [, drag] = useDrag({
 		type,
 		item: {
@@ -38,10 +34,7 @@ const DragableUploadListItem = ({ originNode, moveRow, file, fileList }) => {
 		}),
 	})
 	drop(drag(ref))
-
 	const errorNode = <Tooltip title="картинка">{originNode.props.children}</Tooltip>
-
-
 	return (
 		<div
 			ref={ref}
@@ -61,21 +54,13 @@ const getBase64 = (file) =>
 		reader.onload = () => resolve(reader.result);
 		reader.onerror = (error) => reject(error);
 	})
-
-
-
 const DragableComp = ({onChange ,fileList, setFileList, }) => {
 	const [previewOpen, setPreviewOpen] = useState(false)
 	const [previewImage, setPreviewImage] = useState('')
 	const [previewTitle, setPreviewTitle] = useState('')
-	// const [fileList, setFileList] = useState([])
-
-
 	const onchange = ({ fileList: newFileList }) => {
 		setFileList(newFileList)
 	}
-
-
 	const handleCancel = () => setPreviewOpen(false)
 	const handlePreview = async (file) => {
 		if (!file.url && !file.preview) {
@@ -85,17 +70,6 @@ const DragableComp = ({onChange ,fileList, setFileList, }) => {
 		setPreviewOpen(true)
 		setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1))
 	}
-
-	const prop = {
-		beforeUpload: (file) => {
-			const isWebp = file.type === 'image/webp'
-			if (!isWebp) {
-				message.error(`${file.name} is not a webp file`);
-			}
-			return isWebp || Upload.LIST_IGNORE
-		},
-	}
-
 	const moveRow = useCallback(
 		(dragIndex, hoverIndex) => {
 			const dragRow = fileList[dragIndex];
@@ -110,15 +84,11 @@ const DragableComp = ({onChange ,fileList, setFileList, }) => {
 		},
 		[fileList],
 	)
-
-
-
 	return (
 		<>
 			<DndProvider backend={HTML5Backend}>
 				<Upload
 					fileList={fileList}
-					// {...prop}
 					multiple={true}
 					onPreview={handlePreview}
 					listType="picture-card"

@@ -1,7 +1,6 @@
 import React from 'react'
-import { Button, List, message, Space, } from 'antd'
+import { Button, message, Space, } from 'antd'
 import { deleteInfo } from '../../http/adminAPI'
-
 const ListInfo = ({ data, setMessages, dataTitleInfo }) => {
 	const deleteFu = id => {
 		deleteInfo(id)
@@ -13,7 +12,6 @@ const ListInfo = ({ data, setMessages, dataTitleInfo }) => {
 			})
 	}
 	return (
-
 		dataTitleInfo.map(el => {
 			return (
 				<React.Fragment key={el.id}>
@@ -39,10 +37,8 @@ const ListInfo = ({ data, setMessages, dataTitleInfo }) => {
 									</div>
 								)
 							}
-
 						})}
 					</Space>
-
 				</React.Fragment>
 			)
 		})

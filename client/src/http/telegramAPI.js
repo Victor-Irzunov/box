@@ -1,9 +1,6 @@
-import { $authHost, $host } from "./index"
+import { $host } from "./index"
 import { chat_id, uri_api } from '../Constants/constants'
-
 export const sendOrderTelegram = async (data) => {
-	console.log('sendOrderTelegram data: ', data)
-
 	let messageForm = `<b>Заказ с сайта</b>\n`
 	messageForm += `<b> </b>\n`
 	messageForm += `<b>Заказ №</b> «${data.id}»\n`
@@ -18,9 +15,6 @@ export const sendOrderTelegram = async (data) => {
 	messageForm += `<b>Телефон для связи: </b> ${data.order.phone}\n`
 	messageForm += `<b> </b>\n`
 	messageForm += `<b>На складе осталось: </b> ${data.product.count}\n`
-
-
-
 	$host.post(uri_api, {
 		chat_id,
 		parse_mode: 'html',
@@ -31,7 +25,6 @@ export const sendOrderTelegram = async (data) => {
 
 		}
 	})
-
 }
 
 

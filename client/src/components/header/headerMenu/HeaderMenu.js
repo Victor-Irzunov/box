@@ -4,21 +4,15 @@ import React, { useState, useContext } from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import logo from '../../../images/logo/logo3.webp'
 import { Context } from '../../../App'
-// import { useScreens } from '../../../Constants/constants'
-
-
 const HeaderMenu = () => {
 	const { dataApp } = useContext(Context)
 	const [current, setCurrent] = useState('main')
-	// const screens = useScreens()
 	const onClick = e => { setCurrent(e.key) }
-
-
 	 const items = [
 		{
 			label: (
 				<NavLink to="/">
-					<img src={logo} className='inline w-36' />
+					<img src={logo} alt='логотип компании' className='inline w-36' />
 				</NavLink>),
 			key: 'main'
 		},
@@ -43,7 +37,6 @@ const HeaderMenu = () => {
 			children: type
 		})
 	})
-
 	return (
 		<div
 			style={{ position: 'relative' }}
@@ -52,7 +45,6 @@ const HeaderMenu = () => {
 				onClick={onClick}
 				selectedKeys={[current]}
 				mode="horizontal"
-				
 				items={items}
 				style={{
 					background: 'transparent',
