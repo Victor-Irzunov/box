@@ -1,7 +1,7 @@
 import { Divider, Button } from 'antd'
 import React, { useState } from 'react'
 import CarouselCard from '../carouselCard/CarouselCard'
-import DrawerModal from '../drawerModal/DrawerModal'
+// import DrawerModal from '../drawerModal/DrawerModal'
 
 
 const MainCard = ({cardItem}) => {
