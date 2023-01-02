@@ -5,6 +5,7 @@ import { Context } from '../../App'
 import { observer } from "mobx-react-lite"
 import { fetchProductNoUser } from '../../http/productsAPI'
 import { getAllBasketUser } from '../../http/basketAPI'
+import { Helmet } from "react-helmet"
 const { Title } = Typography
 const BasketPage = observer(() => {
 	const { dataApp, dataProducts, user } = useContext(Context)
@@ -51,6 +52,10 @@ const BasketPage = observer(() => {
 	])
 	return (
 		<section className='container min-h-screen flex flex-col justify-evenly pb-10 pt-10 '>
+			<Helmet>
+				<title>Корзина</title>
+				<meta name="description" content='Корзина' />
+			</Helmet>
 			<Title>Моя корзина</Title>
 			<BackTop />
 			<BasketSteps data={data} setData={setData} />

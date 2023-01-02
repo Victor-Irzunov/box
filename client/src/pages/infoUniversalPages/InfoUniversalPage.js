@@ -4,6 +4,7 @@ import { message, Typography, BackTop, Empty } from 'antd'
 import parse from 'html-react-parser'
 import { getOneInfoPages } from '../../http/infoPagesAPI'
 import CyrillicToTranslit from 'cyrillic-to-translit-js'
+import { Helmet } from "react-helmet"
 function InfoUniversalPage() {
 	const cyrillicToTranslit = new CyrillicToTranslit()
 	const [data, setData] = useState({})
@@ -19,6 +20,10 @@ function InfoUniversalPage() {
 	}, [pathname])
 	return (
 		<section className='container mt-6 py-10'>
+			<Helmet>
+				<title>{data.title}</title>
+				<meta name="description" content={data.title} />
+			</Helmet>
 			<Typography.Title>{data.title}</Typography.Title>
 			<BackTop />
 			<article>

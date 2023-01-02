@@ -24,7 +24,6 @@ const UniversalPage = observer(() => {
 	const { dataApp } = useContext(Context)
 	const [editH1, setEditH1] = useState('')
 	const [editH2] = useState(textMenPage.h2)
-	// const [h2, setH2] = useState('')
 	const [editH3] = useState(textMenPage.h3)
 	const [editP] = useState(textMenPage.p)
 	const [editP2] = useState(textMenPage.p2)
@@ -37,7 +36,6 @@ const UniversalPage = observer(() => {
 	const arrLocalPath = location.pathname.split('/').filter(function (el) {
 		return (el != null && el != "" || el === 0)
 	})
-
 	const [itemCard, setItemCard] = useState([])
 	const [totalItem, setTotalItem] = useState(1)
 	const [page, setPage] = useState(1)
@@ -45,6 +43,7 @@ const UniversalPage = observer(() => {
 	const [categoryId, setCategoryId] = useState(null)
 	const [typeId, setTypeId] = useState(null)
 	const [type, setType] = useState([])
+	const [typeTitle, setTypeTitle] = useState('')
 	const [isReset, setIsReset] = useState(false)
 	const [isBtnSortRatng, setIsBtnSortRatng] = useState(false)
 	const [isBtnSortPrice, setIsBtnSortPrice] = useState(false)
@@ -66,15 +65,16 @@ const UniversalPage = observer(() => {
 					el.types.forEach(elem => {
 						if (elem.link === arrLocalPath[1]) {
 							setTypeId(elem.id)
-							// setH2(elem.name)
+							setTypeTitle(elem.name)
 						}
 					})
+				} else {
+					setTypeTitle('')
 				}
 			})
 		}
-	}, [
-		arrLocalPath,
-	])
+	}, [arrLocalPath])
+
 	useEffect(() => {
 		if (categoryId) {
 			fetchProducts(page, pageSize, categoryId, typeId)
@@ -126,16 +126,16 @@ const UniversalPage = observer(() => {
 		return setItemCard(prev => prev.sort((a, b) => b.rating - a.rating))
 	}
 	const showDrawer = () => {
-		setOpen(true);
+		setOpen(true)
 	}
 	const onClose = () => {
-		setOpen(false);
+		setOpen(false)
 	}
 	return (
 		<>
 			<Helmet>
-				<title>{dataApp.data['/muzhskie'].title}</title>
-				<meta name="description" content={dataApp.data['/muzhskie'].description} />
+				<title>{editH1}{typeTitle ? ` | ${typeTitle}`: ''}</title>
+				<meta name="description" content={editH1} />
 			</Helmet>
 			<BackTop />
 			<section className='container'>
@@ -237,6 +237,7 @@ const UniversalPage = observer(() => {
 							setInputValueFrom={setInputValueFrom}
 							setInputValueBefore={setInputValueBefore}
 							resetFilter={resetFilter}
+							onClose={onClose}
 						/>
 					</Drawer>
 					<Content className='pb-20 bg-white'>

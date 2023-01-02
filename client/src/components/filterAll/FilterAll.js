@@ -7,7 +7,7 @@ const { Panel } = Collapse
 const FilterAll = (
 	{ inputValueFrom, setInputValueFrom,
 		inputValueBefore, setInputValueBefore,
-		sendFormFilter, resetFilter
+		sendFormFilter, resetFilter,  onClose
 	}
 ) => {
 	return (
@@ -25,6 +25,7 @@ const FilterAll = (
 					setInputValueFrom={setInputValueFrom}
 					setInputValueBefore={setInputValueBefore}
 					resetFilter={resetFilter}
+					onClose={onClose}
 				/>
 			</Panel>
 		</Collapse>

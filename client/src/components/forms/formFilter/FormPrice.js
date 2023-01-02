@@ -1,4 +1,4 @@
-import { Col, InputNumber, Row, Slider, Form, Button } from 'antd'
+import { Col, InputNumber, Row, Slider, Form, Button, message } from 'antd'
 import React, { useState } from 'react'
 import { CloseCircleOutlined } from '@ant-design/icons'
 const style = {
@@ -20,7 +20,7 @@ const marks = {
 const FormPrice = (
 	{ inputValueFrom, setInputValueFrom,
 		inputValueBefore, setInputValueBefore,
-		sendFormFilter, resetFilter
+		sendFormFilter, resetFilter,  onClose
 	}
 ) => {
 	const onChangeFrom = (newValue) => setInputValueFrom(newValue)
@@ -30,6 +30,16 @@ const FormPrice = (
 	}
 	const onFinishFailed = (errorInfo) => {
 		console.log('ошибка в отправке:', errorInfo);
+	}
+	const closeClickBtn = (num = 0) => {
+		if (num === 1) {
+			message.success('Фильтр сброшен')
+		} else {
+			message.success('Цена отфильтрована')
+		}
+		setTimeout(() => {
+			onClose()
+		},500)
 	}
 	return (
 		<div>
@@ -110,6 +120,7 @@ const FormPrice = (
 						type="primary"
 						htmlType="submit"
 						className='mt-5 ml-2'
+						onClick={closeClickBtn}
 					>
 						Фильтровать
 					</Button>
@@ -117,7 +128,10 @@ const FormPrice = (
 			</Form>
 			<Button
 				type='text'
-				onClick={resetFilter}
+				onClick={() => {
+					resetFilter()
+					closeClickBtn(1)
+				}}
 				className='text-xs'
 				icon={<CloseCircleOutlined />}
 			>

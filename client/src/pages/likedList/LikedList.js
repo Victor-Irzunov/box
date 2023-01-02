@@ -7,6 +7,7 @@ import { fetchProductNoUser } from '../../http/productsAPI'
 import {useLocation} from 'react-router-dom'
 import { useCookieList } from '../../hooks/useCookieList'
 import { observer } from "mobx-react-lite"
+import { Helmet } from "react-helmet"
 const { Title } = Typography
 const LikedList = observer(() => {
 	const { dataApp } = useContext(Context)
@@ -38,6 +39,10 @@ const LikedList = observer(() => {
 	}
 	return (
 		<section className='container pt-9 pb-12'>
+			<Helmet>
+				<title>Понравившиеся товары</title>
+				<meta name="description" content='Понравившиеся товары' />
+			</Helmet>
 			<Title>Понравившиеся товары</Title>
 			<BackTop />
 			{itemCard.length ?

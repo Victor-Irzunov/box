@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Collapse,BackTop } from 'antd'
+import { Collapse, BackTop } from 'antd'
 import {
 	PictureOutlined, ScheduleOutlined,
 	DollarCircleOutlined, DeleteOutlined,
@@ -23,15 +23,16 @@ import GetOrderAdmin from '../../components/formsAdmin/formOrdersAdmin/GetOrderA
 import RenderingDataOrder from '../../components/formsAdmin/formOrdersAdmin/RenderingDataOrder'
 import FormInfoPages from '../../components/formsAdmin/formInfoPages/FormInfoPages'
 import FomrGetOneInfoPage from '../../components/formsAdmin/formInfoPages/changeInfoPage/FomrGetOneInfoPage'
-
+import { Helmet } from "react-helmet"
 const { Panel } = Collapse
-
 const AdminPage = () => {
 	const [dataOrder, setDataOrder] = useState([])
-
-
 	return (
 		<section className='pb-28'>
+			<Helmet>
+				<title>Страница администратора</title>
+				<meta name="description" content='Страница администратора' />
+			</Helmet>
 			<div className='container'>
 				<BackTop />
 				<p className='text-2xl mt-8 mb-8'>Страница администратора</p>

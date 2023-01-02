@@ -86,8 +86,8 @@ const ProductPage = observer(() => {
 	return (
 		<>
 			<Helmet>
-				<title>{dataApp.data['/muzhskie'].title}</title>
-				<meta name="description" content={dataApp.data['/muzhskie'].description} />
+				<title>{editH1}</title>
+				<meta name="description" content={editH1} />
 			</Helmet>
 			<BackTop />
 			<section className='container pt-5 pb-20'>

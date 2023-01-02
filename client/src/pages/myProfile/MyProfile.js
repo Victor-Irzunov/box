@@ -2,6 +2,7 @@ import React, {  useEffect, useState } from 'react'
 import { Typography, Empty, Spin } from 'antd'
 import { getMyAccount } from '../../http/userAPI'
 import DescriptionsCompUserData from '../../components/descriptionsMyProfile/DescriptionsCompUserData'
+import { Helmet } from "react-helmet"
 const { Title } = Typography
 
 function MyProfile() {
@@ -12,7 +13,6 @@ function MyProfile() {
 		setLoading(true)
 		getMyAccount()
 			.then(data => {
-				console.log('getMyAccount: ', data)
 				setData(data)
 				setLoading(false)
 			})
@@ -22,7 +22,11 @@ function MyProfile() {
 	}
 	return (
 		<section className='container pt-5 pb-20'>
-			<div className=''>
+			<Helmet>
+				<title>Мой профиль</title>
+				<meta name="description" content='Мой профиль' />
+			</Helmet>
+			<div>
 				<Title>Мой профиль</Title>
 				{Object.keys(data).length &&
 					data.userData ?

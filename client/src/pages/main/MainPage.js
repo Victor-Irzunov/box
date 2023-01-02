@@ -10,7 +10,6 @@ import { observer } from "mobx-react-lite"
 import { Context } from '../../App'
 import { getNewProduct } from '../../http/productsAPI'
 import { getSliderImg } from '../../http/imgAPI'
-
 const MainPage = observer(() => {
   const { dataApp } = useContext(Context)
   const [cardItem, setCardItem] = useState([])
