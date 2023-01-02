@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
-import { message, Typography, BackTop} from 'antd'
+import { message, Typography, BackTop, Empty } from 'antd'
 import parse from 'html-react-parser'
 import { getOneInfoPages } from '../../http/infoPagesAPI'
 import CyrillicToTranslit from 'cyrillic-to-translit-js'
@@ -13,7 +13,8 @@ function InfoUniversalPage() {
 	useEffect(() => {
 		getOneInfoPages({ link: cyrillicToTranslit.reverse(pathnames[1]) })
 			.then(data => {
-				if (data && Object.keys(data).length) setData(data)
+				console.log('-getOneInfoPages------->data: ', data)
+				if (data) setData(data)
 				else message.error(data.message)
 			})
 	}, [pathname])
@@ -22,7 +23,7 @@ function InfoUniversalPage() {
 			<Typography.Title>{data.title}</Typography.Title>
 			<BackTop />
 			<article>
-				{Object.keys(data).length && parse(data.content)}
+				{Object.keys(data).length ? parse(data.content) : <Empty />}
 			</article>
 		</section>
 	)
