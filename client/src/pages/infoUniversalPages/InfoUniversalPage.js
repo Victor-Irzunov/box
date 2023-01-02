@@ -13,7 +13,6 @@ function InfoUniversalPage() {
 	useEffect(() => {
 		getOneInfoPages({ link: cyrillicToTranslit.reverse(pathnames[1]) })
 			.then(data => {
-				console.log('-getOneInfoPages------->data: ', data)
 				if (data) setData(data)
 				else message.error(data.message)
 			})
