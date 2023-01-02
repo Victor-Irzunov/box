@@ -19,12 +19,10 @@ import {
 	PushpinOutlined,
 	ArrowRightOutlined,
 	ArrowLeftOutlined,
-
 } from '@ant-design/icons'
 import { addBasketUserOneProduct } from '../../http/basketAPI'
 import { useScreens } from '../../Constants/constants'
 import CyrillicToTranslit from 'cyrillic-to-translit-js'
-
 const { Paragraph } = Typography
 
 const BtnComp = observer(({ el }) => {
@@ -183,15 +181,12 @@ const ComparisonList = observer(() => {
 			setIsLoading(false)
 		}
 	}, [dataApp.vesyLength])
-
 	function clearAllList() {
 		deleteAllList('ComparisonList')
 	}
-
 	function deleteOneElCookies(id) {
 		deleteOneList('ComparisonList', id)
 	}
-
 	const fixedElem = (value) => {
 		if (value === 'left') {
 			colomns.map((el, idx) => {
@@ -232,7 +227,6 @@ const ComparisonList = observer(() => {
 
 	}
 	const data = [{}]
-
 	return (
 		<div>
 			{dataApp.vesyLength ?
@@ -280,5 +274,4 @@ const ComparisonList = observer(() => {
 		</div>
 	)
 })
-
 export default ComparisonList

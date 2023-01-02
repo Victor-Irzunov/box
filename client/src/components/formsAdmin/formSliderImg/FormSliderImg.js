@@ -26,7 +26,6 @@ const FormSliderImg = () => {
 	const [form] = Form.useForm()
 
 	const onFinish = async (values) => {
-		// console.log('Success:', values)
 		const formData = new FormData()
 		for (let k in values.img.fileList) {
 			const pic = await resizeFile(values.img.fileList[k].originFileObj, 2000, 1333)
@@ -72,16 +71,13 @@ const FormSliderImg = () => {
 				<Upload
 					listType="picture"
 					className="upload-list-inline"
+					
 				>
 					<Button icon={<UploadOutlined />}>Загрузить</Button>
 				</Upload>
 			</Form.Item>
 
 			<Form.Item
-				// wrapperCol={{
-				// 	offset: 8,
-				// 	span: 16,
-				// }}
 			>
 				<Button type="primary" htmlType="submit" className='mt-2 float-right'>
 					Сохранить

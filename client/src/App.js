@@ -83,7 +83,7 @@ const App = observer(() => {
         }
         dataApp.setInfoPages(items)
       })
-  }, [dataApp])
+  }, [])
 
 
   if (loading) {

@@ -1,10 +1,7 @@
-import { Button, Checkbox, Form, Input, DatePicker, Space, message } from 'antd'
+import { Button, Form, DatePicker, Space, message } from 'antd'
 import React from 'react'
 import { getDateOrders, getDateOrdersCourier } from '../../../http/adminAPI'
-
-
 const GetOrderAdmin = ({ setDataOrder, courier }) => {
-
 	const onFinish = (values) => {
 		if (courier) {
 			getDateOrdersCourier(values.date._d.toLocaleDateString("en-EN"))
@@ -19,17 +16,12 @@ const GetOrderAdmin = ({ setDataOrder, courier }) => {
 					} else {
 						message.warning('Заказов нет')
 					}
-					console.log('data: ', data)
-
 				})
 		}
-
 	}
-
 	const onFinishFailed = (errorInfo) => {
 		console.log('Failed:', errorInfo)
 	}
-
 	return (
 		<Form
 			name="order_admin"
@@ -50,7 +42,6 @@ const GetOrderAdmin = ({ setDataOrder, courier }) => {
 				>
 					<DatePicker />
 				</Form.Item>
-
 				<Form.Item
 				>
 					<Button type="primary" htmlType="submit">
@@ -59,6 +50,6 @@ const GetOrderAdmin = ({ setDataOrder, courier }) => {
 				</Form.Item>
 			</Space>
 		</Form>
-	);
-};
+	)
+}
 export default GetOrderAdmin

@@ -34,9 +34,7 @@ const resizeFile = (file, size, size2) =>
 			"file",
 		)
 	})
-
 const { TextArea } = Input
-
 const FormProduct = () => {
 	const [form] = Form.useForm()
 	const [dataInfo, setDataInfo] = useState([])
@@ -45,9 +43,7 @@ const FormProduct = () => {
 	const [fileList, setFileList] = useState([])
 	const [group, setGroup] = useState(null)
 	const [groupId, setGroupId] = useState(null)
-
 	const [title, setTitle] = useState('')
-
 	useEffect(() => {
 		fetchInfo()
 			.then(data => {
@@ -72,17 +68,13 @@ const FormProduct = () => {
 			})
 	}, [])
 
-
 	const onFinish = async values => {
 		console.log('Success:', values)
-
-
 		const arrInfo = []
 		const keys = Object.keys(values.info)
 		keys.forEach(el => {
 			arrInfo.push({ title: el, description: values.info[el].content, titleInfoId: values.info[el].id })
 		})
-
 		const formData = new FormData()
 		formData.append('info', JSON.stringify(arrInfo))
 		formData.append('category', values.category)
@@ -95,7 +87,6 @@ const FormProduct = () => {
 		formData.append('newProd', values.newProd)
 		formData.append('groupCreate', values.groupCreate)
 		formData.append('group', values.group)
-
 		for (let k in fileList) {
 			const pic = await resizeFile(fileList[k].originFileObj, 1000, 600)
 			formData.append('img', pic)
@@ -103,7 +94,6 @@ const FormProduct = () => {
 		for (let k in fileList) {
 			formData.append('imgMini', await resizeFile(fileList[k].originFileObj, 250, 250))
 		}
-
 		createProduct(formData)
 			.then(data => {
 				console.log('💊data: ', data)
@@ -111,8 +101,6 @@ const FormProduct = () => {
 					message.success(`Продукт добавлен`)
 					setGroupId(data.groupId)
 				}
-
-
 			})
 			.catch(data => {
 				message.error(data.response.data.message)
@@ -122,7 +110,6 @@ const FormProduct = () => {
 	const onFinishFailed = (errorInfo) => {
 		console.log('Failed:', errorInfo);
 	}
-
 	const copyFunction = () => {
 		navigator.clipboard.writeText(title)
 			.then(() => {
@@ -130,19 +117,16 @@ const FormProduct = () => {
 				else message.warning('Введите полное название для копирования!')
 			})
 			.catch(err => console.log('err: ', err))
-
 	}
 
 	const groupNumber = num => {
 		setGroup(num.target.value)
 	}
-
 	const confirm = (e) => {
 		form.resetFields()
 		setGroupId(null)
 		message.success('Форма очищена')
 	}
-
 
 	return (
 		<>
@@ -178,7 +162,6 @@ const FormProduct = () => {
 						>
 							<Radio.Button className='mr-1 mb-1' value={1}>Создать группу</Radio.Button>
 						</Popconfirm>
-
 						<Radio.Button className='mr-1 mb-1' value={2}>Группа есть</Radio.Button>
 						<Popconfirm
 							title="Очистить форму?"
@@ -188,11 +171,8 @@ const FormProduct = () => {
 						>
 							<Radio.Button className='mr-1 mb-1' value={0}>Не создавать группу</Radio.Button>
 						</Popconfirm>
-
 					</Radio.Group>
-
 				</Form.Item>
-
 				{
 					group === 2 &&
 					<Form.Item
@@ -206,7 +186,6 @@ const FormProduct = () => {
 						<InputNumber />
 					</Form.Item>
 				}
-
 				<Form.Item
 					label="Категория"
 					name="category"
@@ -226,9 +205,7 @@ const FormProduct = () => {
 							:
 							<Empty />
 					}
-
 				</Form.Item>
-
 				<Form.Item
 					label="Тип"
 					name="type"
@@ -254,13 +231,10 @@ const FormProduct = () => {
 							:
 							<Empty />
 					}
-
 				</Form.Item>
-
 				<Form.Item
 					label="Название"
 					name="name"
-
 					rules={[{
 						required: true,
 						message: 'Введите название!',
@@ -289,7 +263,6 @@ const FormProduct = () => {
 						}
 					/>
 				</Form.Item>
-
 				<Form.Item
 					label="Описание товара"
 					name="description"
@@ -314,7 +287,6 @@ const FormProduct = () => {
 				>
 					<InputNumber addonAfter="руб." />
 				</Form.Item>
-
 				<Form.Item
 					label="Процент скидки"
 					name="discountPercentage"
@@ -323,7 +295,6 @@ const FormProduct = () => {
 						addonAfter="%"
 					/>
 				</Form.Item>
-
 				<Form.Item
 					label="Количество"
 					name="count"
@@ -336,14 +307,11 @@ const FormProduct = () => {
 				>
 					<InputNumber addonAfter="шт." />
 				</Form.Item>
-
 				<Divider />
-
 				<Form.Item
 					label="Картинки"
 					name="img"
 					valuePropName='img'
-					// extra=''
 					rules={[{
 						required: true,
 						message: 'Добавьте картинки!',
@@ -351,7 +319,6 @@ const FormProduct = () => {
 				>
 					<DragableComp setFileList={setFileList} fileList={fileList} />
 				</Form.Item>
-
 				<Form.Item
 					label="Описание"
 					name='info'
@@ -359,7 +326,6 @@ const FormProduct = () => {
 				>
 					{
 						dataInfo.length > 0 ?
-
 							dataInfo.map(el => {
 								return (
 									<div className='mb-3 mt-1.5' key={el.id}>
@@ -395,7 +361,6 @@ const FormProduct = () => {
 							<Empty />
 					}
 				</Form.Item>
-
 				<Form.Item
 					name="newProd"
 					valuePropName="checked"
@@ -406,8 +371,6 @@ const FormProduct = () => {
 				>
 					<Checkbox>Новый товар</Checkbox>
 				</Form.Item>
-
-
 				<Form.Item
 					wrapperCol={{
 						offset: 16,
@@ -429,7 +392,6 @@ const FormProduct = () => {
 					/>
 				</Affix>
 			}
-
 		</>
 	)
 }

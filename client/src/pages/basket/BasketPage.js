@@ -38,7 +38,7 @@ const BasketPage = observer(() => {
 						})
 						setData(dataArr)
 					} else {
-						message.warning('Пока в корзине пусто')
+						message.warning('В корзине пусто')
 					}
 				}
 				)
