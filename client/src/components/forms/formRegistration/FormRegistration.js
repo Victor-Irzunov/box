@@ -8,17 +8,14 @@ import {
 	notification,
 } from 'antd'
 import React, { useState, useContext } from 'react'
-import InputMask from 'react-input-mask'
 import { registration } from '../../../http/userAPI'
 import { Context } from '../../../App'
-
-
 
 const FormRegistration = ({ handleCancel }) => {
 	const [form] = Form.useForm()
 	const [isCheck, setIsCheck] = useState(false)
 	const { user } = useContext(Context)
-	const [tel, setTel] = useState('')
+	const [tel] = useState('')
 	const [autoCompleteResult, setAutoCompleteResult] = useState([])
 
 	const [api, contextHolder] = notification.useNotification()
@@ -29,19 +26,17 @@ const FormRegistration = ({ handleCancel }) => {
 			duration: 10,
 		})
 	}
-
-	const onWebsiteChange = (value) => {
+	const onWebsiteChange = value => {
 		if (!value) {
 			setAutoCompleteResult([])
 		} else {
 			setAutoCompleteResult(['@gmail.com', '@tut.by', '@yandex.by', '@mail.ru'].map((domain) => `${value}${domain}`));
 		}
-	};
+	}
 	const websiteOptions = autoCompleteResult.map((website) => ({
 		label: website,
 		value: website,
 	}))
-
 	let count = 0
 	const onFinish = values => {
 		if (count > 0) {
@@ -77,7 +72,6 @@ const FormRegistration = ({ handleCancel }) => {
 			selection
 		}
 	}
-
 	return (
 		<>
 			<Form
@@ -88,7 +82,6 @@ const FormRegistration = ({ handleCancel }) => {
 				onFinishFailed={onFinishFailed}
 				style={{ overflowX: 'hidden' }}
 			>
-
 				<Form.Item
 					label="Логин"
 					name="login"
@@ -111,7 +104,6 @@ const FormRegistration = ({ handleCancel }) => {
 						placeholder="exemple@gmail.com"
 					/>
 				</Form.Item>
-
 				<Form.Item
 					label="Пароль"
 					name="password"
@@ -126,7 +118,6 @@ const FormRegistration = ({ handleCancel }) => {
 				>
 					<Input.Password placeholder="мин. 4 символа" />
 				</Form.Item>
-
 				<Form.Item
 					name="password2"
 					label="Повторите пароль"
@@ -148,31 +139,6 @@ const FormRegistration = ({ handleCancel }) => {
 				>
 					<Input.Password />
 				</Form.Item>
-
-				{/* <Form.Item
-					name="tel"
-					label="Телефон"
-					tooltip="Обязательное поле"
-					hasFeedback
-					rules={[
-						{
-							required: true,
-							message: 'Пожалуйста введите телефон!',
-						},
-					]}
-				>
-					<InputMask
-						placeholder="29 333-33-33"
-						mask="+3\7\5 99 999 99 99"
-						maskChar={'-'}
-						className='ant-input'
-						beforeMaskedValueChange={beforeMaskedValueChange}
-						value={tel}
-						onChange={(e) => setTel(e.target.value)}
-					/>
-				</Form.Item> */}
-
-
 				<Form.Item
 					name="soglasen"
 					valuePropName="checked"
@@ -189,26 +155,21 @@ const FormRegistration = ({ handleCancel }) => {
 						Входя в аккаунт или создавая новый, вы соглашаетесь на обработку персональных данных в соответствии с политикой и условиями оферты.
 					</Checkbox>
 				</Form.Item>
-
 				<Form.Item
 				>
 					<Button
 						type="primary"
 						htmlType="submit"
 						onClick={onFinish}
-						// disabled={!isCheck}
 						size='large'
 					>
 						Регистрация
 					</Button>
 				</Form.Item>
-
 			</Form>
-
 			{contextHolder}
 		</>
 	)
 }
-
 export default FormRegistration
 

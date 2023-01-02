@@ -1,22 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import {
 	Button, InputNumber,
-	Form, Input, Radio,
-	message, Select,
-	Tooltip,
-	Collapse,
-	Checkbox,
-	Empty,
-	Divider, Alert,
-	Affix, Popconfirm, Space
+	Form, Space
 } from 'antd'
 import { fetchOneProduct } from '../../../http/productsAPI'
 import FormChangeProduct from './FormChangeProduct'
-
 function GetProductChange() {
 	const [product, setProduct] = useState({})
 	const [form] = Form.useForm()
-
 	const onFinish = values => {
 		fetchOneProduct(values.id)
 			.then(data => {
@@ -29,18 +20,11 @@ function GetProductChange() {
 	const onFinishFailed = (errorInfo) => {
 		console.log('Failed:', errorInfo)
 	}
-
 	return (
 		<div>
 			<Form
 				name="getOneProduct"
 				form={form}
-				// labelCol={{
-				// 	span: 12,
-				// }}
-				// wrapperCol={{
-				// 	span: 12,
-				// }}
 				onFinish={onFinish}
 				onFinishFailed={onFinishFailed}
 				autoComplete="off"
@@ -56,12 +40,7 @@ function GetProductChange() {
 					>
 						<InputNumber />
 					</Form.Item>
-
 					<Form.Item
-						// wrapperCol={{
-						// 	offset: 8,
-						// 	span: 8,
-						// }}
 					>
 						<Button type="primary" htmlType="submit">
 							Получить
@@ -69,7 +48,6 @@ function GetProductChange() {
 					</Form.Item>
 				</Space>
 			</Form>
-
 			{
 				Object.keys(product).length ?
 					<FormChangeProduct product={product} setProduct={setProduct} />
@@ -79,5 +57,4 @@ function GetProductChange() {
 		</div>
 	)
 }
-
 export default GetProductChange
