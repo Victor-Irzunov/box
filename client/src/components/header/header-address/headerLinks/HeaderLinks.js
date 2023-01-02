@@ -7,17 +7,21 @@ function HeaderLinks() {
 	const { dataApp } = useContext(Context)
 	return (
 		<Space split={<Divider type="vertical" />}>
-			{dataApp.infoPages.length && dataApp.infoPages.map(el => {
-				return (
+			{dataApp.infoPages.length ?
+				dataApp.infoPages.map(el => {
+					return (
 						<Link to={{
-						pathname: `/info/${el.link}`
-					}}
-						state={{ id: el.id }}
-					>
-						{el.name}
-					</Link>
-				)
-			})}
+							pathname: `/info/${el.link}`
+						}}
+							state={{ id: el.id }}
+						>
+							{el.name}
+						</Link>
+					)
+				})
+				:
+				undefined
+			}
 		</Space>
 	)
 }

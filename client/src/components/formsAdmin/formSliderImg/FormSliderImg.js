@@ -12,7 +12,7 @@ const resizeFile = (file, size, size2) =>
 			size,
 			size2,
 			"WEBP",
-			80,
+			75,
 			0,
 			(uri) => {
 				resolve(uri)
