@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken'
 import { v4 as uuidv4 } from 'uuid'
 import { validationResult } from "express-validator"
 import { mailService } from '../mail/MailService.js'
+import chalk from 'chalk'
 
 
 
@@ -61,6 +62,7 @@ class UserController {
 
 		} catch (err) {
 			console.log('🚀-error: ', err)
+			console.log(chalk.red('🚀-error: ', err))
 		}
 
 	}
@@ -82,6 +84,7 @@ class UserController {
 			return res.json({ token })
 		} catch (err) {
 			console.log('🚀🚀-error: ', err)
+			console.log(chalk.red('🚀-error: ', err))
 		}
 	}
 
