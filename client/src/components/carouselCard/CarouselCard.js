@@ -50,6 +50,9 @@ const CarouselCard = ({ product, cardItem }) => {
 	const cyrillicToTranslit = new CyrillicToTranslit()
 	let location = useLocation()
 
+	console.log('cardItem: ', cardItem)
+
+
 	function scrollToTop() {
 		window.scrollTo({
 			top: 0,
@@ -82,20 +85,24 @@ const CarouselCard = ({ product, cardItem }) => {
 								<div className='flex'>
 									<Image src={process.env.REACT_APP_API_URL + JSON.parse(el.imgMini)[0].image} />
 									<div className='w-9/12 p-2'>
-										<Link to={{
-											pathname: `/${el.categories[0].link}/${el.types[0].link}/${cyrillicToTranslit.transform(el.name.split(' ').join('-'))}`,
-										}}
-											state={{ id: el.id, location: location.pathname }}
-											onClick={scrollToTop}
-										>
-											<p className='font-semibold text-lg xm:text-base'>{el.name}</p>
-											<Button type='text'
-												 className='absolute bottom-4 right-0'
+										{el.categories.length ?
+											<Link to={{
+												pathname: `/${el.categories[0].link}/${el.types[0].link}/${cyrillicToTranslit.transform(el.name.split(' ').join('-'))}`,
+											}}
+												state={{ id: el.id, location: location.pathname }}
+												onClick={scrollToTop}
 											>
-												Посмотреть{' '}
-												<ArrowRightOutlined />
-											</Button>
-										</Link>
+												<p className='font-semibold text-lg xm:text-base'>{el.name}</p>
+												<Button type='text'
+													className='absolute bottom-4 right-0'
+												>
+													Посмотреть{' '}
+													<ArrowRightOutlined />
+												</Button>
+											</Link>
+											:
+											undefined
+										}
 										<Rate allowHalf defaultValue={el.rating} disabled />
 										<p className='mr-2 mt-2'>Цена: {el.price} BYN</p>
 									</div>
@@ -122,17 +129,21 @@ const CarouselCard = ({ product, cardItem }) => {
 								<div className='flex'>
 									<Image src={process.env.REACT_APP_API_URL + JSON.parse(el.imgMini)[0].image} />
 									<div className='w-9/12 p-2'>
-										<Link to={{
-											pathname: `/${el.categories[0].link}/${el.types[0].link}/${cyrillicToTranslit.transform(el.name.split(' ').join('-'))}`,
-										}}
-											state={{ id: el.id, location: location.pathname }}
-										>
-											<p className='font-semibold text-lg xm:text-base'>{el.name}</p>
-											<Button type='text' className='absolute bottom-4 right-0'>
-												Посмотреть{' '}
-												<ArrowRightOutlined />
-											</Button>
-										</Link>
+										{el.categories.length ?
+											<Link to={{
+												pathname: `/${el.categories[0].link}/${el.types[0].link}/${cyrillicToTranslit.transform(el.name.split(' ').join('-'))}`,
+											}}
+												state={{ id: el.id, location: location.pathname }}
+											>
+												<p className='font-semibold text-lg xm:text-base'>{el.name}</p>
+												<Button type='text' className='absolute bottom-4 right-0'>
+													Посмотреть{' '}
+													<ArrowRightOutlined />
+												</Button>
+											</Link>
+											:
+											undefined
+										}
 										<Rate allowHalf defaultValue={el.rating} disabled />
 										<p className='mr-2 mt-2'>Цена: {el.price} BYN</p>
 									</div>

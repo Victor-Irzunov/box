@@ -334,6 +334,7 @@ class ProductController {
 					]
 				}
 			)
+			console.log('💊💊💊💊💊💊data:', data)
 			return res.json(data)
 		}
 		catch (e) {
