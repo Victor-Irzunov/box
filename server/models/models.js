@@ -169,6 +169,59 @@ const Feedback = sequelize.define('feedback', {
 	}
 })
 
+const QuestionResponse = sequelize.define('questions_response', {
+	id: {
+		type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true
+	},
+	name: {
+		type: DataTypes.STRING, allowNull: false
+	},
+	contact: {
+		type: DataTypes.STRING, allowNull: false
+	},
+	question: {
+		type: DataTypes.TEXT('long'), allowNull: false
+	},
+	response: {
+		type: DataTypes.TEXT('long')
+	},
+	prochitano: {
+		type: DataTypes.BOOLEAN, defaultValue: false
+	},
+	publication: {
+		type: DataTypes.BOOLEAN, defaultValue: false
+	}
+})
+
+//---------------
+const ContentPage = sequelize.define('content_page', {
+	id: {
+		type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true
+	},
+	content: {
+		type: DataTypes.TEXT('long')
+	},
+	h2: {
+		type: DataTypes.STRING
+	},
+	contentH2: {
+		type: DataTypes.TEXT('long')
+	},
+	imgH2: {
+		type: DataTypes.JSON
+	},
+	h3: {
+		type: DataTypes.STRING
+	},
+	contentH3: {
+		type: DataTypes.TEXT('long')
+	},
+	imgH3: {
+		type: DataTypes.JSON
+	},
+})
+
+//----------------------
 const SliderImg = sequelize.define('sliderImg', {
 	id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 	img: { type: DataTypes.STRING, allowNull: false },
@@ -312,6 +365,15 @@ BasketOrder.belongsTo(Basket)
 
 User.hasOne(UserData)
 UserData.belongsTo(User)
+//----------------
+Product.hasOne(ContentPage)
+ContentPage.belongsTo(Product)
+
+Category.hasOne(ContentPage)
+ContentPage.belongsTo(Category)
+
+Type.hasOne(ContentPage)
+ContentPage.belongsTo(Type)
 
 // -----------------------------------------
 User.hasOne(Basket)
@@ -323,7 +385,8 @@ BasketProduct.belongsTo(Basket)
 Product.hasMany(BasketProduct) //, {onDelete: 'cascade'}
 BasketProduct.belongsTo(Product) //, {onDelete: 'restrict'}
 // -------------------------------------------
-
+Product.hasMany(QuestionResponse)
+QuestionResponse.belongsTo(Product)
 
 
 User.hasMany(Rating)
@@ -381,5 +444,7 @@ export const models = {
 	BasketProduct,
 	Group,
 	InfoPages,
+	QuestionResponse,
+	ContentPage,
 }
 

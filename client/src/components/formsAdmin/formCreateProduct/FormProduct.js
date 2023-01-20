@@ -7,7 +7,7 @@ import {
 	Checkbox,
 	Empty,
 	Divider, Alert,
-	Affix, Popconfirm
+	Affix, Popconfirm, Typography
 } from 'antd'
 import DragableComp from '../../upload/DragableComp'
 import {
@@ -15,18 +15,18 @@ import {
 	fetchType,
 	fetchInfo,
 } from '../../../http/productsAPI'
-import { InfoCircleOutlined, CopyOutlined } from '@ant-design/icons'
+import { InfoCircleOutlined, CopyOutlined, DragOutlined} from '@ant-design/icons'
 import { createProduct } from '../../../http/adminAPI'
 import Resizer from "react-image-file-resizer"
 
-const resizeFile = (file, size, size2) =>
+const resizeFile = (file, size, size2, quality = 75) =>
 	new Promise((resolve) => {
 		Resizer.imageFileResizer(
 			file,
 			size,
 			size2,
 			"WEBP",
-			75,
+			quality,
 			0,
 			(uri) => {
 				resolve(uri)
@@ -70,6 +70,7 @@ const FormProduct = () => {
 
 	const onFinish = async values => {
 		console.log('Success:', values)
+
 		const arrInfo = []
 		const keys = Object.keys(values.info)
 		keys.forEach(el => {
@@ -88,15 +89,15 @@ const FormProduct = () => {
 		formData.append('groupCreate', values.groupCreate)
 		formData.append('group', values.group)
 		for (let k in fileList) {
-			const pic = await resizeFile(fileList[k].originFileObj, 1000, 600)
+			const pic = await resizeFile(fileList[k].originFileObj, 2800, 1200, values.quality)
 			formData.append('img', pic)
 		}
 		for (let k in fileList) {
-			formData.append('imgMini', await resizeFile(fileList[k].originFileObj, 250, 250))
+			formData.append('imgMini', await resizeFile(fileList[k].originFileObj, 250, 250, values.quality))
 		}
 		createProduct(formData)
 			.then(data => {
-				console.log('💊data: ', data)
+				// console.log('💊data: ', data)
 				if (data) {
 					message.success(`Продукт добавлен`)
 					setGroupId(data.groupId)
@@ -134,10 +135,10 @@ const FormProduct = () => {
 				name="product"
 				form={form}
 				labelCol={{
-					span: 4,
+					span: 5,
 				}}
 				wrapperCol={{
-					span: 20,
+					span: 18,
 				}}
 				initialValues={{
 					newProd: true,
@@ -148,9 +149,11 @@ const FormProduct = () => {
 			>
 				<Form.Item
 					name="groupCreate"
+					label='Группа товара'
+					tooltip={`Группа появиться внизу экрана на синем фоне со значком информация i.`}
 					rules={[{
 						required: true,
-						message: 'Выберите!',
+						message: 'Выберите пожалуйста!',
 					},]}
 				>
 					<Radio.Group size='small' onChange={groupNumber}>
@@ -308,6 +311,20 @@ const FormProduct = () => {
 					<InputNumber addonAfter="шт." />
 				</Form.Item>
 				<Divider />
+
+				<Form.Item
+					label="Размер картинки"
+					tooltip="Рекомендуется для оптимального качества банера. Можно использовать online-photoshop.org. Есть готовые шаблоны для редактирования."
+				>
+					
+							<Typography.Text className="ant-form-text" type="success">
+								( <DragOutlined className='text-base' /> 2800x1200px )
+							</Typography.Text>
+				
+				</Form.Item>
+
+
+
 				<Form.Item
 					label="Картинки"
 					name="img"
@@ -319,10 +336,30 @@ const FormProduct = () => {
 				>
 					<DragableComp setFileList={setFileList} fileList={fileList} />
 				</Form.Item>
+
+				<Form.Item
+					label="Введите качество картинок"
+					name='quality'
+					tooltip="Вы можете изменить качество картинок (уменьшить их вес), что увеличит скорость загрузки. Вы загружаете 100% качество, программа изменяет автоматически качество на 75%, если Вы не измените качество сами. От 0%-100%."
+				>
+					<InputNumber
+						addonAfter="%"
+						defaultValue={75}
+						min={0}
+						max={100}
+					/>
+				</Form.Item>
+
+
 				<Form.Item
 					label="Описание"
 					name='info'
 					tooltip="Необходимо"
+					rules={[
+						{
+							required: true,
+						},
+					]}
 				>
 					{
 						dataInfo.length > 0 ?

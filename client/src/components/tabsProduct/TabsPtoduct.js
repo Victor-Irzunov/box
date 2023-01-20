@@ -10,6 +10,7 @@ import FormQuestion from '../forms/formQuestion/FormQuestion'
 import { isBuyThisProductUser } from '../../http/orderAPI'
 import { otzyvRatinOneUserProduct } from '../../http/otzyvyAPI'
 import { useScreens } from '../../Constants/constants'
+import { getQuestionResponse } from '../../http/questionAPI'
 const { Paragraph } = Typography
 const BtnAndFormOtzyvy = observer(({ product, isBuyProd, isOtzyvUserProd, setIsOtzyvUserProd }) => {
 	const { user } = useContext(Context)
@@ -45,13 +46,13 @@ const BtnAndFormOtzyvy = observer(({ product, isBuyProd, isOtzyvUserProd, setIsO
 		</>
 	)
 })
-const BtnAndFormQuestion = observer(() => {
+const BtnAndFormQuestion = observer(({ product,dataQuestRes }) => {
 	const { dataApp } = useContext(Context)
 	return (
 		<>
 			{
 				dataApp.isBtnFormQuestion ?
-					<FormQuestion />
+					<FormQuestion product={product} />
 					:
 					<Button
 						type='primary'
@@ -61,7 +62,7 @@ const BtnAndFormQuestion = observer(() => {
 					</Button>
 			}
 			<hr className='mt-5 pb-3' />
-			<VoprosOtvet />
+			<VoprosOtvet dataQuestRes={dataQuestRes} />
 		</>
 	)
 })
@@ -87,6 +88,7 @@ const ListProperty = observer(() => {
 const TabsPtoduct = ({ product }) => {
 	const [isBuyProd, setIsBuyProd] = useState(false)
 	const [isOtzyvUserProd, setIsOtzyvUserProd] = useState(false)
+	const [dataQuestRes, setDataQuestRes] = useState([])
 	const { user } = useContext(Context)
 	const screens = useScreens()
 	const onChange = key => {
@@ -109,6 +111,14 @@ const TabsPtoduct = ({ product }) => {
 						}
 					})
 			}
+			
+		}
+		if (key === 3) {
+			getQuestionResponse(product.id)
+				.then(data => {
+					console.log('get data: ', data)
+					setDataQuestRes(data)
+			})
 		}
 	}
 	const itemTabsProduct = [
@@ -135,7 +145,7 @@ const TabsPtoduct = ({ product }) => {
 		{
 			key: 3,
 			label: 'Вопрос-ответ',
-			children: (<BtnAndFormQuestion />),
+			children: (<BtnAndFormQuestion product={product} dataQuestRes={dataQuestRes} />),
 		},
 	]
 	return (

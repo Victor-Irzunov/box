@@ -7,7 +7,7 @@ import {
 	BarsOutlined, ProfileOutlined,
 	PartitionOutlined, ApartmentOutlined,
 	CloseSquareOutlined, InfoCircleOutlined,
-	EditOutlined,
+	EditOutlined,CloseOutlined,
 } from '@ant-design/icons'
 import FormType from '../../components/formsAdmin/formType/FormType'
 import FormCategory from '../../components/formsAdmin/formCategory/FormCategory'
@@ -24,6 +24,7 @@ import RenderingDataOrder from '../../components/formsAdmin/formOrdersAdmin/Rend
 import FormInfoPages from '../../components/formsAdmin/formInfoPages/FormInfoPages'
 import FomrGetOneInfoPage from '../../components/formsAdmin/formInfoPages/changeInfoPage/FomrGetOneInfoPage'
 import { Helmet } from "react-helmet"
+import FormDeleteGroup from '../../components/formsAdmin/formDeleteGroup/FormDeleteGroup'
 const { Panel } = Collapse
 const AdminPage = () => {
 	const [dataOrder, setDataOrder] = useState([])
@@ -65,28 +66,32 @@ const AdminPage = () => {
 						<FormDeleteProduct />
 					</Panel>
 
+					<Panel header="Удалить группу" extra={<CloseOutlined className='text-xl text-red-500 ml-1' />} key="8" className='p-2'>
+						<FormDeleteGroup />
+					</Panel>
 
-					<Panel header="Заказы" extra={<DollarCircleOutlined className='text-xl text-orange-400 ml-1' />} key="8" className='p-2'>
+
+					<Panel header="Заказы" extra={<DollarCircleOutlined className='text-xl text-orange-400 ml-1' />} key="9" className='p-2'>
 						<GetOrderAdmin setDataOrder={setDataOrder} />
 						<RenderingDataOrder dataOrder={dataOrder} />
 					</Panel>
 
-					<Panel header="Изменить статус заказа" extra={<ScheduleOutlined className='text-xl text-green-500 ml-1' />} key="9" className='p-2'>
+					<Panel header="Изменить статус заказа" extra={<ScheduleOutlined className='text-xl text-green-500 ml-1' />} key="10" className='p-2'>
 						<ChangeStatusOrder />
 					</Panel>
 					{/* <p className='mt-4 text-xl font-semibold'>Банер</p> */}
-					<Panel header='Добавить банер слайдера на главной странице' extra={<PictureOutlined className='text-xl text-blue-500 ml-1' />} key="10" className='p-2'>
+					<Panel header='Добавить банер слайдера на главной странице' extra={<PictureOutlined className='text-xl text-blue-500 ml-1' />} key="11" className='p-2'>
 						<FormSliderImg />
 					</Panel>
 
-					<Panel header='Удалить банер слайдера на главной странице' extra={<CloseSquareOutlined className='text-xl text-red-500 ml-1' />} key="11" className='p-2'>
+					<Panel header='Удалить банер слайдера на главной странице' extra={<CloseSquareOutlined className='text-xl text-red-500 ml-1' />} key="12" className='p-2'>
 						<FormDelSliderOneImg />
 					</Panel>
 
-					<Panel header='Добавить страницу с информацией' extra={<InfoCircleOutlined className='text-xl text-lime-500 ml-1' />} key="12" className='p-2'>
+					<Panel header='Добавить страницу с информацией' extra={<InfoCircleOutlined className='text-xl text-lime-500 ml-1' />} key="13" className='p-2'>
 						<FormInfoPages />
 					</Panel>
-					<Panel header='Изменить / удалить страницу с информацией' extra={<EditOutlined className='text-xl text-lime-500 ml-1' />} key="13" className='p-2'>
+					<Panel header='Изменить / удалить страницу с информацией' extra={<EditOutlined className='text-xl text-lime-500 ml-1' />} key="14" className='p-2'>
 						<FomrGetOneInfoPage />
 					</Panel>
 				</Collapse>

@@ -4,15 +4,17 @@ import {
 } from 'antd'
 import { deleteSliderImg } from '../../../../http/adminAPI'
 import { getSliderImg } from '../../../../http/imgAPI'
+
 function FormDelSliderOneImg() {
 	const [data, setData] = useState([])
 	const [elId, setElId] = useState([])
+	const [isLoad, setIsLoad] = useState(true)
 	useEffect(() => {
 		getSliderImg()
 			.then(data => {
 				setData(data)
 			})
-	}, [])
+	}, [isLoad])
 	const onChange = checkedValues => {
 		setElId(checkedValues)
 	}
@@ -21,6 +23,7 @@ function FormDelSliderOneImg() {
 			deleteSliderImg({ dataId: JSON.stringify(elId) })
 				.then(data => {
 					message.success(data.message)
+					setIsLoad(!isLoad)
 				})
 		} else {
 			message.warning('Выберите банер для удаления!')
@@ -28,7 +31,8 @@ function FormDelSliderOneImg() {
 	}
 	return (
 		<div className='pb-12'>
-			<p>Выберите банер для удаления</p>
+			{elId.length ? <p>Выберите банер для удаления</p> : <p className='ml-10 text-orange-600'>Нет картинок</p>}
+			
 			<Checkbox.Group onChange={onChange}>
 				<div className='flex justify-between'>
 					{data.map(el => {

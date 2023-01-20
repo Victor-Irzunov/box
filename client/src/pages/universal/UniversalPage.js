@@ -1,10 +1,16 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { Helmet } from "react-helmet"
-import { Typography, Layout, Space, Button, Divider, BackTop, Empty,  Drawer } from 'antd'
-import { UpCircleOutlined, DownCircleOutlined, FilterOutlined } from '@ant-design/icons'
+import {
+	Typography, Layout, Space, Button,
+	 BackTop, Empty, Drawer, 
+} from 'antd'
+import {
+	UpCircleOutlined,
+	DownCircleOutlined,
+	FilterOutlined,
+} from '@ant-design/icons'
 import CardComp from '../../components/Card/CardComp'
 import FilterAll from '../../components/filterAll/FilterAll'
-import { textMenPage } from '../../content/Content'
 import { Context } from '../../App'
 import { observer } from "mobx-react-lite"
 import PaginationComp from '../../components/pagination/PaginationComp'
@@ -14,28 +20,30 @@ import {
 } from 'react-router-dom'
 import { fetchProducts } from '../../http/productsAPI'
 import { useScreens } from '../../Constants/constants'
+import { ContentUniversalPage } from '../../components/contentUniversalPage/ContentUniversalPage'
 
 const { Sider, Content } = Layout
-const { Paragraph } = Typography
+
 
 
 
 const UniversalPage = observer(() => {
 	const { dataApp } = useContext(Context)
 	const [editH1, setEditH1] = useState('')
-	const [editH2] = useState(textMenPage.h2)
-	const [editH3] = useState(textMenPage.h3)
-	const [editP] = useState(textMenPage.p)
-	const [editP2] = useState(textMenPage.p2)
-	const [editP3] = useState(textMenPage.p3)
+	
 	const screens = useScreens()
 	let [searchParams, setSearchParams] = useSearchParams()
 	const [open, setOpen] = useState(false);
 	let location = useLocation()
-	const localPath = location.pathname.split('/').join('')
+	const localPath = location.pathname.split('/').join(' ')
 	const arrLocalPath = location.pathname.split('/').filter(function (el) {
 		return (el != null && el != "" || el === 0)
 	})
+	// console.log('location:', location)
+	// console.log('localPath:', localPath)
+	// console.log('arrLocalPath:', arrLocalPath)
+
+
 	const [itemCard, setItemCard] = useState([])
 	const [totalItem, setTotalItem] = useState(1)
 	const [page, setPage] = useState(1)
@@ -50,28 +58,38 @@ const UniversalPage = observer(() => {
 	const [inputValueFrom, setInputValueFrom] = useState(15)
 	const [inputValueBefore, setInputValueBefore] = useState(null)
 	const params = searchParams.get('page')
+
+
+
+
+
 	useEffect(() => {
 		if (!params) setPage(1)
 		if (params && page !== params) setPage(+params)
 		if (dataApp.dataMenu) {
+		
 			dataApp.dataMenu.forEach(el => {
 				if (el.link === arrLocalPath[0]) {
 					setCategoryId(el.id)
 					setEditH1(el.name)
 					setTypeId(null)
 					setType(el.types)
+			
 				}
 				if (arrLocalPath.length === 2) {
 					el.types.forEach(elem => {
 						if (elem.link === arrLocalPath[1]) {
 							setTypeId(elem.id)
 							setTypeTitle(elem.name)
+					
 						}
 					})
 				} else {
 					setTypeTitle('')
 				}
 			})
+		
+
 		}
 	}, [arrLocalPath])
 
@@ -91,6 +109,10 @@ const UniversalPage = observer(() => {
 		typeId,
 		isReset
 	])
+
+
+
+
 
 	const sendFormFilter = () => {
 		fetchProducts(page, pageSize, categoryId, typeId, inputValueFrom, inputValueBefore)
@@ -131,10 +153,14 @@ const UniversalPage = observer(() => {
 	const onClose = () => {
 		setOpen(false)
 	}
+
+
+
+
 	return (
 		<>
 			<Helmet>
-				<title>{editH1}{typeTitle ? ` | ${typeTitle}`: ''}</title>
+				<title>{editH1}{typeTitle ? ` | ${typeTitle}` : ''}</title>
 				<meta name="description" content={editH1} />
 			</Helmet>
 			<BackTop />
@@ -260,32 +286,10 @@ const UniversalPage = observer(() => {
 									</Button>
 								</Empty>
 						}
-						<div className='mt-32'>
-							<Paragraph>
-								{editP}
-							</Paragraph>
-							<Divider orientation="left">
-								<Typography.Title
-									level={4}
-								>
-									{editH2}
-								</Typography.Title>
-							</Divider>
-							<Paragraph
-							>
-								{editP2}
-							</Paragraph>
-							<Typography.Title
-								level={5}
-								className=''
-							>
-								{editH3}
-							</Typography.Title>
-							<Paragraph
-							>
-								{editP3}
-							</Paragraph>
-						</div>
+
+
+
+						<ContentUniversalPage categoryId={ categoryId} typeId={typeId} />
 					</Content>
 				</Layout>
 			</section>

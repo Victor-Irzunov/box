@@ -13,15 +13,12 @@ const FormInfo = ({ setMessages }) => {
 	const [data, setData] = useState([{ id: 1, }])
 	const [infoTitle, setInfiTitle] = useState([])
 
-
 	useEffect(() => {
 		fetchInfoTitle()
 			.then(data => {
 				setInfiTitle(data)
 			})
 	}, [])
-
-
 	const onFinish = values => {
 		const array = [{ name: values.name, content: Object.values(arr), infoTitleId: values.infoTitleId }]
 		createInfo(array)
@@ -38,19 +35,23 @@ const FormInfo = ({ setMessages }) => {
 	const addArr = e => {
 		setArr(st => ({ ...st, [e.target.name]: e.target.value }))
 	}
-	const delElemArr = () => {
-		if (data.length > 1) setData((previousArr) => (previousArr.slice(0, -1)))
+	const delElemArr = (el) => {
+		if (data.length > 1) {
+			setData((previousArr) => (previousArr.slice(0, -1)))
+			setArr(current => {
+				const copy = { ...current }
+				delete copy[el]
+				return copy
+			})
+		}
 	}
-
 	const fu = (num) => {
 		setData([...data, { id: num }])
 	}
-
 	const clearForm = () => {
 		form.resetFields()
 		if (data.length > 1) setData([{ id: 1, }])
 	}
-
 
 	return (
 		<Form
@@ -58,14 +59,13 @@ const FormInfo = ({ setMessages }) => {
 			onFinish={onFinish}
 			autoComplete="off"
 			form={form}
-			
 		>
 			<Form.Item
 				name="infoTitleId"
 				label="Выберите заголовок характеристики"
 				hasFeedback
 				labelCol={{
-					span:24
+					span: 24
 				}}
 				wrapperCol={{
 					span: 14,
@@ -93,10 +93,6 @@ const FormInfo = ({ setMessages }) => {
 				}}
 				align="baseline"
 			>
-
-
-
-
 				<Form.Item
 					name='name'
 					rules={[
@@ -108,9 +104,7 @@ const FormInfo = ({ setMessages }) => {
 				>
 					<Input placeholder="Тип характеристики" className='w-48' allowClear />
 				</Form.Item>
-
 				<div className='flex flex-col'>
-
 					{
 						data.map((el, idx) => {
 							return (
@@ -133,7 +127,6 @@ const FormInfo = ({ setMessages }) => {
 											allowClear
 										/>
 									</Form.Item>
-
 									{idx === data.length - 1 &&
 										<div className='flex'>
 											<PlusCircleOutlined
@@ -141,7 +134,7 @@ const FormInfo = ({ setMessages }) => {
 												className='ml-1 mr-4'
 											/>
 											{data.length > 1 &&
-												<MinusCircleOutlined onClick={delElemArr} />
+												<MinusCircleOutlined onClick={() => delElemArr(el.id + 1)} />
 											}
 										</div>
 									}
@@ -151,11 +144,7 @@ const FormInfo = ({ setMessages }) => {
 					}
 				</div>
 				<DeleteOutlined onClick={clearForm} />
-
-
 			</Space>
-
-
 			<Form.Item>
 				<Button type="" htmlType="submit" >
 					Сохранить описание

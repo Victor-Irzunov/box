@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react'
 import './App.css'
-import { Spin, ConfigProvider } from 'antd'
+import { Spin, ConfigProvider, Affix, } from 'antd'
+import { MailOutlined } from '@ant-design/icons'
 import { Routes, Route, BrowserRouter } from 'react-router-dom'
 import UserStore from './store/UserStore'
 import DataStore from './store/DataStore'
@@ -10,12 +11,10 @@ import BreadCrumbComp from './components/breadcrumb/BreadcrumbComp'
 import MainPage from './pages/main/MainPage'
 import ErrorPage from './pages/error/ErrorPage'
 import Footer from './components/footer/Footer'
-// import NovyjGodPage from './pages/novyjGod/NovyjGodPage'
 import ProductPage from './pages/productPage/ProductPage'
 import { observer } from "mobx-react-lite"
 import { check } from './http/userAPI'
 import ResultComp from './components/result/ResultComp'
-// import { duration } from 'moment'
 import AdminPage from './pages/admin/AdminPage'
 import locale from 'antd/es/locale/ru_RU'
 import { categoryType } from './http/productsAPI'
@@ -31,6 +30,8 @@ import CyrillicToTranslit from 'cyrillic-to-translit-js'
 import InfoUniversalPage from './pages/infoUniversalPages/InfoUniversalPage'
 import ResultFalseLogin from './components/result/ResultFalseLogin'
 import RequireAuth from '../src/hoc/RequireAuth'
+import { getAllQuestionResponseAdmin } from './http/questionAPI'
+import { DrawerNewQuestions } from './components/drawerNewQuestions/DrawerNewQuestions'
 
 
 ConfigProvider.config({
@@ -43,6 +44,9 @@ export const Context = createContext(null)
 
 const App = observer(() => {
   const [loading, setLoading] = useState(true)
+  const [question, setQuestion] = useState([])
+  const [open, setOpen] = useState(false)
+  const [isReq, setIsReq] = useState(false)
   const [user] = useState(new UserStore())
   const [dataApp] = useState(new DataStore())
   const cyrillicToTranslit = new CyrillicToTranslit()
@@ -85,11 +89,21 @@ const App = observer(() => {
       })
   }, [])
 
+  useEffect(() => {
+    getAllQuestionResponseAdmin()
+      .then(data => {
+        setQuestion(data)
+      })
+  }, [isReq])
+
+  const showDrawer = () => {
+    setOpen(true)
+  }
+
 
   if (loading) {
     return <div className='w-full h-screen flex justify-center items-center'><Spin size="large" /></div>
   }
-
 
   return (
     <ConfigProvider
@@ -100,11 +114,20 @@ const App = observer(() => {
         dataApp,
         dataProducts: new ProductsStore()
       }}>
-
         <BrowserRouter>
           <div className="app">
             <Header />
-
+            {
+              question.length && user.userData.role === "ADMIN" ?
+              <Affix offsetTop={60} style={{ position: 'absolute', right: '40px', zIndex: '100' }}>
+                <MailOutlined
+                  className='text-4xl animate-bounce text-green-600'
+                  onClick={showDrawer}
+                />
+                </Affix>
+                :
+                undefined
+            }
             <main className='bg-gray-50 relative xs:pt-14 xx:pt-14 xy:pt-14 lg:pt-0'>
               <BreadCrumbComp />
               <Routes>
@@ -125,7 +148,7 @@ const App = observer(() => {
                 <Route path='/dlya-voditelya' element={<CourierPage />} />
                 <Route path='/info/:link' element={<InfoUniversalPage />} />
                 <Route path='/false/auth' element={<ResultFalseLogin />} />
-                <Route path='/:category/:type/:title' element={<ProductPage />}/>
+                <Route path='/:category/:type/:title' element={<ProductPage />} />
                 <Route path='*' element={<ErrorPage />} />
               </Routes>
             </main>
@@ -134,9 +157,7 @@ const App = observer(() => {
         </BrowserRouter>
 
 
-
-
-
+        <DrawerNewQuestions setOpen={setOpen} open={open} question={question} setIsReq={setIsReq} />
 
 
       </Context.Provider>

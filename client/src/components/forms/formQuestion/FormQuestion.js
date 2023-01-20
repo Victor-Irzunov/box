@@ -1,14 +1,31 @@
-import { Button, Rate, Form, Input, Checkbox } from 'antd'
+import { Button, Form, Input, Checkbox, message } from 'antd'
 import React, { useState } from 'react'
+import { createQuestionUser } from '../../../http/questionAPI'
 const { TextArea } = Input
 
 
-const FormQuestion = () => {
+const FormQuestion = ({ product }) => {
 	const [form] = Form.useForm()
 	const [isCheck, setIsCheck] = useState(false)
 	const onFinish = (values) => {
 		console.log('Success:', values)
-		form.resetFields()
+
+		const formData = new FormData()
+		formData.append('name', values.name)
+		formData.append('contact', values.contact)
+		formData.append('question', values.question)
+		formData.append('productId', product.id)
+
+		createQuestionUser(formData)
+			.then(data => {
+				if (data) {
+					message.success(data.message)
+					form.resetFields()
+				}
+
+			})
+
+
 	}
 	const onFinishFailed = (errorInfo) => {
 		console.log('Failed:', errorInfo)
@@ -34,7 +51,7 @@ const FormQuestion = () => {
 			>
 				<Form.Item
 					label="Имя"
-					name="username"
+					name="name"
 					rules={[
 						{
 							required: true,
@@ -44,10 +61,10 @@ const FormQuestion = () => {
 				>
 					<Input />
 				</Form.Item>
-
 				<Form.Item
 					label="Телефон"
-					name="tel"
+					tooltip='Опубликован не будет'
+					name="contact"
 					rules={[
 						{
 							required: true,
@@ -57,10 +74,15 @@ const FormQuestion = () => {
 				>
 					<Input />
 				</Form.Item>
-
 				<Form.Item
 					name="question"
 					label='Вопрос'
+					rules={[
+						{
+							required: true,
+							message: 'Это поле обязательно для заполнения',
+						},
+					]}
 				>
 					<TextArea
 						showCount
@@ -70,28 +92,23 @@ const FormQuestion = () => {
 					/>
 				</Form.Item>
 
-				
-				
+
 
 				<Form.Item
 					name="soglasen"
 					wrapperCol={{
-						offset: 8,
+						offset: 2,
 						span: 16,
 					}}
 				>
 					<Checkbox onChange={onChange}>Согласен с политикой обработки персональных данных</Checkbox>
 				</Form.Item>
-
-
-
 				<Form.Item
 					wrapperCol={{
 						offset: 8,
 						span: 16,
 					}}
 				>
-
 					<Button
 						type="primary"
 						htmlType="submit"
@@ -102,7 +119,7 @@ const FormQuestion = () => {
 				</Form.Item>
 
 				<p className='text-xs font-light mb-4 text-slate-400'>
-				Обработка вопросов осуществляется модератором и может занимать до нескольких рабочих дней. Для оперативного ответа обратитесь в call-центр. Мы публикуем только обращения, касающиеся производственных характеристик и/или использования исправного товара.
+					Обработка вопросов осуществляется модератором и может занимать до нескольких рабочих дней. Мы публикуем только обращения, касающиеся производственных характеристик и/или использования исправного товара.
 				</p>
 			</Form>
 

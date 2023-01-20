@@ -12,6 +12,9 @@ import orderRouter from "./orderRouter.js"
 import otzyvyRouter from "./otzyvyRatingRouter.js"
 import imgRouter from "./imgRouter.js"
 import infoPagesRouter from "./infoPagesRouter.js"
+import groupRouter from "./groupRouter.js"
+import questionRouter from "./questionRouter.js"
+import contentRouter from "./contentRouter.js"
 
 
 
@@ -32,6 +35,9 @@ router.use('/order', orderRouter)
 router.use('/otzyvy', otzyvyRouter)
 router.use('/img', imgRouter)
 router.use('/info', infoPagesRouter)
+router.use('/group', groupRouter)
+router.use('/question', questionRouter)
+router.use('/content', contentRouter)
 
 
 

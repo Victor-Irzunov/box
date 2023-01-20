@@ -24,7 +24,7 @@ class ProductController {
 				group
 			} = req.body
 
-			console.log('💊💊💊req.body: ', req.body)
+			// console.log('💊💊💊req.body: ', req.body)
 			const { img, imgMini } = req.files
 
 			let groupData = 0
@@ -36,19 +36,33 @@ class ProductController {
 			const fileName = []
 			if (img) {
 				const __dirname = decodeURI(new URL('.', import.meta.url).pathname)
-				for (let k of img) {
+
+				if (Array.isArray(img)) {
+					for (let k of img) {
+						let name = uuidv4() + ".webp"
+						fileName.push({ image: name })
+						k.mv(path.resolve(__dirname, '..', 'static', name))
+					}
+				} else {
 					let name = uuidv4() + ".webp"
 					fileName.push({ image: name })
-					k.mv(path.resolve(__dirname, '..', 'static', name))
+					img.mv(path.resolve(__dirname, '..', 'static', name))
 				}
+
 			}
 			const fileNameMini = []
 			if (imgMini) {
 				const __dirname = decodeURI(new URL('.', import.meta.url).pathname)
-				for (let k of imgMini) {
+				if (Array.isArray(img)) {
+					for (let k of imgMini) {
+						let name = uuidv4() + ".webp"
+						fileNameMini.push({ image: name })
+						k.mv(path.resolve(__dirname, '..', 'static', name))
+					}
+				} else {
 					let name = uuidv4() + ".webp"
 					fileNameMini.push({ image: name })
-					k.mv(path.resolve(__dirname, '..', 'static', name))
+					img.mv(path.resolve(__dirname, '..', 'static', name))
 				}
 			}
 			const product = await models.Product.create({
@@ -322,7 +336,7 @@ class ProductController {
 		try {
 			const data = await models.Product.findAll(
 				{
-					limit: 5,
+					limit: 30,
 					order: [['createdAt', 'DESC']],
 					include: [
 						{
@@ -334,7 +348,7 @@ class ProductController {
 					]
 				}
 			)
-			console.log('💊💊💊💊💊💊data:', data)
+			// console.log('💊💊💊💊💊💊data:', data)
 			return res.json(data)
 		}
 		catch (e) {

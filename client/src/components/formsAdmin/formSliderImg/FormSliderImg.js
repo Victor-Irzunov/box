@@ -17,7 +17,7 @@ const resizeFile = (file, size, size2) =>
 			(uri) => {
 				resolve(uri)
 			},
-			"file",
+			"file"
 		)
 	})
 
@@ -28,17 +28,17 @@ const FormSliderImg = () => {
 	const onFinish = async (values) => {
 		const formData = new FormData()
 		for (let k in values.img.fileList) {
-			const pic = await resizeFile(values.img.fileList[k].originFileObj, 2000, 1333)
+			const pic = await resizeFile(values.img.fileList[k].originFileObj, 1300, 700)
 			formData.append('img', pic)
 		}
 		//!!console ничего не покажет 
 		//!!смотри на сервере req.files
 		createSliderImg(formData)
-		.then(data => {
-			if (data) {
-				message.success(data.message)
-			}
-		})
+			.then(data => {
+				if (data) {
+					message.success(data.message)
+				}
+			})
 	}
 	const onFinishFailed = (errorInfo) => {
 		console.log('Failed:', errorInfo)
@@ -71,7 +71,7 @@ const FormSliderImg = () => {
 				<Upload
 					listType="picture"
 					className="upload-list-inline"
-					
+
 				>
 					<Button icon={<UploadOutlined />}>Загрузить</Button>
 				</Upload>

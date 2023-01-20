@@ -48,31 +48,8 @@ const CardComp = ({ itemCard, page, location, deleteOneElCookies }) => {
 								className='hover:border-[#ff0084] relative'
 								key={el.id}
 							>
-								<BadgeIconVesy
-									cardComp={true}
-									addToComparisonList={addList}
-									id={el.id}
-								/>
-								{location.pathname !== "/spisok-ponravivshikhsya" ?
-									<BadgeIconHeard
-										cardComp={true}
-										addToLiked={addList}
-										id={el.id}
-									/>
-									:
-									<div className='absolute top-0 right-0 bg-white cursor-pointer z-[2]'>
-										<Tooltip title="удалить">
-											<Button type="text"
-												danger
-												onClick={() => deleteOneElCookies(el.id, idx)}
-												size='small'
-											>
-												<CloseOutlined />
-											</Button>
-										</Tooltip>
-									</div>
-								}
-								<div className='h-80 overflow-hidden'>
+
+								<div className='overflow-hidden min-h-[250px]'>
 									<Image
 										preview={{
 											visible: false,
@@ -84,7 +61,7 @@ const CardComp = ({ itemCard, page, location, deleteOneElCookies }) => {
 												setIdPreviewGroup(el.id)
 											}
 										}
-									// className='object-cover bg-center'
+										className='object-cover bg-center'
 									/>
 									<div
 										style={{
@@ -109,18 +86,18 @@ const CardComp = ({ itemCard, page, location, deleteOneElCookies }) => {
 										</Image.PreviewGroup>
 									</div>
 								</div>
-								<div className='h-72 p-2 cursor-pointer'>
+								<div className='p-3 cursor-pointer'>
 									<Link to={{
 										pathname: `/${el.categories[0].link}/${el.types[0].link}/${cyrillicToTranslit.transform(el.name.split(' ').join('-'))}`,
 									}}
 										state={{ page: page, id: el.id, location: location.pathname }}
 									>
-										<div className='h-36 mb-3 flex flex-col justify-between'>
+										<div className='flex flex-col justify-between'>
 											<p className='font-bold text-lg'>{el.name}</p>
-											<p className='text-sm'>
+											<p className='text-sm mb-1'>
 												{el.description}
 											</p>
-											<p className='font-thin text-xs'>Артикул:
+											<p className='font-thin text-xs'>Aртикул:
 												{el.id}GR{el.groupId}
 											</p>
 											<div>
@@ -131,37 +108,82 @@ const CardComp = ({ itemCard, page, location, deleteOneElCookies }) => {
 											</div>
 										</div>
 									</Link>
-									<div
-									>
+
+									<div>
 										<Badge
 											status="success"
 											text="в наличии"
 										/>
-										<p className='uppercase text-2xl font-semibold'>{(el.price).toFixed(2)} BYN</p>
-										{(user.isAuth ? dataProducts.dataBasket.some(elem => elem.productId === el.id) : dataApp.basketArr.some(elem => elem.id === el.id)) ?
-											<Link to='/korzina'>
-												<Tooltip title="Товар в корзине">
-													<Button
-														type="primary"
-														shape="round"
-														size="large"
-														icon={<CheckOutlined />}
-														className='absolute bottom-3 right-3'
-													/>
-												</Tooltip>
-											</Link>
-											:
-											<Tooltip title="Добавить в корзину">
-												<Button
-													type="primary"
-													shape="round"
-													size="large"
-													onClick={() => addBasket(el)}
-													icon={<Svg />}
-													className='absolute bottom-3 right-3'
+										<div className='mt-1 flex justify-between items-top'>
+											<p className='uppercase text-2xl font-semibold'>{(el.price - el.price * el.discountPercentage / 100).toFixed(2)} BYN</p>
+											<div className='text-right'>
+												{
+													el.discountPercentage ?
+														<>
+															<p className='uppercase text-xl font-extralight line-through decoration-from-font'>{(el.price).toFixed(2)} BYN</p>
+															<p className='font-extralight text-xs'>скидка {el.discountPercentage}%</p>
+														</>
+														:
+														undefined
+												}
+
+											</div>
+										</div>
+
+										<div className='flex justify-between items-center'>
+											<div className='flex pt-4'>
+												<BadgeIconVesy
+													cardComp={true}
+													addToComparisonList={addList}
+													id={el.id}
 												/>
-											</Tooltip>
-										}
+												{location.pathname !== "/spisok-ponravivshikhsya" ?
+													<BadgeIconHeard
+														cardComp={true}
+														addToLiked={addList}
+														id={el.id}
+													/>
+													:
+													<div className='absolute top-0 right-0 bg-white cursor-pointer z-[2]'>
+														<Tooltip title="удалить">
+															<Button type="text"
+																danger
+																onClick={() => deleteOneElCookies(el.id, idx)}
+																size='small'
+															>
+																<CloseOutlined />
+															</Button>
+														</Tooltip>
+													</div>
+												}
+											</div>
+											<div className='mt-5 text-right'>
+												{(user.isAuth ? dataProducts.dataBasket.some(elem => elem.productId === el.id) : dataApp.basketArr.some(elem => elem.id === el.id)) ?
+													<Link to='/korzina'>
+														<Tooltip title="Товар в корзине">
+															<Button
+																type="primary"
+																shape="round"
+																size="large"
+																icon={<CheckOutlined />}
+															/>
+														</Tooltip>
+													</Link>
+													:
+													<Tooltip title="Добавить в корзину">
+														<Button
+															type="primary"
+															shape="round"
+															size="large"
+															onClick={() => addBasket(el)}
+															icon={<Svg />}
+														/>
+													</Tooltip>
+												}
+											</div>
+										</div>
+
+
 
 									</div>
 								</div>

@@ -17,7 +17,7 @@ const BadgeIconVesy = observer(({ cardComp, header, productPage, addToComparison
 			{
 				cardComp &&
 				<div
-					className='absolute top-2 right-14 cursor-pointer z-[2]'
+					className='cursor-pointer'
 					onClick={() => addToComparisonList('ComparisonList', id)}
 				>
 					{

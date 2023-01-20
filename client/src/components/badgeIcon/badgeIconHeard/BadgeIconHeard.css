@@ -1,5 +1,5 @@
 .icon-heart{
-	fill:#ff0084 !important;
+	fill:#ccc !important;
 	width: 25px !important;
 	height: 25px !important;
 	transition: .5s;
@@ -9,5 +9,5 @@
 	transform: scale(1.1)!important;
 }
 .icon-heart.activeliked{
-	fill: green !important;
+	fill: #f80759 !important;
 }

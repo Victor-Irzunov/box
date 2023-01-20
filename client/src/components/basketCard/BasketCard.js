@@ -137,7 +137,7 @@ const BasketCard = observer(({ data, isActive, setData }) => {
 												state={{ id: el.id, location: location.pathname }}>
 												<p className='text-lg xs:text-base xx:text-sm xy:text-sm '>{el.name}</p>
 											</Link>
-											<p className='text-xs text-slate-400 font-light xx:mt-2 xy:text-[12px]'>Артикул: {el.id}</p>
+											<p className='text-xs text-slate-400 font-light xx:mt-2 xy:text-[12px]'>Артикул: {el.id}GR{el.groupId}</p>
 										</div>
 										<p className='text-xs text-slate-300 font-light xx:text-[10px] xy:text-[10px]'>На складе: {el.count}</p>
 									</div>
@@ -153,7 +153,7 @@ const BasketCard = observer(({ data, isActive, setData }) => {
 										<MinusOutlined />
 									</Button>
 									<Button
-										size={isActive || screens.sm|| screens.xs ? 'small' : 'large'}
+										size={isActive || screens.sm || screens.xs ? 'small' : 'large'}
 									>
 										{count}
 									</Button>
