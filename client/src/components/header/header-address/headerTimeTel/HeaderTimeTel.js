@@ -9,7 +9,8 @@ import { Context } from '../../../../App'
 import ModalComponent from '../../../modalLoginRegistrat/ModalComponent'
 import { Link } from 'react-router-dom'
 import { observer } from "mobx-react-lite"
-import { useScreens } from '../../../../Constants/constants'
+// import { useScreens } from '../../../../Constants/constants'
+
 export const ContentAdmin = () => {
 	const { user } = useContext(Context)
 	const exit = () => {
@@ -57,6 +58,7 @@ export const ContentCourier = () => {
 	)
 }
 export const Content = () => {
+	console.log('user')
 	const { user } = useContext(Context)
 	const exit = () => {
 		localStorage.removeItem('token')
@@ -89,6 +91,9 @@ export const Content = () => {
 	)
 }
 const { Paragraph } = Typography
+
+
+
 const HeaderTimeTel = observer(() => {
 	const { user } = useContext(Context)
 	const [open, setOpen] = useState(false)
@@ -132,7 +137,11 @@ const HeaderTimeTel = observer(() => {
 					user.isAuth ?
 						<Popover
 							placement="bottomRight"
-							content={user.userData.role === 'ADMIN' ? ContentAdmin : Content}
+							content={
+								(user.userData.role === 'COURIER' && ContentCourier) ||
+								(user.userData.role === 'ADMIN' && ContentAdmin) ||
+								(user.userData.role === 'USER' && Content)
+							}
 							trigger="click"
 						>
 							<Button

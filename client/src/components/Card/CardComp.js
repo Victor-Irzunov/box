@@ -93,11 +93,11 @@ const CardComp = ({ itemCard, page, location, deleteOneElCookies }) => {
 										state={{ page: page, id: el.id, location: location.pathname }}
 									>
 										<div className='flex flex-col justify-between'>
-											<p className='font-bold text-lg'>{el.name}</p>
+											<p className='font-bold text-lg mb-0'>{el.name}</p>
 											<p className='text-sm mb-1'>
 												{el.description}
 											</p>
-											<p className='font-thin text-xs'>Aртикул:
+											<p className='font-thin text-xs mb-1'>Aртикул:
 												{el.id}GR{el.groupId}
 											</p>
 											<div>
@@ -115,13 +115,13 @@ const CardComp = ({ itemCard, page, location, deleteOneElCookies }) => {
 											text="в наличии"
 										/>
 										<div className='mt-1 flex justify-between items-top'>
-											<p className='uppercase text-2xl font-semibold'>{(el.price - el.price * el.discountPercentage / 100).toFixed(2)} BYN</p>
+											<p className='uppercase text-2xl font-semibold mb-0'>{(el.price - el.price * el.discountPercentage / 100).toFixed(2)} BYN</p>
 											<div className='text-right'>
 												{
 													el.discountPercentage ?
 														<>
-															<p className='uppercase text-xl font-extralight line-through decoration-from-font'>{(el.price).toFixed(2)} BYN</p>
-															<p className='font-extralight text-xs'>скидка {el.discountPercentage}%</p>
+															<p className='uppercase text-xl font-extralight line-through decoration-from-font mb-0'>{(el.price).toFixed(2)} BYN</p>
+															<p className='font-extralight text-xs mb-0'>скидка {el.discountPercentage}%</p>
 														</>
 														:
 														undefined

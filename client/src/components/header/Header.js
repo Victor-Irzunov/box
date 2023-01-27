@@ -42,7 +42,7 @@ const Header = observer(() => {
       dataApp.setVesyLength(arr.length)
       dataApp.setVesyArr(arr)
     }
-  }, [dataApp.vesyLength])
+  }, [dataApp.vesyLength, dataApp])
 
   useEffect(() => {
     let cookie = {}
@@ -55,7 +55,7 @@ const Header = observer(() => {
       dataApp.setLikedLength(arr.length)
       dataApp.setLikedArr(arr)
     }
-  }, [dataApp.likedLength])
+  }, [dataApp.likedLength, dataApp])
 
   useEffect(() => {
     if (!user.isAuth) {
@@ -76,7 +76,13 @@ const Header = observer(() => {
           dataProducts.setDataBasket(data)
         })
     }
-  }, [dataApp.basketLength])
+  }, [dataApp.basketLength, dataApp])
+
+
+  console.log('user.userData.role:', user.userData.role)
+  console.log(`user.userData.role === 'COURIER'`, user.userData.role === 'COURIER')
+  console.log(`user.userData.role === 'ADMIN'`, user.userData.role === 'ADMIN')
+  console.log(`user.userData.role === 'USER'`, user.userData.role === 'USER')
 
   return (
     <>
@@ -146,7 +152,11 @@ const Header = observer(() => {
                   ?
                   <Popover
                     placement="bottomRight"
-                    content={user.userData.role === 'ADMIN' && ContentAdmin || user.userData.role === 'COURIER' && ContentCourier || user.userData.role === 'USER' && Content}
+                    content={
+                      (user.userData.role === 'COURIER' && ContentCourier) ||
+                      (user.userData.role === 'ADMIN' && ContentAdmin) ||
+                      (user.userData.role === 'USER' && Content)
+                    }
                     trigger="click"
                   >
                     <UserOutlined className='text-white text-2xl mr-3' />

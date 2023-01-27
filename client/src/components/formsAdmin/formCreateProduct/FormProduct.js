@@ -312,7 +312,7 @@ const FormProduct = () => {
 				</Form.Item>
 				<Divider />
 
-				<Form.Item
+				{/* <Form.Item
 					label="Размер картинки"
 					tooltip="Рекомендуется для оптимального качества банера. Можно использовать online-photoshop.org. Есть готовые шаблоны для редактирования."
 				>
@@ -321,7 +321,7 @@ const FormProduct = () => {
 								( <DragOutlined className='text-base' /> 2800x1200px )
 							</Typography.Text>
 				
-				</Form.Item>
+				</Form.Item> */}
 
 
 

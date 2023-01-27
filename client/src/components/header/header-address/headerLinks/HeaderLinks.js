@@ -13,6 +13,7 @@ function HeaderLinks() {
 						<Link to={{
 							pathname: `/info/${el.link}`
 						}}
+							key={el.id}
 							state={{ id: el.id }}
 						>
 							{el.name}
