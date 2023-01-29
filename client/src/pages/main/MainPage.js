@@ -34,9 +34,10 @@ const MainPage = observer(() => {
       <section className='container'>
         <CarouselComp imgData={imgData} />
         {
-          cardItem.length && (
+          cardItem.length ?
             <MainCard cardItem={cardItem} />
-          )
+            :
+            undefined
         }
 
         <HisotyStore />
