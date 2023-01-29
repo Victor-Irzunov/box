@@ -33,7 +33,12 @@ const MainPage = observer(() => {
       <BackTop />
       <section className='container'>
         <CarouselComp imgData={imgData} />
-        <MainCard cardItem={cardItem} />
+        {
+          cardItem.length && (
+            <MainCard cardItem={cardItem} />
+          )
+        }
+
         <HisotyStore />
         <Divider />
         <BrandMain />
