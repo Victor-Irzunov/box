@@ -79,11 +79,6 @@ const Header = observer(() => {
   }, [dataApp.basketLength, dataApp])
 
 
-  console.log('user.userData.role:', user.userData.role)
-  console.log(`user.userData.role === 'COURIER'`, user.userData.role === 'COURIER')
-  console.log(`user.userData.role === 'ADMIN'`, user.userData.role === 'ADMIN')
-  console.log(`user.userData.role === 'USER'`, user.userData.role === 'USER')
-
   return (
     <>
       {screens.lg ?

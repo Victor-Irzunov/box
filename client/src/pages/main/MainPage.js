@@ -35,7 +35,7 @@ const MainPage = observer(() => {
         <CarouselComp imgData={imgData} />
         {
           cardItem.length ?
-            <MainCard cardItem={cardItem} />
+            (<MainCard cardItem={cardItem} />)
             :
             undefined
         }
