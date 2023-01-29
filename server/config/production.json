@@ -1,5 +1,5 @@
 {
   "port": 5000,
   "SECRET_KEY":"secret_2022",
-  "baseUrl": "http://palochka.by"
+  "baseUrl": "https://palochka.by"
 }

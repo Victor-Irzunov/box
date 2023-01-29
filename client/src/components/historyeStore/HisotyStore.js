@@ -1,6 +1,6 @@
 import { Image, Typography } from 'antd'
 import React, { useState } from 'react'
-import logohistory from '../../images/historyStore/box-history.jpeg'
+import logohistory from '../../images/historyStore/box.jpeg'
 const { Paragraph } = Typography
 function HisotyStore() {
 	const [editH1] = useState('box-Store - самый крупный онлайн-магазин подарочных боксов в Беларуси.')

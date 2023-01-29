@@ -41,6 +41,8 @@ if (process.env.NODE_ENV === 'production') {
 		res.sendFile(path.resolve(__dirname, '../client', 'build', 'index.html'))
 	})
 }
+// message: "Непредвиденная ошибка!!!!" - build
+
 
 //: middleware c err обязательно в конце
 app.use(errorHandler)
