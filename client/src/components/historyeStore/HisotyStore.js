@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import logohistory from '../../images/historyStore/box.jpeg'
 const { Paragraph } = Typography
 function HisotyStore() {
-	const [editH1] = useState('box-Store - самый крупный онлайн-магазин подарочных боксов в Беларуси.')
+	const [editH1] = useState('palochka.by - самый крупный онлайн-магазин подарочных боксов в Беларуси.')
 	const [editContent] = useState(`Ant Design, a design language for background applications, is refined by Ant UED Team. Ant
 	Design, a design language for background applications, is refined by Ant UED Team. Ant
 	Design, a design language for background applications, is refined by Ant UED Team. Ant

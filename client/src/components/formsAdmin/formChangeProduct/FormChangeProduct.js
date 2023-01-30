@@ -352,6 +352,7 @@ const FormChangeProduct = ({ product, setProduct }) => {
 				<Form.Item
 					label="Изменить фото"
 					name="img"
+					tooltip="Новые картинки сотрут старые и останутся только новые. Картинки должны быть одного размера!"
 					valuePropName='img'
 				// extra=''
 				// rules={[{

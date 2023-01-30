@@ -99,12 +99,13 @@ const ComparisonList = observer(() => {
 						data.forEach((el, idx) => {
 							col.push(
 								{
-									title: <div className='relative'>
+									title: <div className={`${data.length === 1 && 'w-1/2'} relative`}>
 										<Image
 											src={process.env.REACT_APP_API_URL + JSON.parse(el.img)[0].image}
-											className=''
 										/>
-										<div className='absolute top-0 right-0 bg-white'>
+										<div
+											className='absolute top-0 right-0 bg-white'
+										>
 											<Button type="text"
 												danger
 												onClick={() => deleteOneElCookies(el.id, idx)}
@@ -117,7 +118,9 @@ const ComparisonList = observer(() => {
 									</div>,
 									render: () => {
 										return (
-											<div key={el.id} className='block'>
+											<div key={el.id}
+												className={`block ${data.length === 1 && 'w-1/2'}`}
+											>
 												<div className=''>
 													<Link to={{
 														pathname: `/${el.categories[0].link}/${el.types[0].link}/${cyrillicToTranslit.transform(el.name.split(' ').join('-'))}`,
@@ -140,7 +143,7 @@ const ComparisonList = observer(() => {
 												<p className='text-center mt-2 text-base'>Характеристики</p>
 												{dataTitleInfo && dataTitleInfo.map((elem) => {
 													return (
-														<div className={`mb-3 mt-2 border-b h-[120px]`} key={elem.id}>
+														<div className={`mb-3 mt-2 border-b h-[100px]`} key={elem.id}>
 															<p className='font-semibold text-sm mb-2'>
 																{elem.name}
 															</p>
