@@ -26,10 +26,10 @@ const ProductPage = observer(() => {
 	const arrLocalPath = location.pathname.split('/').filter(function (el) {
 		return (el != null && el != "" || el === 0)
 	})
-console.log('location:', location)
-// console.log('localPath:', localPath)
-	console.log('arrLocalPath:', arrLocalPath)
-	console.log('dataApp:', dataApp.dataMenu)
+// console.log('location:', location)
+
+// 	console.log('arrLocalPath:', arrLocalPath)
+// 	console.log('dataApp:', dataApp.dataMenu)
 
 	const navigate = useNavigate()
 	const [editH1, setEditH1] = useState('')
