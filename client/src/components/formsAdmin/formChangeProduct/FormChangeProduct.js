@@ -379,9 +379,9 @@ const FormChangeProduct = ({ product, setProduct }) => {
 										<Form.Item
 											name={['info', `${el.name}`, 'id']}
 											hidden={true}
-											initialValue={el.infoTitle.id}
+											initialValue={el.infoTitle ? el.infoTitle.id : ''}
 										>
-											<Input value={el.infoTitle.id} />
+											<Input value={el.infoTitle ? el.infoTitle.id : ''} />
 										</Form.Item>
 										<Form.Item
 											name={['info', `${el.name}`, 'infoId']}

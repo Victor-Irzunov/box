@@ -14,6 +14,7 @@ const FormInfo = ({ setMessages }) => {
 	const [infoTitle, setInfiTitle] = useState([])
 
 	useEffect(() => {
+		console.log('-------FormInfo-----useEffect----fetchInfoTitle()-')
 		fetchInfoTitle()
 			.then(data => {
 				setInfiTitle(data)
@@ -26,6 +27,7 @@ const FormInfo = ({ setMessages }) => {
 				message.success(data.message)
 				setTimeout(() => { clearForm() }, [500])
 				setMessages(i => !i)
+				setArr({})
 			})
 			.catch(error => {
 				message.error(error)
