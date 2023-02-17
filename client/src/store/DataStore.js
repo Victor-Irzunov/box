@@ -15,12 +15,16 @@ export default class DataStore {
 		this._isBtnFormQuestion = false
 		this._isBuyProd = false
 		this._infoPages = []
+		this._isInfoTitle = false
 
 
 		makeAutoObservable(this)
 	}
 	setData(data) {
 		this._data = data
+	}
+	setIsInfoTitle(data) {
+		this._isInfoTitle = data
 	}
 	setDataMenu(data) {
 		this._dataMenu = data
@@ -59,6 +63,9 @@ export default class DataStore {
 
 	get data() {
 		return this._data
+	}
+	get isInfoTitle() {
+		return this._isInfoTitle
 	}
 	get dataMenu() {
 		return this._dataMenu

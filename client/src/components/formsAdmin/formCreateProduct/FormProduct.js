@@ -7,7 +7,7 @@ import {
 	Checkbox,
 	Empty,
 	Divider, Alert,
-	Affix, Popconfirm, Typography
+	Affix, Popconfirm
 } from 'antd'
 import DragableComp from '../../upload/DragableComp'
 import {
@@ -15,7 +15,7 @@ import {
 	fetchType,
 	fetchInfo,
 } from '../../../http/productsAPI'
-import { InfoCircleOutlined, CopyOutlined, DragOutlined} from '@ant-design/icons'
+import { InfoCircleOutlined, CopyOutlined} from '@ant-design/icons'
 import { createProduct } from '../../../http/adminAPI'
 import Resizer from "react-image-file-resizer"
 
