@@ -12,7 +12,7 @@ class CategoryTypeController {
 
 		try {
 			const d = await models.CategoryType.findAll()
-			// console.log('💊💊d: ', d)
+			console.log('💊💊d: ', d)
 
 			const a = d.map(el => el.id)
 			const data = await models.Category.findAll({
@@ -24,7 +24,7 @@ class CategoryTypeController {
 				}]
 			})
 
-			// console.log('💊💊💊data:', data)
+			console.log('💊💊💊data:', data)
 			return res.json(data)
 		}
 		catch (e) {
