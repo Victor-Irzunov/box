@@ -21,6 +21,7 @@ import Resizer from "react-image-file-resizer"
 
 const resizeFile = (file, size, size2, quality = 75) =>
 	new Promise((resolve) => {
+		console.log('quality:', quality)
 		Resizer.imageFileResizer(
 			file,
 			size,
@@ -105,6 +106,7 @@ const FormProduct = () => {
 			})
 			.catch(data => {
 				message.error(data.response.data.message)
+				console.log('data.response:', data.response)
 			})
 	}
 

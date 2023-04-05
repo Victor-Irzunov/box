@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react'
 import {
 	Typography,
 } from 'antd'
-import { getContentPage } from '../../http/contentAPI'
+// import {getContentPage } from '../../http/contentAPI'
 import { textMenPage } from '../../content/Content'
 import { Context } from '../../App'
 
@@ -17,12 +17,12 @@ export const ContentUniversalPage = ({ typeId, categoryId }) => {
 	const [editContentH2, setEditContentH2] = useState(textMenPage.p2)
 	const [editContentH3, setEditContentH3] = useState(textMenPage.p3)
 
-	useEffect(() => {
-		getContentPage(typeId, categoryId)
-			.then(data => {
-				console.log('data: ', data)
-			})
-	}, [])
+	// useEffect(() => {
+	// 	getContentPage(typeId, categoryId)
+	// 		.then(data => {
+	// 			console.log('data: ', data)
+	// 		})
+	// }, [])
 
 	return (
 		<div className='mt-32'>

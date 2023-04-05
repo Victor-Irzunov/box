@@ -360,9 +360,6 @@ const FormChangeProduct = ({ product, setProduct }) => {
 				// 	message: 'Добавьте картинки!',
 				// },]}
 				>
-
-
-
 					<DragableComp fileList={fileList} setFileList={setFileList} />
 				</Form.Item>
 

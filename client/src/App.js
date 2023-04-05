@@ -69,6 +69,7 @@ const App = observer(() => {
   useEffect(() => {
     categoryType()
       .then(data => {
+        // console.log('data:', data)
         dataApp.setDataMenu(data)
       })
     getAllInfoPages()

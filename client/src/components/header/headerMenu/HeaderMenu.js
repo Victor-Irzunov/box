@@ -46,6 +46,7 @@ const HeaderMenu = () => {
 				onClick={onClick}
 				selectedKeys={[current]}
 				mode="horizontal"
+				// theme='dark'
 				items={items}
 				style={{
 					background: 'transparent',
