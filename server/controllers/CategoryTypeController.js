@@ -14,7 +14,7 @@ class CategoryTypeController {
 			const d = await models.CategoryType.findAll()
 			console.log('💊💊d: ', d)
 
-			const a = d.map(el => el.id)
+			const a = d.map(el => el.categoryId)
 			const data = await models.Category.findAll({
 				where: {
 					id: a,
